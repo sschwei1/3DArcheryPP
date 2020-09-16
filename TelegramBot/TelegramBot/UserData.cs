@@ -13,7 +13,6 @@ namespace TelegramBot
     public class UserData
     {
         public long ChatId { get; set; }
-        public Chat Chat { get; set; }
         public string Username { get; set; }
         public UserRole Role { get; set; }
     }

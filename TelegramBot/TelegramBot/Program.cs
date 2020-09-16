@@ -12,8 +12,7 @@ using File = System.IO.File;
 
 namespace TelegramBot
 {
-    public class Program {
-
+    public static class Program {
         public static void Main() {
             var bot = new TelegramBot();
             bot.Start();

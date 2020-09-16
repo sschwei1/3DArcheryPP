@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Requests;
 using Telegram.Bot.Types;
 using TelegramBot.Commands;
 using File = System.IO.File;
@@ -24,25 +25,25 @@ namespace TelegramBot
             //     Username = "Sebastian",
             //     ChatId = 1297488807
             // },
-            new UserData()
-            {
-                Role = UserRole.Registered,
-                Username = "Marco",
-                ChatId = 1360574880
-            },
-            new UserData()
-            {
-                Role = UserRole.Registered,
-                Username = "Kevin",
-                ChatId = 1358186380
-            }
+            // new UserData()
+            // {
+            //     Role = UserRole.Registered,
+            //     Username = "Marco",
+            //     ChatId = 1360574880
+            // },
+            // new UserData()
+            // {
+            //     Role = UserRole.Registered,
+            //     Username = "Kevin",
+            //     ChatId = 1358186380
+            // }
         };
-        
-        public HashSet<long> MessagesWhileOffline { get; set; }
-        public ITelegramBotClient Client { get; }
-        public ConfigJson Config { get; set; }
+
+        private HashSet<long> MessagesWhileOffline { get; set; }
+        private ITelegramBotClient Client { get; }
+        private ConfigJson Config { get; set; }
         public Dictionary<string, BaseCommand> Commands { get; set; }
-        public bool IgnoreMessages { get; set; }
+        private bool IgnoreMessages { get; set; }
 
         public TelegramBot()
         {
@@ -67,7 +68,7 @@ namespace TelegramBot
             Console.WriteLine("Successfully started bot!");
         }
 
-        public async void Stop()
+        public void Stop()
         {
             Client.StopReceiving();
         }
@@ -82,33 +83,19 @@ namespace TelegramBot
                 return;
             }
 
-            if (e.Message.Text != null)
-            {
-                var args = e.Message.Text.Split(' ');
+            if (e.Message.Text == null) return;
+            var args = e.Message.Text.Split(' ');
                 
-                args[0] = FixCommandString(args[0]);
+            args[0] = FixCommandString(args[0]);
 
-                if (Commands.TryGetValue(args[0], out BaseCommand command))
-                {
-                    var usr = Users?.Where(u => u.ChatId == e.Message.Chat.Id).FirstOrDefault();
-                    if (usr == null)
-                    {
-                        usr = new UserData()
-                        {
-                            Role = UserRole.New,
-                            Username = null,
-                            ChatId = e.Message.Chat.Id
-                        };
-                        Users.Add(usr);
-                    }
-
-                    usr.Chat = e.Message.Chat;
-
-                    command.Execute(args.Skip(1).ToArray(), usr);
-                }
-                else
-                    await SendMessage(e.Message.Chat.Id, BotMessages.UnknownCommand);
+            if (Commands.TryGetValue(args[0], out BaseCommand command))
+            {
+                var user = GetUser(e.Message.Chat.Id);
+                command.Execute(args.Skip(1).ToArray(), user);
+                return;
             }
+            
+            await SendMessage(e.Message.Chat.Id, BotMessages.UnknownCommand);
         }
 
         public async Task SendMessage(long id, string message)
@@ -118,6 +105,22 @@ namespace TelegramBot
                 chatId: id,
                 text: message
             );
+        }
+
+        private UserData GetUser(long id)
+        {
+            var user = Users?.Where(u => u.ChatId == id).FirstOrDefault();
+            if (user != null) return user;
+            
+            user = new UserData()
+            {
+                Role = UserRole.New,
+                Username = null,
+                ChatId = id,
+            };
+            Users.Add(user);
+
+            return user;
         }
 
         private async Task RemoveOldMessages()
@@ -153,16 +156,15 @@ namespace TelegramBot
                         RequiredRole = UserRole.Registered,
                         Parameters = new List<CommandParameter>()
                         {
-                            new CommandParameter() {Name = "param1", Description = "super useful"},
-                            new CommandParameter() {Name = "param2", Description = "what do i do with my life..."},
-                            new CommandParameter() {Name = "uwu", Description = "i wanna die, kill me plis"}
+                            new CommandParameter() {Name = "param1", Description = "super useful"}
                         },
                         Description = BotMessages.TestCommandDescription
                     }
                 },
                 { 
                     CommandName.Start, 
-                    new StartCommand() {
+                    new StartCommand()
+                    {
                         Client = this,
                         Name = CommandName.Start,
                         RequiredRole = UserRole.New,
@@ -172,7 +174,8 @@ namespace TelegramBot
                 },
                 { 
                     CommandName.Help, 
-                    new HelpCommand() {
+                    new HelpCommand()
+                    {
                         Client = this,
                         Name = CommandName.Help,
                         RequiredRole = UserRole.New,
@@ -193,8 +196,35 @@ namespace TelegramBot
                         Parameters = new List<CommandParameter>(),
                         Description = BotMessages.CommandsCommandDescription
                     }
+                },
+                {
+                    CommandName.Register,
+                    new RegisterCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.Register,
+                        RequiredRole = UserRole.New,
+                        Parameters = new List<CommandParameter>()
+                        {
+                            new CommandParameter() { Name = "nickname", Description = "Nickname used " }
+                        },
+                        Description = BotMessages.RegisterCommandDescription
+                    }
+                },
+                {
+                    CommandName.ChangeNickname,
+                    new ChangeNicknameCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.ChangeNickname,
+                        RequiredRole = UserRole.Registered,
+                        Parameters = new List<CommandParameter>()
+                        {
+                            new CommandParameter() { Name = "nickname", Description = "Nickname used " }
+                        },
+                        Description = BotMessages.ChangeNicknameCommandDescription
+                    }
                 }
-                // register <nickname> (register for site)
                 // changeNick <nickname> (change nickname of user)
                 // accept (invited to event, accept invatation)
                 // createEvent <event id> (create event via site and get code to create it)

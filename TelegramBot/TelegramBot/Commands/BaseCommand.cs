@@ -7,11 +7,6 @@ using Telegram.Bot.Types;
 
 namespace TelegramBot.Commands
 {
-    public enum Commands
-    {
-        //Test = "test",
-        
-    }
     public abstract class BaseCommand
     {
         public string Name { get; set; }
@@ -22,7 +17,7 @@ namespace TelegramBot.Commands
         public string Description { get; set; }
         
         
-        public bool CanExecute(UserData user)
+        public virtual bool CanExecute(UserData user)
         {
             return user.Role >= RequiredRole;
         }
@@ -35,9 +30,9 @@ namespace TelegramBot.Commands
                 return false;
             }
 
-            if (args.Length == 0)
+            if (args.Length == 0 && Parameters.Count() != 0)
             {
-                await Client.SendMessage(user.ChatId, this.Description);
+                await Client.SendMessage(user.ChatId, $"{Description}\n\n{GetUsageString()}");
                 return false;
             }
 
@@ -52,14 +47,14 @@ namespace TelegramBot.Commands
         
         public string GetUsageString()
         {
-            return "Correct usage:\n" +
+            return "Usage:\n" +
                    $"{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}\n" +
                    $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
         }
 
         protected abstract void CustomExecute(string[] args, UserData user);
 
-        public virtual async void Execute(string[] args, UserData user)
+        public async void Execute(string[] args, UserData user)
         {
             if (!await CheckExecute(args, user))
                 return;

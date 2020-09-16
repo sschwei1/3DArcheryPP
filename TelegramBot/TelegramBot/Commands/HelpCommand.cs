@@ -7,13 +7,9 @@ namespace TelegramBot.Commands
             args[0] = TelegramBot.FixCommandString(args[0]);
             
             if (Client.Commands.TryGetValue(args[0], out BaseCommand command))
-            {
                 await Client.SendMessage(user.ChatId, command.GetUsageString());
-            }
             else
-            {
                 await Client.SendMessage(user.ChatId, BotMessages.HelpCommandCommandNotFound);
-            }
         }
     }
 }
