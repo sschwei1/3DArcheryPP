@@ -4,13 +4,17 @@ using Telegram.Bot;
 
 namespace TelegramBot.Commands
 {
+    public enum CommandPermission {
+        New = 1,
+        Registered = 2
+    }
     public interface ICommand
     {
-        string Command { get; }
         TelegramBot Client { get; }
-        string PermissionRequired { get; }
+        CommandPermission PermissionRequired { get; }
         string Description { get; } 
         IEnumerable<CommandParameter> Parameters { get; }
+        int ArgsCount { get; set; }
         void Execute(string Id);
     }
 }

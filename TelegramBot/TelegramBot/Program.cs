@@ -16,14 +16,9 @@ namespace TelegramBot
 
         public static void Main() {
             var bot = new TelegramBot();
-            // bot.Start();
-            
-            var baseCommandInterface = typeof(ICommand);
-            var commands = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => baseCommandInterface.IsAssignableFrom(p));
-
+            bot.Start();
             Console.ReadKey();
+            bot.Stop();
         }
     }
 }
