@@ -234,7 +234,7 @@ namespace TelegramBot
 
         public static string FixCommandString(string command)
         {
-            return command.StartsWith("/") ? command : $"/{command}";
+            return command.StartsWith("/") ? command.ToLower() : $"/{command.ToLower()}";
         }
     }
 }
