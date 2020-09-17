@@ -86,7 +86,7 @@ namespace TelegramBot
             if (e.Message.Text == null) return;
             var args = e.Message.Text.Split(' ');
                 
-            args[0] = FixCommandString(args[0]);
+            args[0] = BotHelper.FixCommandString(args[0]);
 
             if (Commands.TryGetValue(args[0], out BaseCommand command))
             {
@@ -230,11 +230,6 @@ namespace TelegramBot
                 // createEvent <event id> (create event via site and get code to create it)
                 // closeEvent (stops current event running on user)
             };
-        }
-
-        public static string FixCommandString(string command)
-        {
-            return command.StartsWith("/") ? command.ToLower() : $"/{command.ToLower()}";
         }
     }
 }

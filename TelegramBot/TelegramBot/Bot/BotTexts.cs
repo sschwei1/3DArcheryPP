@@ -18,6 +18,7 @@ namespace TelegramBot
         public const string NoPermission = "You have no permission to execute this command.";
         public const string InvalidAmountOfArgs = "Invalid amount of arguments for command.";
         public const string UserExists = "This username is already in use.\nTry to use a different one.";
+        public const string InvalidNickname = "Invalid nickname entered\nA nickname needs to match following conditions:\n - needs to be alphanumeric\n - minimum 3 characters\n - maximum 15 characters";
 
         // help command
         public const string HelpCommandCommandNotFound = "Command was not found\nTry '/commands' for a List of available commands";

@@ -11,6 +11,12 @@ namespace TelegramBot.Commands
                 await Client.SendMessage(user.ChatId, BotMessages.UserExists);
                 return;
             }
+            
+            if (!BotHelper.ValidateNickname(args[0]))
+            {
+                await Client.SendMessage(user.ChatId, BotMessages.InvalidNickname);
+                return;
+            }
 
             user.Username = args[0];
             await Client.SendMessage(user.ChatId, BotMessages.ChangeNicknameCommandChangedNick + args[0]);
