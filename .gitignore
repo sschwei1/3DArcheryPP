@@ -6,3 +6,5 @@ nuget.config
 bin
 obj
 runtimes
+
+.vs
