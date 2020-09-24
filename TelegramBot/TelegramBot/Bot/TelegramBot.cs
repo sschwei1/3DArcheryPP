@@ -16,28 +16,15 @@ namespace TelegramBot
 {
     public class TelegramBot
     {
-        public List<UserData> Users = new List<UserData>()
-        {
-            // test variable
-            // new UserData()
-            // {
-            //     Role = UserRole.Registered,
-            //     Username = "Sebastian",
-            //     ChatId = 1297488807
-            // },
-            // new UserData()
-            // {
-            //     Role = UserRole.Registered,
-            //     Username = "Marco",
-            //     ChatId = 1360574880
-            // },
-            // new UserData()
-            // {
-            //     Role = UserRole.Registered,
-            //     Username = "Kevin",
-            //     ChatId = 1358186380
-            // }
-        };
+        public List<UserData> Users = new List<UserData>();
+        //     Username = "Sebastian",
+        //     ChatId = 1297488807
+        
+        //     Username = "Marco",
+        //     ChatId = 1360574880
+        
+        //     Username = "Kevin",
+        //     ChatId = 1358186380
 
         private HashSet<long> MessagesWhileOffline { get; set; }
         private ITelegramBotClient Client { get; }

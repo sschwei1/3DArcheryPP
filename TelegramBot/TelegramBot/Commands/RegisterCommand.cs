@@ -26,7 +26,7 @@ namespace TelegramBot.Commands
 
             user.Username = args[0];
             user.Role = UserRole.Registered;
-            Client.SendMessage(user.ChatId, BotMessages.RegisterCommandRegistered + args[0]);
+            await Client.SendMessage(user.ChatId, BotMessages.RegisterCommandRegistered + args[0]);
         }
     }
 }
