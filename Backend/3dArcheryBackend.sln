@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramBot", "TelegramBot\TelegramBot.csproj", "{F4ADB436-EC95-4DE2-96F8-E121909928A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3dArcheryApi", "..\3dArcheryApi\3dArcheryApi\3dArcheryApi.csproj", "{377FD858-F213-42DD-B2FE-62F5C553D945}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3dArcheryApi", "3dArcheryApi\3dArcheryApi.csproj", "{6E62BE05-13D9-49DC-BD77-40831B6448F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3dArcheryRepos", "..\3dArcheryApi\3dArcheryRepos\3dArcheryRepos.csproj", "{16778C27-06FF-485A-BA08-8FF716318E3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3dArcheryRepos", "3dArcheryRepos\3dArcheryRepos.csproj", "{63FB9D24-392E-4E31-ACE3-6173B0197B90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{F4ADB436-EC95-4DE2-96F8-E121909928A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4ADB436-EC95-4DE2-96F8-E121909928A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4ADB436-EC95-4DE2-96F8-E121909928A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{377FD858-F213-42DD-B2FE-62F5C553D945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{377FD858-F213-42DD-B2FE-62F5C553D945}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{377FD858-F213-42DD-B2FE-62F5C553D945}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{377FD858-F213-42DD-B2FE-62F5C553D945}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16778C27-06FF-485A-BA08-8FF716318E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16778C27-06FF-485A-BA08-8FF716318E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16778C27-06FF-485A-BA08-8FF716318E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16778C27-06FF-485A-BA08-8FF716318E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E62BE05-13D9-49DC-BD77-40831B6448F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E62BE05-13D9-49DC-BD77-40831B6448F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E62BE05-13D9-49DC-BD77-40831B6448F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E62BE05-13D9-49DC-BD77-40831B6448F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63FB9D24-392E-4E31-ACE3-6173B0197B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63FB9D24-392E-4E31-ACE3-6173B0197B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63FB9D24-392E-4E31-ACE3-6173B0197B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63FB9D24-392E-4E31-ACE3-6173B0197B90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
