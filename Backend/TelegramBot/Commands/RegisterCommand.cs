@@ -1,4 +1,6 @@
 using System.Linq;
+using _3dArcheryRepos;
+using _3dArcheryRepos.ServersideModels;
 using Telegram.Bot;
 
 namespace TelegramBot.Commands
@@ -12,7 +14,9 @@ namespace TelegramBot.Commands
         
         protected override async void CustomExecute(string[] args, UserData user)
         {
-            if (Client.Users.Any(e => e.Username == args[0]))
+            using var repos = new ArcheryRepos();
+            
+            if (repos.CheckIfUserExists(args[0]))
             {
                 await Client.SendMessage(user.ChatId, BotMessages.UserExists);
                 return;
@@ -24,8 +28,7 @@ namespace TelegramBot.Commands
                 return;
             }
 
-            user.Username = args[0];
-            user.Role = UserRole.Registered;
+            repos.RegisterUser(user, args[0]);
             await Client.SendMessage(user.ChatId, BotMessages.RegisterCommandRegistered + args[0]);
         }
     }

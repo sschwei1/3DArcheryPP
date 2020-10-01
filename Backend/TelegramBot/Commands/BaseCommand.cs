@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using _3dArcheryRepos.ServersideModels;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 

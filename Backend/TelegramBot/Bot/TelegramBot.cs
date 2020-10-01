@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _3dArcheryRepos;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -11,21 +12,12 @@ using Telegram.Bot.Requests;
 using Telegram.Bot.Types;
 using TelegramBot.Commands;
 using File = System.IO.File;
+using _3dArcheryRepos.ServersideModels;
 
 namespace TelegramBot
 {
     public class TelegramBot
     {
-        public List<UserData> Users = new List<UserData>();
-        //     Username = "Sebastian",
-        //     ChatId = 1297488807
-        
-        //     Username = "Marco",
-        //     ChatId = 1360574880
-        
-        //     Username = "Kevin",
-        //     ChatId = 1358186380
-
         private HashSet<long> MessagesWhileOffline { get; set; }
         private ITelegramBotClient Client { get; }
         private ConfigJson Config { get; set; }
@@ -77,7 +69,9 @@ namespace TelegramBot
 
             if (Commands.TryGetValue(args[0], out BaseCommand command))
             {
-                var user = GetUser(e.Message.Chat.Id);
+                using var repos = new ArcheryRepos();
+                
+                var user = repos.GetUserByChatId(e.Message.Chat.Id);
                 command.Execute(args.Skip(1).ToArray(), user);
                 return;
             }
@@ -92,22 +86,6 @@ namespace TelegramBot
                 chatId: id,
                 text: message
             );
-        }
-
-        private UserData GetUser(long id)
-        {
-            var user = Users?.Where(u => u.ChatId == id).FirstOrDefault();
-            if (user != null) return user;
-            
-            user = new UserData()
-            {
-                Role = UserRole.New,
-                Username = null,
-                ChatId = id,
-            };
-            Users.Add(user);
-
-            return user;
         }
 
         private async Task RemoveOldMessages()
@@ -140,7 +118,7 @@ namespace TelegramBot
                     {
                         Client = this,
                         Name = CommandName.Test,
-                        RequiredRole = UserRole.Registered,
+                        RequiredRole = UserRole.New,
                         Parameters = new List<CommandParameter>()
                         {
                             new CommandParameter() {Name = "param1", Description = "super useful"}

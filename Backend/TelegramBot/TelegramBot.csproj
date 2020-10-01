@@ -14,4 +14,8 @@
       <Compile Remove="Commands\ICommand.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\3dArcheryRepos\3dArcheryRepos.csproj" />
+    </ItemGroup>
+
 </Project>

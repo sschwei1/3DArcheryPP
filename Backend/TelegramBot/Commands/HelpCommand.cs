@@ -1,3 +1,5 @@
+using _3dArcheryRepos.ServersideModels;
+
 namespace TelegramBot.Commands
 {
     public class HelpCommand : BaseCommand

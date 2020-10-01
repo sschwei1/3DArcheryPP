@@ -1,8 +1,4 @@
-using System.Runtime.CompilerServices;
-using Telegram.Bot.Types;
-using TelegramBot.Commands;
-
-namespace TelegramBot
+namespace _3dArcheryRepos.ServersideModels
 {
     public enum UserRole
     {

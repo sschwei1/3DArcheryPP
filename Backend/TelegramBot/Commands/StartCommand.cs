@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using _3dArcheryRepos.ServersideModels;
 
 namespace TelegramBot.Commands
 {

@@ -4,7 +4,7 @@ namespace _3dArcheryRepos.ConfigJson
 {
     public class ConfigJson
     {
-        [JsonProperty("ConnectionString")] 
-        public string Token { get; private set; }
+        [JsonProperty("connectionString")] 
+        public string ConnectionString { get; private set; }
     }
 }
