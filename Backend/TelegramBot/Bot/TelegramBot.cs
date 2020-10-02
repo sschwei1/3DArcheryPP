@@ -67,11 +67,11 @@ namespace TelegramBot
                 
             args[0] = BotHelper.FixCommandString(args[0]);
 
+            using var repos = new ArcheryRepos();
+            var user = repos.GetUserByChatId(e.Message.Chat.Id);
+            
             if (Commands.TryGetValue(args[0], out BaseCommand command))
             {
-                using var repos = new ArcheryRepos();
-                
-                var user = repos.GetUserByChatId(e.Message.Chat.Id);
                 command.Execute(args.Skip(1).ToArray(), user);
                 return;
             }
@@ -190,7 +190,6 @@ namespace TelegramBot
                         Description = BotMessages.ChangeNicknameCommandDescription
                     }
                 }
-                // changeNick <nickname> (change nickname of user)
                 // accept (invited to event, accept invatation)
                 // createEvent <event id> (create event via site and get code to create it)
                 // closeEvent (stops current event running on user)

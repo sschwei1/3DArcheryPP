@@ -33,7 +33,7 @@ namespace _3dArcheryRepos.DatabaseContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql("server=localhost;userid=test;password=password;database=archeryTestDb;");
+            optionsBuilder.UseMySql(this.ConnectionString);
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)

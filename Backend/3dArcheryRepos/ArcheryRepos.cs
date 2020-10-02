@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _3dArcheryRepos.DatabaseContext;
 using _3dArcheryRepos.ServersideModels;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace _3dArcheryRepos
 {
@@ -44,7 +45,7 @@ namespace _3dArcheryRepos
 
         public bool CheckIfUserExists(string username)
         {
-            return Db.Users.SingleOrDefault(e => e.Username == username) != null;
+            return Db.Users.FirstOrDefault(e => e.Username == username) != null;
         }
 
         public IEnumerable<UserData> GetAllUsers()

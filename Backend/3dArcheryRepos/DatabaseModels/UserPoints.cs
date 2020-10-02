@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _3dArcheryRepos.DatabaseContext
 {
+    [Table("UserPoints")]
     public class DbUserPoints
     {
         [ForeignKey("EventUser")]
