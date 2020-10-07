@@ -11,7 +11,7 @@ namespace _3dArcheryRepos.DatabaseContext
         public int Size { get; set; }
         
         [ForeignKey("Type")]
-        public virtual int TypeId { get; set; }
+        public int TypeId { get; set; }
         public virtual DbTargetType Type { get; set; }
     }
 }

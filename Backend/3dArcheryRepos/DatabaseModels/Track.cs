@@ -14,7 +14,7 @@ namespace _3dArcheryRepos.DatabaseContext
         public string Name { get; set; }
         
         [ForeignKey("Location")]
-        public virtual int LocationId { get; set; }
+        public int LocationId { get; set; }
         public virtual DbLocation Location { get; set; }
     }
 }

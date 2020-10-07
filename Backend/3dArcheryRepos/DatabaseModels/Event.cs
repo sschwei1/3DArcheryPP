@@ -20,15 +20,15 @@ namespace _3dArcheryRepos.DatabaseContext
         public string EventCode { get; set; }
         
         [ForeignKey("Track")]
-        public virtual int TrackId { get; set; }
+        public int TrackId { get; set; }
         public virtual DbTrack Track { get; set; }
         
         [ForeignKey("Owner")]
-        public virtual int? OwnerId { get; set; }
+        public int? OwnerId { get; set; }
         public virtual DbUser? Owner { get; set; }
         
         [ForeignKey("CountType")]
-        public virtual int CountTypeId { get; set; }
+        public int CountTypeId { get; set; }
         public virtual DbCountType CountType { get; set; }
     }
 }

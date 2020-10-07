@@ -6,11 +6,11 @@ namespace _3dArcheryRepos.DatabaseContext
     public class DbTrackTarget
     {
         [ForeignKey("Track")]
-        public virtual int TrackId { get; set; }
+        public int TrackId { get; set; }
         public virtual DbTrack Track { get; set; }
         
         [ForeignKey("Target")]
-        public virtual int TargetId { get; set; }
+        public int TargetId { get; set; }
         public virtual DbTarget Target { get; set; }
     }
 }

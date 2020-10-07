@@ -10,11 +10,11 @@ namespace _3dArcheryRepos.DatabaseContext
         [Key] public int Id { get; set; }
 
         [ForeignKey("User")]
-        public virtual int UserId { get; set; }
+        public int UserId { get; set; }
         public virtual DbUser User { get; set; }
         
         [ForeignKey("Event")]
-        public virtual int EventId { get; set; }
+        public int EventId { get; set; }
         public virtual DbEvent Event { get; set; }
     }
 }
