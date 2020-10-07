@@ -5,7 +5,7 @@ namespace _3dArcheryRepos.DatabaseContext
     public class ArcheryDb : DbContext
     {
         private static readonly string DefaultConnection =
-            "server=localhost;userid=test;password=password;database=archeryTestDb;";
+            "server=localhost;userid=admin;password=password321;database=archeryTestDb;";
         
         private string ConnectionString { get; set; }
         
