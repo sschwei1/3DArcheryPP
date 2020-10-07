@@ -1,4 +1,6 @@
+using System;
 using System.Text.RegularExpressions;
+using _3dArcheryRepos.ServersideModels;
 
 namespace TelegramBot
 {
@@ -13,6 +15,11 @@ namespace TelegramBot
         {
             var r = new Regex("^[a-zA-Z0-9]{3,15}$");
             return r.IsMatch(nick);
+        }
+
+        public static void LogMessage(UserData usr, string message)
+        {
+            Console.WriteLine($"Received message from (${usr.Username ?? "-"}/${usr.ChatId}): ${message}");
         }
     }
 }

@@ -54,6 +54,7 @@ namespace TelegramBot
 
         private async void HandleMessage(object sender, MessageEventArgs e)
         {
+            
             if (IgnoreMessages)
             {
                 if(MessagesWhileOffline.Add(e.Message.Chat.Id))
@@ -70,6 +71,8 @@ namespace TelegramBot
             using var repos = new ArcheryRepos();
             var user = repos.GetUserByChatId(e.Message.Chat.Id);
             
+            BotHelper.LogMessage(user, e.Message.Text);
+            
             if (Commands.TryGetValue(args[0], out BaseCommand command))
             {
                 command.Execute(args.Skip(1).ToArray(), user);
@@ -81,7 +84,7 @@ namespace TelegramBot
 
         public async Task SendMessage(long id, string message)
         {
-            Console.WriteLine($"Message sent to id:{id}");
+            Console.WriteLine($"Message sent to id: {id}");
             await Client.SendTextMessageAsync(
                 chatId: id,
                 text: message
