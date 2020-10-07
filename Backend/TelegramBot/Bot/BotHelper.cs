@@ -19,7 +19,7 @@ namespace TelegramBot
 
         public static void LogMessage(UserData usr, string message)
         {
-            Console.WriteLine($"Received message from (${usr.Username ?? "-"}/${usr.ChatId}): ${message}");
+            Console.WriteLine($"Received message from ({usr.Username ?? "-"}/{usr.ChatId}): ${message}");
         }
     }
 }
