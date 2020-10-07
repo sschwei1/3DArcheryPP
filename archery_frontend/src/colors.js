@@ -1,10 +1,14 @@
-export const primaryCol= '#01bf71';
-
-export const darkFgCol = '#010606';
-export const darkBgCol = '#010606';
-
-export const lightFgCol = '#f7f8fa';
-export const lightBgCol = '#f9f9f9';
+export const color = {
+  primary: '#01bf71',
+  dark1:{
+    fg: '#010606',
+    bg: '#010606'
+  },
+  light1:{
+    fg: '#f7f8fa',
+    bg: '#f7f8fa'
+  }
+};
 
 export const convertHexToRgba = (hexCode,opacity) => {
   let hex = hexCode.replace('#', '');
@@ -17,5 +21,5 @@ export const convertHexToRgba = (hexCode,opacity) => {
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
 
-  return `rgba(${r},${g},${b},${opacity / 100})`;
-}
+  return `rgba(${r},${g},${b},${opacity})`;
+};

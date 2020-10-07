@@ -9,6 +9,9 @@ import {
   SideBtnWrap,
   SidebarRoute
 } from './SidebarElements';
+import {scrollProps} from '../ButtonEelement';
+
+import {navData} from '../Navbar/Data';
 
 const Sidebar = ({isOpen, toggle}) => {
   return (
@@ -18,14 +21,14 @@ const Sidebar = ({isOpen, toggle}) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink to='welcome' onClick={toggle}>Welcome</SidebarLink>
-          <SidebarLink to='about' onClick={toggle}>About</SidebarLink>
-          <SidebarLink to='howto'onClick={toggle}>How To</SidebarLink>
-          <SidebarLink to='company' onClick={toggle}>Company</SidebarLink>
-          <SidebarLink to='devteam' onClick={toggle}>Dev Team</SidebarLink>
+          {
+            navData.navItems.map(({link, text}) => (
+              <SidebarLink to={link} onClick={toggle} {...scrollProps}>{text}</SidebarLink>
+            ))
+          }
         </SidebarMenu>
         <SideBtnWrap>
-          <SidebarRoute to='/signin'>Sign In</SidebarRoute>
+          <SidebarRoute to={navData.btn.link}>{navData.btn.text}</SidebarRoute>
         </SideBtnWrap>
       </SidebarWrapper>
     </SidebarContainer>

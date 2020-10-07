@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
+import {scrollProps} from '../ButtonEelement'
 import { 
   Nav,
   NavbarContainer,
+  NavLogoLink,
   NavLogo,
   MobileIcon,
   NavMenu,
@@ -12,34 +14,41 @@ import {
   NavBtnLink
 } from './NavbarElements';
 
+import {navData} from './Data';
+
 const Navbar = ({toggle}) => {
+  const [scrollNav, setScrollNav] = useState(false);
+  
+  const changeNav = () => {
+    setScrollNav(window.scrollY >= 80 ? true : false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', changeNav);
+  }, []);
+
   return (
     <>
-      <Nav>
+      <Nav scrollNav={scrollNav}>
         <NavbarContainer>
-          <NavLogo to='/'>Logo</NavLogo>
+          <NavLogoLink to='welcome' {...scrollProps}>
+            <NavLogo src={require('../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
+            3dium
+          </NavLogoLink>
           <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
           <NavMenu>
-            <NavItem>
-              <NavLink to='welcome'>Welcome</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to='about'>About</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to='howto'>How To</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to='company'>Company</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to='devteam'>Dev Team</NavLink>
-            </NavItem>
+            {
+              navData.navItems.map(({link,text}) => (
+                <NavItem>
+                  <NavLink to={link} {...scrollProps}>{text}</NavLink>
+                </NavItem>
+              ))
+            }
           </NavMenu>
           <NavBtn>
-            <NavBtnLink to='/signin'>Sign In</NavBtnLink>
+            <NavBtnLink to={navData.btn.link}>{navData.btn.text}</NavBtnLink>
           </NavBtn>
         </NavbarContainer>
       </Nav>

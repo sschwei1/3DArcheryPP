@@ -25,8 +25,8 @@ export const HowObject = {
     '\n2.) Do that!' +
     '\n3.) And now this!' +
     '\n4.) Enjoy whatever you just archieved!',
-  buttonLabel: 'Create event',
-  buttonLink: '/CreateEvent',
+  buttonLabel: 'Detailed Guide',
+  buttonLink: '/howto',
   buttonPageLink: false,
   imgStart: true,
   img: require('../../images/setup_guide_test3.png'),

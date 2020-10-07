@@ -1,21 +1,15 @@
 import styled from 'styled-components';
-import { darkBgCol, lightFgCol } from '../../colors';
+import {Link as LinkR} from 'react-router-dom';
+import {color, convertHexToRgba} from '../../colors';
 
 export const CardContainer = styled.div`
-  height: 800px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${darkBgCol};
-
-  @media screen and (max-width: 768px){
-    height: 1100px;
-  }
-
-  @media screen and (max-width: 480px){
-    height: 1300px
-  }
+  background: ${color.dark1.bg};
+  padding: 50px 0;
+  box-shadow: inset 0 -1px 2px 0 ${convertHexToRgba(color.light1.bg, 0.70)}
 `;
 
 export const CardWrapper = styled.div`
@@ -31,13 +25,15 @@ export const CardWrapper = styled.div`
   }
 `;
 
-export const Card = styled.div`
+export const Card = styled(LinkR)`
   height: 100%;
   min-width: 330px;
   max-width: 380px;
   margin: 0 10px;
+  color: ${color.dark1.fg};
+  text-decoration: none;
   overflow: hidden;
-  background: ${lightFgCol};
+  background: ${color.light1.bg};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -63,7 +59,7 @@ export const CardIcon = styled.img`
 
 export const CardH1 = styled.h1`
   font-size: 2.5rem;
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
   margin-bottom: 64px;
 
   @media screen and (max-width: 480px){

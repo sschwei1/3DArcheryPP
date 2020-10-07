@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   ButtonScroll as ButtonS,
-  ButtonRoute as ButtonR
+  ButtonRoute as ButtonR,
+  scrollProps
 } from '../ButtonEelement';
 import {
   InfoContainer,
@@ -30,11 +31,7 @@ const InfoSection = ({id, lightTheme, topLine, headline,
 
   let button = buttonPageLink ?
     <ButtonS
-      smooth={true}
-      duration={500}
-      spy={true}
-      exact='true'
-      offset={-80}
+      {...scrollProps}
       {...buttonProps}
     >{buttonLabel}</ButtonS> :
     <ButtonR {...buttonProps}>

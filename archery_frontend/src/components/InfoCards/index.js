@@ -15,12 +15,12 @@ const InfoCards = ({id, title, cards}) => {
       <CardH1>{title}</CardH1>
       <CardWrapper>
         {
-          cards.map(({title, iconSrc, description}, index) => 
-          <Card key={index}>
-            <CardIcon src={iconSrc} alt={`${title}_icon`} />
-            <CardH2>{title}</CardH2>
+          cards.map((info, index) => 
+          <Card key={index} to={info.cardLink}>
+            <CardIcon src={info.iconSrc} alt={`${info.title}_icon`} />
+            <CardH2>{info.title}</CardH2>
             <CardP>
-              {description}
+              {info.description}
             </CardP>
           </Card>)
         }

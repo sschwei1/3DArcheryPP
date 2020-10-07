@@ -11,6 +11,7 @@ import {
   CompanyObject 
 } from '../components/InfoSection/Data';
 import { DevTeam } from '../components/InfoCards/Data';
+import Footer from '../components/Footer';
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ const Home = () => {
       <InfoSection {...HowObject} />
       <InfoSection {...CompanyObject} />
       <InfoCards {...DevTeam} />
-      {/* dev team */}
+      <Footer />
     </>
   );
 }

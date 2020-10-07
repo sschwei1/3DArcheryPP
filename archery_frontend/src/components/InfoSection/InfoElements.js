@@ -1,18 +1,12 @@
 import styled from 'styled-components';
-import {
-  primaryCol,
-  darkFgCol,
-  darkBgCol,
-  lightFgCol,
-  lightBgCol
-} from '../../colors';
+import {color} from '../../colors';
 
 export const InfoContainer = styled.div`
-  color: ${lightFgCol};
-  background: ${({lightBg}) => (lightBg ? lightBgCol : darkBgCol)};
+  color: ${color.light1.fg};
+  background: ${({lightBg}) => (lightBg ? color.light1.bg : color.dark1.bg)};
   overflow: hidden;
   @media screen and (max-width: 768px){
-    padding: 100px 0;
+    padding: 50px 0;
   }
 `;
 
@@ -58,7 +52,7 @@ export const TextWrapper = styled.div`
 `;
 
 export const TopLine = styled.p`
-  color: ${primaryCol};
+  color: ${color.primary};
   font-size: 16px;
   line-height: 16px;
   font-weight: 700;
@@ -72,7 +66,7 @@ export const Heading = styled.h1`
   font-size: 48px;
   line-height: 1.1;
   font-weight: 600;
-  color: ${({lightText}) => (lightText ? lightFgCol : darkFgCol)};
+  color: ${({lightText}) => (lightText ? color.light1.fg : color.dark1.fg)};
 
   @media screen and (max-width: 480px){
     font-size: 32px;
@@ -85,7 +79,7 @@ export const Subtitle = styled.p`
   font-size: 18px;
   line-height: 24px;
   white-space: pre-wrap;
-  color: ${({lightText}) => (lightText ? lightFgCol : darkFgCol)};
+  color: ${({lightText}) => (lightText ? color.light1.fg : color.dark1.fg)};
 `;
 
 export const BtnWrap = styled.div`

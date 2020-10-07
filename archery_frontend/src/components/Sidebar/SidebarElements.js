@@ -2,20 +2,14 @@ import styled from 'styled-components'
 import { Link as LinkS } from 'react-scroll'
 import { Link as LinkR } from 'react-router-dom'
 import { FaTimes } from 'react-icons/fa'
-import {
-  darkBgCol,
-  darkFgCol,
-  lightBgCol,
-  lightFgCol,
-  primaryCol
-} from '../../colors';
+import {color} from '../../colors';
 
 export const SidebarContainer = styled.aside`
   position: fixed;
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: ${darkBgCol};
+  background: ${color.dark1.bg};
   display: grid;
   align-items: center;
   left: 0;
@@ -25,7 +19,7 @@ export const SidebarContainer = styled.aside`
 `;
 
 export const CloseIcon = styled(FaTimes)`
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
 `;
 
 export const Icon = styled.div`
@@ -39,7 +33,7 @@ export const Icon = styled.div`
 `;
 
 export const SidebarWrapper = styled.div`
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
 `;
 
 export const SidebarMenu = styled.ul`
@@ -61,11 +55,11 @@ export const SidebarLink = styled(LinkS)`
   text-decoration: none;
   list-style: none;
   transition: 0.2s ease-in-out;
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
   cursor: pointer;
 
   &:hover {
-    color: ${primaryCol};
+    color: ${color.primary};
     transition: 0.2s ease-in-out;
   }
 `;
@@ -77,10 +71,10 @@ export const SideBtnWrap = styled.div`
 
 export const SidebarRoute = styled(LinkR)`
   border-radius: 50px;
-  background: ${primaryCol};
+  background: ${color.primary};
   white-space: nowrap;
   padding: 16px 64px;
-  color: ${darkFgCol};
+  color: ${color.dark1.fg};
   font-size: 16px;
   outline: none;
   border: none;
@@ -90,7 +84,7 @@ export const SidebarRoute = styled(LinkR)`
 
   &:hover{
     transition: all 0.2s ease-in-out;
-    background: ${lightBgCol};
-    color: ${darkFgCol};
+    background: ${color.light1.bg};
+    color: ${color.dark1.fg};
   }
 `;

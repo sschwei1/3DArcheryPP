@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 import {Link as LinkS} from 'react-scroll'
 import {Link as LinkR} from 'react-router-dom'
-import { darkBgCol, darkFgCol, lightBgCol, lightFgCol, primaryCol } from '../colors';
+import { color } from '../colors';
 
 export const ButtonScroll = styled(LinkS)`
   border-radius: 50px;
-  background: ${({primary}) => (primary ? primaryCol : darkBgCol)};
+  background: ${({primary}) => (primary ? color.primary : color.dark1.bg)};
   white-space: nowrap;
   padding: ${({big}) => (big ? '14px 48px' : '12px 30px')};
-  color: ${({dark}) => (dark ? darkFgCol : lightFgCol)};
+  color: ${({dark}) => (dark ? color.dark1.fg : color.light1.fg)};
   font-size: ${({fontBig}) => (fontBig ? '20px' : '16px')};
   outline: none;
   border: none;
@@ -20,16 +20,16 @@ export const ButtonScroll = styled(LinkS)`
 
   &:hover {
     transition: all0.2s ease-in-out;
-    background: ${({primary}) => (primary ? lightBgCol : primaryCol)};
+    background: ${({primary}) => (primary ? color.light1.bg : color.primary)};
   }
 `;
 
 export const ButtonRoute = styled(LinkR)`
   border-radius: 50px;
-  background: ${({primary}) => (primary ? primaryCol : darkBgCol)};
+  background: ${({primary}) => (primary ? color.primary : color.dark1.bg)};
   white-space: nowrap;
   padding: ${({big}) => (big ? '14px 48px' : '12px 30px')};
-  color: ${({dark}) => (dark ? darkFgCol : lightFgCol)};
+  color: ${({dark}) => (dark ? color.dark1.fg : color.light1.fg)};
   font-size: ${({fontBig}) => (fontBig ? '20px' : '16px')};
   outline: none;
   border: none;
@@ -42,6 +42,14 @@ export const ButtonRoute = styled(LinkR)`
 
   &:hover {
     transition: all0.2s ease-in-out;
-    background: ${({primary}) => (primary ? lightBgCol : primaryCol)};
+    background: ${({primary}) => (primary ? color.light1.bg : color.primary)};
   }
 `;
+
+export const scrollProps = {
+  duration: 500,
+  exact: 'true',
+  offset: -80,
+  smooth: true,
+  spy: true
+};

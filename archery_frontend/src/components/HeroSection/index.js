@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Video from '../../videos/BlackBg.mp4';
-import { ButtonScroll as Button } from '../ButtonEelement';
+import {
+  ButtonScroll as Button,
+  scrollProps
+} from '../ButtonEelement';
 import {
   HeroContainer,
   HeroBg,
@@ -37,13 +40,9 @@ const HeroSection = () => {
             onMouseLeave={onHover}
             primary='true'
             dark='true'
-            smooth={true}
-            duration={500}
-            spy={true}
-            exact='true'
-            offset={-80}
+            {...scrollProps}
           >
-            Get started {hover ? <ArrowForward /> : <ArrowRight />}
+            Get Started {hover ? <ArrowForward /> : <ArrowRight />}
           </Button>
         </HeroBtnWrapper>
       </HeroContent>

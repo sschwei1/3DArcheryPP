@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import {MdKeyboardArrowRight, MdArrowForward} from 'react-icons/md';
-import {
-  darkBgCol,
-  lightFgCol
-} from '../../colors';
+import {color} from '../../colors';
 
 export const HeroContainer = styled.div`
-  background: ${darkBgCol};
+  background: ${color.dark1.bg};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +41,7 @@ export const VideoBg = styled.video`
   height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
-  background: ${darkBgCol};
+  background: ${color.dark1.bg};
 `;
 
 export const HeroContent = styled.div`
@@ -58,7 +55,7 @@ export const HeroContent = styled.div`
 `;
 
 export const HeroH1 = styled.h1`
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
   font-size: 48px;
   text-align: center;
 
@@ -73,7 +70,7 @@ export const HeroH1 = styled.h1`
 
 export const HeroP = styled.p`
   margin-top: 24px;
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
   font-size: 24px;
   text-align: center;
   max-width: 600px;

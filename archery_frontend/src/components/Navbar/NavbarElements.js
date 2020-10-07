@@ -1,17 +1,10 @@
 import styled from 'styled-components'
 import { Link as LinkR } from 'react-router-dom'
 import { Link as LinkS } from 'react-scroll'
-import {
-  convertHexToRgba,
-  darkBgCol,
-  darkFgCol,
-  lightBgCol,
-  lightFgCol,
-  primaryCol
-} from '../../colors';
+import {color, convertHexToRgba} from '../../colors';
 
 export const Nav = styled.nav`
-  background: ${darkBgCol};
+  background: ${({scrollNav}) => (scrollNav ? color.dark1.bg : 'transparent')};
   height: 80px;
   margin-top: -80px;
   display: flex;
@@ -21,7 +14,11 @@ export const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 2px 5px ${convertHexToRgba(primaryCol, 0.6)};
+  box-shadow: ${({scrollNav}) => (
+    scrollNav ?
+    `0 1px 2px 0 ${convertHexToRgba(color.light1.bg, 0.45)}`
+    : 0
+  )};
 
   @media screen and (max-width: 960px){
     transition: 0.8s all ease;
@@ -38,8 +35,8 @@ export const NavbarContainer = styled.div`
   max-width: 1100px;
 `;
 
-export const NavLogo = styled(LinkR)`
-  color: ${lightFgCol};
+export const NavLogoLink = styled(LinkS)`
+  color: ${color.light1.fg};
   justify-self: flex-start;
   cursor: pointer;
   font-size: 1.5rem;
@@ -48,6 +45,12 @@ export const NavLogo = styled(LinkR)`
   margin-left: 24px;
   font-weight: bold;
   text-decoration: none;
+`;
+
+export const NavLogo = styled.img`
+  max-height: 45px;
+  max-width: 45px;
+  margin-right: 5px;
 `;
 
 export const MobileIcon = styled.div`
@@ -61,7 +64,7 @@ export const MobileIcon = styled.div`
     transform: translate(-100%, 60%);
     font-size: 1.8rem;
     cursor: pointer;
-    color: ${lightFgCol};
+    color: ${color.light1.fg};
   }
 `;
 
@@ -82,16 +85,21 @@ export const NavItem = styled.li`
 `;
 
 export const NavLink = styled(LinkS)`
-  color: ${lightFgCol};
+  color: ${color.light1.fg};
   display: flex;
   align-items: center;
   text-decoration: none;
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
-  &.active, &:hover {
-    border-bottom: 3px solid ${primaryCol};
+  &:hover {
+    box-shadow: inset 0 -4px 0 0 ${convertHexToRgba(color.primary, 0.55)};
+  }
+
+  &.active {
+    box-shadow: inset 0 -4px 0 0 ${convertHexToRgba(color.primary, 0.85)};
   }
 `;
 
@@ -106,10 +114,10 @@ export const NavBtn = styled.nav`
 
 export const NavBtnLink = styled(LinkR)`
   border-radius: 50px;
-  background: ${primaryCol};
+  background: ${color.primary};
   white-space: nowrap;
   padding: 10px 22px;
-  color: ${darkFgCol};
+  color: ${color.dark1.fg};
   outline: none;
   border: none;
   cursor: pointer;
@@ -118,7 +126,7 @@ export const NavBtnLink = styled(LinkR)`
 
   &:hover {
     transition: all 0.2s -ease-in-out;
-    background: ${lightBgCol};
-    color: ${darkFgCol};
+    background: ${color.light1.bg};
+    color: ${color.dark1.fg};
   }
 `;
