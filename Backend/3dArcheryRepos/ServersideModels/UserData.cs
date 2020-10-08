@@ -13,5 +13,7 @@ namespace _3dArcheryRepos.ServersideModels
         public long ChatId { get; set; }
         public string Username { get; set; }
         public UserRole Role { get; set; }
+
+        public bool IsConsole => Role == UserRole.Console;
     }
 }

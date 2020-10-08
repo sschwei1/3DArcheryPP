@@ -137,9 +137,7 @@ namespace TelegramBot
         {
             if (id == 0)
             {
-                BotHelper.LogMessage(
-                    $"{BotHelper.ConsolePrefix}{message.Replace("\n",BotHelper.ConsolePrefix)}",
-                    ConsoleCommandBuilder);
+                BotHelper.LogMessage(message, ConsoleCommandBuilder, ConsoleUser);
                 return;
             }
             

@@ -8,7 +8,9 @@ namespace TelegramBot
 {
     public static class BotHelper
     {
-        public static string ConsolePrefix = "//   ";
+        public static string LinePrefix = "-> ";
+        public static string ConsolePrefix = "~  ";
+
         
         public static string FixCommandString(string command)
         {
@@ -21,7 +23,7 @@ namespace TelegramBot
             return r.IsMatch(nick);
         }
 
-        public static void LogMessage(string text, StringBuilder builder)
+        public static void LogMessage(string text, StringBuilder builder, UserData user = null)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
@@ -29,18 +31,19 @@ namespace TelegramBot
             try
             {
                 Console.CursorLeft = 0;
+                Console.Write(new string(' ', builder.Length));
+                Console.CursorLeft = 0;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Encountered error: {ex.Message}");
             }
-            
-            var whiteSpaces = text.Length < builder.Length + ConsolePrefix.Length
-                ? new string(' ', builder.Length + ConsolePrefix.Length - text.Length)
-                : string.Empty;
-            
-            Console.WriteLine(text + whiteSpaces);
-            Console.Write(ConsolePrefix + builder.ToString());
+
+            if (user?.IsConsole ?? false)
+                text = $"{ConsolePrefix}{text.Replace("\n", "\n" + ConsolePrefix)}";
+
+            Console.WriteLine(text);
+            Console.Write(LinePrefix + builder.ToString());
         }
 
         public static void RemoveLastChar(StringBuilder builder)
