@@ -73,8 +73,12 @@ namespace TelegramBot
                         break;
 
                     case ConsoleKey.Enter:
-                        var args = BotHelper.GetArgs(ConsoleCommandBuilder);
-                        TryExecuteCommand(ConsoleUser, args);
+                        if (ConsoleCommandBuilder.Length > 0)
+                        {
+                            var args = BotHelper.GetArgs(ConsoleCommandBuilder);
+                            TryExecuteCommand(ConsoleUser, args);
+                        }
+
                         break;
 
                     default:
@@ -133,7 +137,9 @@ namespace TelegramBot
         {
             if (id == 0)
             {
-                BotHelper.LogMessage(message, ConsoleCommandBuilder);
+                BotHelper.LogMessage(
+                    $"{BotHelper.ConsolePrefix}{message.Replace("\n",BotHelper.ConsolePrefix)}",
+                    ConsoleCommandBuilder);
                 return;
             }
             

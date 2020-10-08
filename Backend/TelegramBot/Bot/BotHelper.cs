@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using _3dArcheryRepos.ServersideModels;
@@ -7,6 +8,8 @@ namespace TelegramBot
 {
     public static class BotHelper
     {
+        public static string ConsolePrefix = "//   ";
+        
         public static string FixCommandString(string command)
         {
             return command.StartsWith("/") ? command.ToLower() : $"/{command.ToLower()}";
@@ -22,6 +25,7 @@ namespace TelegramBot
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
+            
             try
             {
                 Console.CursorLeft = 0;
@@ -31,12 +35,12 @@ namespace TelegramBot
                 Console.WriteLine($"Encountered error: {ex.Message}");
             }
             
-            var whiteSpaces = text.Length < builder.Length
-                ? new string(' ', builder.Length - text.Length)
+            var whiteSpaces = text.Length < builder.Length + ConsolePrefix.Length
+                ? new string(' ', builder.Length + ConsolePrefix.Length - text.Length)
                 : string.Empty;
             
             Console.WriteLine(text + whiteSpaces);
-            Console.Write(builder.ToString());
+            Console.Write(ConsolePrefix + builder.ToString());
         }
 
         public static void RemoveLastChar(StringBuilder builder)
@@ -46,7 +50,7 @@ namespace TelegramBot
             {
                 Console.CursorLeft -= 1;
                 Console.Write(" ");
-                Console.CursorLeft = 0;
+                Console.CursorLeft = ConsolePrefix.Length;
             }
             catch (Exception ex)
             {
