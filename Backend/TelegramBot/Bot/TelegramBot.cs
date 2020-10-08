@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using _3dArcheryRepos;
 using Newtonsoft.Json;
@@ -23,31 +24,71 @@ namespace TelegramBot
         private ConfigJson Config { get; set; }
         public Dictionary<string, BaseCommand> Commands { get; set; }
         private bool IgnoreMessages { get; set; }
+        public StringBuilder ConsoleCommandBuilder { get; private set; }
+        public bool LoggingEnabled { get; set; }
+        
+        private static UserData ConsoleUser => new UserData(){ ChatId = 0, Username = "Console", Role = UserRole.Console};
 
         public TelegramBot()
         {
             IgnoreMessages = true;
             MessagesWhileOffline = new HashSet<long>();
-            
+            ConsoleCommandBuilder = new StringBuilder();
+            LoggingEnabled = true;
+
             InitConfig();
 
             Client = new TelegramBotClient(Config.Token);
             var me = Client.GetMeAsync().Result;
-            Console.WriteLine($"Bot info\nId:{me.Id}\nName:{me.FirstName}.");
+            BotHelper.LogMessage($"Bot info\nId:{me.Id}\nName:{me.FirstName}.", ConsoleCommandBuilder);
 
             InitCommands();
             
             Client.OnMessage += HandleMessage;
         }
 
-        public async void Start()
+        public async Task Start()
         {
             Client.StartReceiving();
             await RemoveOldMessages();
-            Console.WriteLine("Successfully started bot!");
+            BotHelper.LogMessage("Successfully started bot!", ConsoleCommandBuilder);
+            this.ConsoleCommands();
+            this.Stop();
         }
 
-        public void Stop()
+        private void ConsoleCommands()
+        {
+            while (true)
+            {
+                var keyInfo = Console.ReadKey(true);
+
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.Delete:
+                        return;
+
+                    case ConsoleKey.Backspace:
+                        if (ConsoleCommandBuilder.Length > 0)
+                            BotHelper.RemoveLastChar(ConsoleCommandBuilder);
+                        break;
+
+                    case ConsoleKey.Enter:
+                        var args = BotHelper.GetArgs(ConsoleCommandBuilder);
+                        TryExecuteCommand(ConsoleUser, args);
+                        break;
+
+                    default:
+                        if (Regex.IsMatch(keyInfo.KeyChar.ToString(), "^[a-zA-Z0-9 ]*$"))
+                        {
+                            ConsoleCommandBuilder.Append(keyInfo.KeyChar);
+                            Console.Write(keyInfo.KeyChar);
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void Stop()
         {
             Client.StopReceiving();
         }
@@ -71,20 +112,31 @@ namespace TelegramBot
             using var repos = new ArcheryRepos();
             var user = repos.GetUserByChatId(e.Message.Chat.Id);
             
-            BotHelper.LogMessage(user, e.Message.Text);
+            if(user.Role >= UserRole.Admin || LoggingEnabled)
+                BotHelper.LogMessage($"Received message from ({user.Username ?? "-"}/{user.ChatId}): {e.Message.Text}", ConsoleCommandBuilder);
             
+            TryExecuteCommand(user, args);
+        }
+
+        private async void TryExecuteCommand(UserData user, string[] args)
+        {
             if (Commands.TryGetValue(args[0], out BaseCommand command))
             {
                 command.Execute(args.Skip(1).ToArray(), user);
                 return;
             }
             
-            await SendMessage(e.Message.Chat.Id, BotMessages.UnknownCommand);
+            await SendMessage(user.ChatId, BotMessages.UnknownCommand);
         }
 
         public async Task SendMessage(long id, string message)
         {
-            Console.WriteLine($"Message sent to id: {id}");
+            if (id == 0)
+            {
+                BotHelper.LogMessage(message, ConsoleCommandBuilder);
+                return;
+            }
+            
             await Client.SendTextMessageAsync(
                 chatId: id,
                 text: message
@@ -94,7 +146,7 @@ namespace TelegramBot
         private async Task RemoveOldMessages()
         {
             await Task.Delay(2500);
-            Console.WriteLine("Removed old Messages!");
+            BotHelper.LogMessage("Removed old Messages!", ConsoleCommandBuilder);
             IgnoreMessages = false;
         }
 
@@ -174,7 +226,7 @@ namespace TelegramBot
                         RequiredRole = UserRole.New,
                         Parameters = new List<CommandParameter>()
                         {
-                            new CommandParameter() { Name = "nickname", Description = "Nickname used " }
+                            new CommandParameter() { Name = "nickname", Description = "Nickname used" }
                         },
                         Description = BotMessages.RegisterCommandDescription
                     }
@@ -188,7 +240,7 @@ namespace TelegramBot
                         RequiredRole = UserRole.Registered,
                         Parameters = new List<CommandParameter>()
                         {
-                            new CommandParameter() { Name = "nickname", Description = "Nickname used " }
+                            new CommandParameter() { Name = "nickname", Description = "Nickname used" }
                         },
                         Description = BotMessages.ChangeNicknameCommandDescription
                     }
@@ -202,6 +254,20 @@ namespace TelegramBot
                         RequiredRole = UserRole.New,
                         Parameters = new List<CommandParameter>(),
                         Description = BotMessages.WebsiteCommandDescription
+                    }
+                },
+                {
+                    CommandName.ToggleLogging,
+                    new ToggleLoggingCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.ToggleLogging,
+                        RequiredRole = UserRole.Console,
+                        Parameters = new List<CommandParameter>()
+                        {
+                            new CommandParameter(){ Description = "Logging status which should be toggled to", Name = "status" }
+                        },
+                        Description = BotMessages.ToggleLoggingDescription
                     }
                 }
                 // accept (invited to event, accept invatation)

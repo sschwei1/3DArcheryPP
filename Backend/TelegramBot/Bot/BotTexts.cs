@@ -9,6 +9,7 @@ namespace TelegramBot
         public const string Register = "/register";
         public const string ChangeNickname = "/nick";
         public const string Website = "/website";
+        public const string ToggleLogging = "/logging";
     }
     
     public static class BotMessages
@@ -41,5 +42,6 @@ namespace TelegramBot
         public const string RegisterCommandDescription = "Register yourself in our 3dArchery program with a username.";
         public const string ChangeNicknameCommandDescription = "Change your nickname, used in Events";
         public const string WebsiteCommandDescription = "Our website:\nhttp://sswe.me\n(will change to pp.sswe.me once our actual webserver is set up)";
+        public const string ToggleLoggingDescription = "Toggles weather messages are logged or not";
     }
 }

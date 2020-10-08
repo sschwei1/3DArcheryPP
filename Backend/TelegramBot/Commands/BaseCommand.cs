@@ -23,6 +23,8 @@ namespace TelegramBot.Commands
             return user.Role >= RequiredRole;
         }
 
+        protected virtual string NoParameterMessage => $"{Description}\n\n{GetUsageString()}";
+
         protected virtual async Task<bool> CheckExecute(string[] args, UserData user)
         {
             if (!CanExecute(user))
@@ -33,7 +35,7 @@ namespace TelegramBot.Commands
 
             if (args.Length == 0 && Parameters.Count() != 0)
             {
-                await Client.SendMessage(user.ChatId, $"{Description}\n\n{GetUsageString()}");
+                await Client.SendMessage(user.ChatId, NoParameterMessage);
                 return false;
             }
 

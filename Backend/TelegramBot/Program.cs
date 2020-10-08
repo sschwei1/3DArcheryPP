@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -13,11 +14,9 @@ using File = System.IO.File;
 namespace TelegramBot
 {
     public static class Program {
-        public static void Main() {
+        public static async Task Main() {
             var bot = new TelegramBot();
-            bot.Start();
-            Console.ReadKey();
-            bot.Stop();
+            await bot.Start();
         }
     }
 }

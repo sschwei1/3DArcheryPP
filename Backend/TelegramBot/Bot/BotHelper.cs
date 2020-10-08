@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using _3dArcheryRepos.ServersideModels;
 
@@ -17,9 +18,39 @@ namespace TelegramBot
             return r.IsMatch(nick);
         }
 
-        public static void LogMessage(UserData usr, string message)
+        public static void LogMessage(string text, StringBuilder builder)
         {
-            Console.WriteLine($"Received message from ({usr.Username ?? "-"}/{usr.ChatId}): {message}");
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            Console.CursorLeft = 0;
+            var whiteSpaces = text.Length < builder.Length
+                ? new string(' ', builder.Length - text.Length)
+                : string.Empty;
+            
+            Console.WriteLine(text + whiteSpaces);
+            Console.Write(builder.ToString());
+        }
+
+        public static void RemoveLastChar(StringBuilder builder)
+        {
+            builder.Remove(builder.Length - 1, 1);
+            Console.CursorLeft -= 1;
+            Console.Write(" ");
+            Console.CursorLeft = 0;
+            Console.Write(builder.ToString());
+        }
+
+        public static string[] GetArgs(StringBuilder builder)
+        {
+            if (builder == null)
+                return new string[]{};
+            
+            var args = builder.ToString().Split(' ');
+            args[0] = BotHelper.FixCommandString(args[0]);
+            builder.Clear();
+            Console.Write('\n');
+            return args;
         }
     }
 }

@@ -3,7 +3,9 @@ namespace _3dArcheryRepos.ServersideModels
     public enum UserRole
     {
         New = 0,
-        Registered = 1
+        Registered = 1,
+        Admin = 10,
+        Console = 11
     }
     
     public class UserData
