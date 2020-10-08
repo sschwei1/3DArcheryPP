@@ -22,8 +22,15 @@ namespace TelegramBot
         {
             if (string.IsNullOrWhiteSpace(text))
                 return;
-
-            Console.CursorLeft = 0;
+            try
+            {
+                Console.CursorLeft = 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error with cursor position");
+            }
+            
             var whiteSpaces = text.Length < builder.Length
                 ? new string(' ', builder.Length - text.Length)
                 : string.Empty;
@@ -35,9 +42,17 @@ namespace TelegramBot
         public static void RemoveLastChar(StringBuilder builder)
         {
             builder.Remove(builder.Length - 1, 1);
-            Console.CursorLeft -= 1;
-            Console.Write(" ");
-            Console.CursorLeft = 0;
+            try
+            {
+                Console.CursorLeft -= 1;
+                Console.Write(" ");
+                Console.CursorLeft = 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error with cursor position");
+            }
+
             Console.Write(builder.ToString());
         }
 

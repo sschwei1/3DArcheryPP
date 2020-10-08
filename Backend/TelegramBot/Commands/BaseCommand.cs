@@ -62,7 +62,7 @@ namespace TelegramBot.Commands
             if (!await CheckExecute(args, user))
                 return;
             
-            CustomExecute(args, user);
+            await CustomExecute(args, user);
         }
     }
 }
