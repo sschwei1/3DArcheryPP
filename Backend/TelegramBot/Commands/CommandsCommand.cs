@@ -6,7 +6,7 @@ namespace TelegramBot.Commands
 {
     public class CommandsCommand : BaseCommand
     {
-        protected override async void CustomExecute(string[] args, UserData user)
+        protected override async Task CustomExecute(string[] args, UserData user)
         {
             var availableCommands = Client.Commands
                 .Where(e => e.Value.CanExecute(user))

@@ -192,6 +192,17 @@ namespace TelegramBot
                         },
                         Description = BotMessages.ChangeNicknameCommandDescription
                     }
+                },
+                {
+                    CommandName.Website,
+                    new WebsiteCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.Website,
+                        RequiredRole = UserRole.New,
+                        Parameters = new List<CommandParameter>(),
+                        Description = BotMessages.WebsiteCommandDescription
+                    }
                 }
                 // accept (invited to event, accept invatation)
                 // createEvent <event id> (create event via site and get code to create it)

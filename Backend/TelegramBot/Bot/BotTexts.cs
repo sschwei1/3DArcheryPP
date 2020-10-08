@@ -8,6 +8,7 @@ namespace TelegramBot
         public const string Commands = "/commands";
         public const string Register = "/register";
         public const string ChangeNickname = "/nick";
+        public const string Website = "/website";
     }
     
     public static class BotMessages
@@ -34,10 +35,11 @@ namespace TelegramBot
         
         // descriptions
         public const string TestCommandDescription = "A fancy test command";
-        public const string StartCommandDescription = "Welcome to our 3dArchery bot!\nThis bot is created by 3dium.\n\nFor a list of available commands type 'commands'.\nIf you need help on how to use specific commands, try 'help <command>'\n\nThanks for using our bot!";
+        public const string StartCommandDescription = "########\nOur project is still in development feel free to register and help us out as a tester!\n########\n\nWelcome to our 3dArchery bot!\nThis bot is created by 3dium.\n\nYou can register yourself by sending following command: 'register <username>'\nThis will enable you to be signed up for events and gives you access to more commands.\n\nFor a list of available commands type 'commands'.\nIf you need help on how to use specific commands, try 'help <command>'\n\nThanks for using our bot!";
         public const string HelpCommandDescription = "The help command shows you how to use other commands.";
         public const string CommandsCommandDescription = "Returns a list of all available commands for user.";
         public const string RegisterCommandDescription = "Register yourself in our 3dArchery program with a username.";
         public const string ChangeNicknameCommandDescription = "Change your nickname, used in Events";
+        public const string WebsiteCommandDescription = "Our website:\nhttp://sswe.me\n(will change to pp.sswe.me once our actual webserver is set up)";
     }
 }

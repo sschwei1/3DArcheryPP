@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using _3dArcheryRepos;
 using _3dArcheryRepos.ServersideModels;
 using Telegram.Bot;
@@ -12,7 +13,7 @@ namespace TelegramBot.Commands
             return user.Role == RequiredRole;
         }
         
-        protected override async void CustomExecute(string[] args, UserData user)
+        protected override async Task CustomExecute(string[] args, UserData user)
         {
             using var repos = new ArcheryRepos();
             

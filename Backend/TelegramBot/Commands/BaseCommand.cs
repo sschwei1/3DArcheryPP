@@ -53,7 +53,7 @@ namespace TelegramBot.Commands
                    $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
         }
 
-        protected abstract void CustomExecute(string[] args, UserData user);
+        protected abstract Task CustomExecute(string[] args, UserData user);
 
         public async void Execute(string[] args, UserData user)
         {
