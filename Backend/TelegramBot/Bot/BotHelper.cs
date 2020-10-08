@@ -28,7 +28,7 @@ namespace TelegramBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error with cursor position");
+                Console.WriteLine($"Encountered error: {ex.Message}");
             }
             
             var whiteSpaces = text.Length < builder.Length
@@ -50,7 +50,7 @@ namespace TelegramBot
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error with cursor position");
+                Console.WriteLine($"Encountered error: {ex.Message}");
             }
 
             Console.Write(builder.ToString());
