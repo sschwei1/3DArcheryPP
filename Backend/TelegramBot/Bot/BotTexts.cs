@@ -13,6 +13,7 @@ namespace TelegramBot
         public const string MakeAdmin = "/op";
         public const string RemoveAdmin = "/deop";
         public const string Broadcast = "/bc";
+        public const string DeactivateUser = "/deactivate";
     }
     
     public static class BotMessages
@@ -41,6 +42,9 @@ namespace TelegramBot
         
         // bc command
         public const string BroadcastSent = "Broadcast sent successfully";
+        
+        // deactivate user command
+        public const string DeactivateUserMessage = "Your account was successfully deactivated, if you wish to participate in further events, just register again.\nThank you for using our tool!";
 
         // console returns
         public const string ConsoleChangeNickname = "Console nick can't be changed.";
@@ -58,5 +62,6 @@ namespace TelegramBot
         public const string MakeAdminCommandDescription = "Promotes user to admin.";
         public const string RemoveAdminCommandDescription = "Promotes user to admin.";
         public const string BroadcastCommandDescription = "Sends a message to all users.";
+        public const string DeactivateUserCommandDescription = "Deactivate your user, so you will not receive any more messages. If you want to activate your account again, just register again.";
     }
 }

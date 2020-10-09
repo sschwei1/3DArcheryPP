@@ -313,6 +313,17 @@ namespace TelegramBot
                         },
                         Description = BotMessages.BroadcastCommandDescription
                     }
+                },
+                {
+                    CommandName.DeactivateUser,
+                    new DeleteUserCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.DeactivateUser,
+                        RequiredRole = UserRole.Registered,
+                        Parameters = new List<CommandParameter>(),
+                        Description = BotMessages.DeactivateUserCommandDescription
+                    }
                 }
                 // accept (invited to event, accept invatation)
                 // createEvent <event id> (create event via site and get code to create it)
