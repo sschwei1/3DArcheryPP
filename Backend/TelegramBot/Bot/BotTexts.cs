@@ -39,7 +39,8 @@ namespace TelegramBot
         // change nickname command
         public const string ChangeNicknameCommandChangedNick = "Nickname changed to: ";
         
-        // make/remove admin command
+        // bc command
+        public const string BroadcastSent = "Broadcast sent successfully";
 
         // console returns
         public const string ConsoleChangeNickname = "Console nick can't be changed.";
