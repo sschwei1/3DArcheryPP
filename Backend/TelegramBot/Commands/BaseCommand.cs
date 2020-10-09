@@ -38,7 +38,7 @@ namespace TelegramBot.Commands
         
         protected virtual string NoParameterMessage (UserData user) => $"{Description}\n\n{GetUsageString(user)}";
 
-        private async Task<bool> CheckExecute(string[] args, UserData user)
+        protected virtual async Task<bool> CheckExecute(string[] args, UserData user)
         {
             if (!CanExecute(user))
             {
