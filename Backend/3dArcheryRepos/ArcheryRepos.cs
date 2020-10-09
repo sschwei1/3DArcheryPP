@@ -109,12 +109,13 @@ namespace _3dArcheryRepos
 
         public bool DeactivateUser(long id)
         {
-            var user = GetUserByChatId(id);
+            var user = Db.Users.SingleOrDefault(e => e.ChatId == id);
 
             if (user == null) return false;
 
-            user.Username = string.Empty;
-            user.Role = UserRole.New;
+            user.Username = null;
+            user.Role = (int) UserRole.New;
+            Db.SaveChanges();
             return true;
         }
 
