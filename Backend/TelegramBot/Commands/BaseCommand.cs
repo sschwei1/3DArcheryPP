@@ -51,7 +51,8 @@ namespace TelegramBot.Commands
         public string GetUsageString()
         {
             return "Usage:\n" +
-                   $"{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}\n" +
+                   $"{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}" +
+                   (Parameters.Any() ? "\n" : "") +
                    $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
         }
 

@@ -8,7 +8,7 @@ namespace TelegramBot.Commands
         private const string Off = "off";
         private const string On = "on";
 
-        protected override string NoParameterMessage => $"Logging is currently {Client.LoggingEnabled}";
+        protected override string NoParameterMessage => $"Logging is currently {(Client.LoggingEnabled ? On : Off)}";
 
         protected override async Task CustomExecute(string[] args, UserData user)
         {

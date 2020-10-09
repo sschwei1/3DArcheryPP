@@ -103,7 +103,7 @@ namespace TelegramBot
             if (IgnoreMessages)
             {
                 if(MessagesWhileOffline.Add(e.Message.Chat.Id))
-                    await SendMessage(e.Message.Chat.Id,BotMessages.SorryMessage);
+                    await SendMessage(e.Message.Chat.Id, BotMessages.SorryMessage);
                 
                 return;
             }
@@ -135,7 +135,7 @@ namespace TelegramBot
 
         public async Task SendMessage(long id, string message)
         {
-            if (id == 0)
+            if (id == ConsoleUser.ChatId)
             {
                 BotHelper.LogMessage(message, ConsoleCommandBuilder, ConsoleUser);
                 return;
