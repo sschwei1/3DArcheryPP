@@ -10,7 +10,7 @@ namespace TelegramBot.Commands
 
         protected override string NoParameterMessage (UserData user) => $"Logging is currently {(Client.LoggingEnabled ? On : Off)}";
 
-        protected override async Task CustomExecute(string[] args, UserData user)
+        protected override async void CustomExecute(string[] args, UserData user)
         {
             string logMessage;
 

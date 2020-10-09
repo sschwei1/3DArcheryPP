@@ -5,7 +5,7 @@ namespace TelegramBot.Commands
 {
     public class StartCommand : BaseCommand
     {
-        protected override async Task CustomExecute(string[] args, UserData user)
+        protected override async void CustomExecute(string[] args, UserData user)
         {
             await Client.SendMessage(user.ChatId, this.Description);
         }

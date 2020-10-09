@@ -12,6 +12,7 @@ namespace TelegramBot
         public const string ToggleLogging = "/logging";
         public const string MakeAdmin = "/op";
         public const string RemoveAdmin = "/deop";
+        public const string Broadcast = "/bc";
     }
     
     public static class BotMessages
@@ -55,5 +56,6 @@ namespace TelegramBot
         public const string ToggleLoggingDescription = "Toggles weather messages are logged or not";
         public const string MakeAdminCommandDescription = "Promotes user to admin.";
         public const string RemoveAdminCommandDescription = "Promotes user to admin.";
+        public const string BroadcastCommandDescription = "Sends a message to all users.";
     }
 }

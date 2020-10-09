@@ -1,3 +1,5 @@
+using System;
+
 namespace _3dArcheryRepos.ServersideModels
 {
     public enum UserRole
@@ -15,5 +17,14 @@ namespace _3dArcheryRepos.ServersideModels
         public UserRole Role { get; set; }
 
         public bool IsConsole => Role == UserRole.Console;
+        
+
+        public override bool Equals(object? obj)
+        {
+            var usr = obj as UserData;
+
+            if (usr == null) return false;
+            return usr.ChatId == this.ChatId;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace TelegramBot
         public StringBuilder ConsoleCommandBuilder { get; private set; }
         public bool LoggingEnabled { get; set; }
         
-        private static UserData ConsoleUser => new UserData(){ ChatId = 0, Username = "Console", Role = UserRole.Console};
+        public UserData ConsoleUser => new UserData(){ ChatId = 0, Username = "Console", Role = UserRole.Console};
 
         public TelegramBot()
         {
@@ -298,6 +298,20 @@ namespace TelegramBot
                         RequiredRole = UserRole.Console,
                         Description = BotMessages.RemoveAdminCommandDescription,
                         SetRole = UserRole.Registered
+                    }
+                },
+                {
+                    CommandName.Broadcast,
+                    new BroadcastCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.Broadcast,
+                        RequiredRole = UserRole.Admin,
+                        Parameters = new List<CommandParameter>()
+                        {
+                            new CommandParameter(){Description = "Message which is sent", Name = "Message"}
+                        },
+                        Description = BotMessages.BroadcastCommandDescription
                     }
                 }
                 // accept (invited to event, accept invatation)

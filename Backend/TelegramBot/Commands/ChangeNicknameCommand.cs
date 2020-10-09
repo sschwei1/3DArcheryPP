@@ -8,7 +8,7 @@ namespace TelegramBot.Commands
 {
     public class ChangeNicknameCommand : BaseCommand
     {
-        protected override async Task CustomExecute(string[] args, UserData user)
+        protected override async void CustomExecute(string[] args, UserData user)
         {
             using var repos = new ArcheryRepos();
             
@@ -29,7 +29,7 @@ namespace TelegramBot.Commands
             await Client.SendMessage(user.ChatId, BotMessages.ChangeNicknameCommandChangedNick + args[0]);
         }
 
-        protected override async Task ConsoleExecute(string[] args, UserData user)
+        protected override async void ConsoleExecute(string[] args, UserData user)
         {
             await Client.SendMessage(user.ChatId, BotMessages.ConsoleChangeNickname);
         }

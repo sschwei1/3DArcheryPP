@@ -5,7 +5,7 @@ namespace TelegramBot.Commands
 {
     public class HelpCommand : BaseCommand
     {
-        protected override async Task CustomExecute(string[] args, UserData user)
+        protected override async void CustomExecute(string[] args, UserData user)
         {
             args[0] = BotHelper.FixCommandString(args[0]);
             

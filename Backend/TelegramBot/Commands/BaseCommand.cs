@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using _3dArcheryRepos.ServersideModels;
+using Newtonsoft.Json;
 
 namespace TelegramBot.Commands
 {
@@ -30,9 +31,9 @@ namespace TelegramBot.Commands
             return user.Role == UserRole.Console;
         }
         
-        private static bool IsAdmin(UserData user)
+        private bool IsAdmin(UserData user)
         {
-            return user.Role >= UserRole.Admin;
+            return user.Role >= UserRole.Admin && user.Role >= RequiredRole;
         }
         
         protected virtual string NoParameterMessage (UserData user) => $"{Description}\n\n{GetUsageString(user)}";
@@ -73,11 +74,11 @@ namespace TelegramBot.Commands
             return BotMessages.NoPermission;
         }
 
-        protected abstract Task CustomExecute(string[] args, UserData user);
+        protected abstract void CustomExecute(string[] args, UserData user);
 
-        protected virtual async Task ConsoleExecute(string[] args, UserData user)
+        protected virtual void ConsoleExecute(string[] args, UserData user)
         {
-            await CustomExecute(args, user);
+            CustomExecute(args, user);
         }
 
         public async void Execute(string[] args, UserData user)
@@ -86,9 +87,9 @@ namespace TelegramBot.Commands
                 return;
 
             if (IsConsole(user))
-                await ConsoleExecute(args, user);
+                ConsoleExecute(args, user);
             else
-                await CustomExecute(args, user);
+                CustomExecute(args, user);
         }
     }
 }
