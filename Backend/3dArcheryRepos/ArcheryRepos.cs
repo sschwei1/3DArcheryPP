@@ -58,6 +58,21 @@ namespace _3dArcheryRepos
             });
         }
 
+        public UserData GetUserByName(string name)
+        {
+            var user = Db.Users.SingleOrDefault(e => e.Username == name);
+
+            if (user == null)
+                return null;
+            
+            return new UserData()
+            {
+                Role = (UserRole)user.Role,
+                Username = user.Username,
+                ChatId = user.ChatId
+            };
+        }
+
         public bool UpdateNickname(UserData user, string newUsername)
         {
             var dbUser = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
@@ -75,6 +90,19 @@ namespace _3dArcheryRepos
             
             dbUser.Role = (int)UserRole.Registered;
             dbUser.Username = username;
+            Db.SaveChanges();
+            return true;
+        }
+
+        public bool SetUserRole(string username, UserRole role)
+        {
+            var dbUser = Db.Users.SingleOrDefault(e =>
+                string.Equals(e.Username, username, StringComparison.CurrentCultureIgnoreCase));
+            
+            if (dbUser == null)
+                return false;
+
+            dbUser.Role = (int) role;
             Db.SaveChanges();
             return true;
         }

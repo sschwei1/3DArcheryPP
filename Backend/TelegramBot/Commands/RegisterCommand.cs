@@ -8,18 +8,29 @@ namespace TelegramBot.Commands
 {
     public class RegisterCommand : BaseCommand
     {
-        public override bool CanExecute(UserData user)
+        protected override bool CustomCanExecute(UserData user)
         {
             return user.Role == RequiredRole;
         }
-        
+
+        protected override async Task ConsoleExecute(string[] args, UserData user)
+        {
+            await Client.SendMessage(user.ChatId, BotMessages.ConsoleRegister);
+        }
+
         protected override async Task CustomExecute(string[] args, UserData user)
         {
             using var repos = new ArcheryRepos();
+
+            if (user.Role != UserRole.New)
+            {
+                await Client.SendMessage(user.ChatId, BotMessages.AlreadyRegistered);
+                return;
+            }
             
             if (repos.CheckIfUserExists(args[0]))
             {
-                await Client.SendMessage(user.ChatId, BotMessages.UserExists);
+                await Client.SendMessage(user.ChatId, BotMessages.UsernameExists);
                 return;
             }
 

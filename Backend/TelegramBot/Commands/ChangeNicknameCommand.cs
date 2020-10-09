@@ -14,7 +14,7 @@ namespace TelegramBot.Commands
             
             if (repos.CheckIfUserExists(args[0]))
             {
-                await Client.SendMessage(user.ChatId, BotMessages.UserExists);
+                await Client.SendMessage(user.ChatId, BotMessages.UsernameExists);
                 return;
             }
 
@@ -27,6 +27,11 @@ namespace TelegramBot.Commands
             repos.UpdateNickname(user, args[0]);
             user.Username = args[0];
             await Client.SendMessage(user.ChatId, BotMessages.ChangeNicknameCommandChangedNick + args[0]);
+        }
+
+        protected override async Task ConsoleExecute(string[] args, UserData user)
+        {
+            await Client.SendMessage(user.ChatId, BotMessages.ConsoleChangeNickname);
         }
     }
 }

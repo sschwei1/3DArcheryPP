@@ -8,7 +8,7 @@ namespace TelegramBot.Commands
         private const string Off = "off";
         private const string On = "on";
 
-        protected override string NoParameterMessage => $"Logging is currently {(Client.LoggingEnabled ? On : Off)}";
+        protected override string NoParameterMessage (UserData user) => $"Logging is currently {(Client.LoggingEnabled ? On : Off)}";
 
         protected override async Task CustomExecute(string[] args, UserData user)
         {
@@ -28,8 +28,8 @@ namespace TelegramBot.Commands
                     logMessage = $"Invalid argument, use either {On} or {Off}.";
                     break;
             }
-            
-            BotHelper.LogMessage(logMessage, Client.ConsoleCommandBuilder);
+
+            await Client.SendMessage(user.ChatId, logMessage);
         }
     }
 }

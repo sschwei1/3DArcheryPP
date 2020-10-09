@@ -6,7 +6,7 @@ using _3dArcheryRepos.ServersideModels;
 
 namespace TelegramBot.Commands
 {
-    public class TestCommand : BaseCommand
+    public class ListUserCommand : BaseCommand
     {
         protected override async Task CustomExecute(string[] args, UserData user)
         {

@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using _3dArcheryRepos.ServersideModels;
-using Telegram.Bot;
-using Telegram.Bot.Types;
 
 namespace TelegramBot.Commands
 {
@@ -18,14 +15,29 @@ namespace TelegramBot.Commands
         public string Description { get; set; }
         
         
-        public virtual bool CanExecute(UserData user)
+        protected virtual bool CustomCanExecute(UserData user)
         {
             return user.Role >= RequiredRole;
         }
 
-        protected virtual string NoParameterMessage => $"{Description}\n\n{GetUsageString()}";
+        public bool CanExecute(UserData user)
+        {
+            return CustomCanExecute(user) || IsAdmin(user);
+        }
 
-        protected virtual async Task<bool> CheckExecute(string[] args, UserData user)
+        private static bool IsConsole(UserData user)
+        {
+            return user.Role == UserRole.Console;
+        }
+        
+        private static bool IsAdmin(UserData user)
+        {
+            return user.Role >= UserRole.Admin;
+        }
+        
+        protected virtual string NoParameterMessage (UserData user) => $"{Description}\n\n{GetUsageString(user)}";
+
+        private async Task<bool> CheckExecute(string[] args, UserData user)
         {
             if (!CanExecute(user))
             {
@@ -35,35 +47,48 @@ namespace TelegramBot.Commands
 
             if (args.Length == 0 && Parameters.Count() != 0)
             {
-                await Client.SendMessage(user.ChatId, NoParameterMessage);
+                await Client.SendMessage(user.ChatId, NoParameterMessage(user));
                 return false;
             }
 
             if (args.Length != Parameters.Count())
             {
-                await Client.SendMessage(user.ChatId, $"{BotMessages.InvalidAmountOfArgs}\n\n{GetUsageString()}");
+                await Client.SendMessage(user.ChatId, $"{BotMessages.InvalidAmountOfArgs}\n\n{GetUsageString(user)}");
                 return false;
             }
 
             return true;
         }
         
-        public string GetUsageString()
+        public string GetUsageString(UserData user)
         {
-            return "Usage:\n" +
-                   $"{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}" +
-                   (Parameters.Any() ? "\n" : "") +
-                   $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
+            if (CanExecute(user))
+            {
+                return "Usage:\n" +
+                       $"{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}" +
+                       (Parameters.Any() ? "\n" : "") +
+                       $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
+            }
+
+            return BotMessages.NoPermission;
         }
 
         protected abstract Task CustomExecute(string[] args, UserData user);
+
+        protected virtual async Task ConsoleExecute(string[] args, UserData user)
+        {
+            await CustomExecute(args, user);
+        }
 
         public async void Execute(string[] args, UserData user)
         {
             if (!await CheckExecute(args, user))
                 return;
-            
-            await CustomExecute(args, user);
+
+            if (IsConsole(user))
+                await ConsoleExecute(args, user);
+            else
+                await CustomExecute(args, user);
         }
     }
 }

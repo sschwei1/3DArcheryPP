@@ -140,11 +140,18 @@ namespace TelegramBot
                 BotHelper.LogMessage(message, ConsoleCommandBuilder, ConsoleUser);
                 return;
             }
-            
-            await Client.SendTextMessageAsync(
-                chatId: id,
-                text: message
-            );
+
+            try
+            {
+                await Client.SendTextMessageAsync(
+                    chatId: id,
+                    text: message
+                );
+            }
+            catch (Exception ex)
+            {
+                BotHelper.LogMessage($"Error sending message to {id}\n{ex.Message}", ConsoleCommandBuilder, ConsoleUser);
+            }
         }
 
         private async Task RemoveOldMessages()
@@ -171,20 +178,6 @@ namespace TelegramBot
         {
             Commands = new Dictionary<string, BaseCommand>()
             {
-                {
-                    CommandName.Test,
-                    new TestCommand()
-                    {
-                        Client = this,
-                        Name = CommandName.Test,
-                        RequiredRole = UserRole.New,
-                        Parameters = new List<CommandParameter>()
-                        {
-                            new CommandParameter() {Name = "param1", Description = "super useful"}
-                        },
-                        Description = BotMessages.TestCommandDescription
-                    }
-                },
                 { 
                     CommandName.Start, 
                     new StartCommand()
@@ -272,6 +265,39 @@ namespace TelegramBot
                             new CommandParameter(){ Description = "Logging status which should be toggled to", Name = "status" }
                         },
                         Description = BotMessages.ToggleLoggingDescription
+                    }
+                },
+                {
+                    CommandName.ListUser,
+                    new ListUserCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.ListUser,
+                        RequiredRole = UserRole.Admin,
+                        Parameters = new List<CommandParameter>(),
+                        Description = BotMessages.ListUserCommandDescription
+                    }
+                },
+                {
+                    CommandName.MakeAdmin,
+                    new SetRankCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.MakeAdmin,
+                        RequiredRole = UserRole.Console,
+                        Description = BotMessages.MakeAdminCommandDescription,
+                        SetRole = UserRole.Admin
+                    }
+                },
+                {  
+                    CommandName.RemoveAdmin,
+                    new SetRankCommand()
+                    {
+                        Client = this,
+                        Name = CommandName.RemoveAdmin,
+                        RequiredRole = UserRole.Console,
+                        Description = BotMessages.RemoveAdminCommandDescription,
+                        SetRole = UserRole.Registered
                     }
                 }
                 // accept (invited to event, accept invatation)
