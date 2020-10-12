@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _3dArcheryRepos;
@@ -8,6 +9,17 @@ namespace TelegramBot.Commands
 {
     public class ChangeNicknameCommand : BaseCommand
     {
+        public ChangeNicknameCommand(TelegramBot client) : base(client){}
+        public override string Name => CommandName.ChangeNickname;
+        public override string[] Aliases => CommandAliases.ChangeNickname;
+        protected override UserRole RequiredRole => UserRole.Registered;
+        protected override string Description => BotMessages.ChangeNicknameCommandDescription;
+
+        protected override IEnumerable<CommandParameter> Parameters => new List<CommandParameter>()
+        {
+            new CommandParameter() {Name = "nickname", Description = "Nickname used"}
+        };
+        
         protected override async void CustomExecute(string[] args, UserData user)
         {
             using var repos = new ArcheryRepos();

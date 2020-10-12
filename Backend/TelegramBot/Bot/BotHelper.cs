@@ -8,13 +8,13 @@ namespace TelegramBot
 {
     public static class BotHelper
     {
-        public static string LinePrefix = "-> ";
-        public static string ConsolePrefix = "~  ";
+        private static string LinePrefix = "-> ";
+        private static string ConsolePrefix = "~  ";
 
         
         public static string FixCommandString(string command)
         {
-            return command.StartsWith("/") ? command.ToLower() : $"/{command.ToLower()}";
+            return command.TrimStart('/');
         }
 
         public static bool ValidateNickname(string nick)
@@ -69,7 +69,6 @@ namespace TelegramBot
                 return new string[]{};
             
             var args = builder.ToString().Split(' ');
-            args[0] = BotHelper.FixCommandString(args[0]);
             builder.Clear();
             Console.Write('\n');
             return args;

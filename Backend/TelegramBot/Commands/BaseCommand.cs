@@ -8,14 +8,19 @@ namespace TelegramBot.Commands
 {
     public abstract class BaseCommand
     {
-        public string Name { get; set; }
-        public IEnumerable<CommandParameter> Parameters { get; set; }
-        
-        public TelegramBot Client { get; set; }
-        public UserRole RequiredRole { get; set; }
-        public string Description { get; set; }
-        
-        
+        protected TelegramBot Client { get; }
+        public abstract string Name { get; }
+        public virtual string[] Aliases => new string[] { };
+        protected abstract IEnumerable<CommandParameter> Parameters { get; }
+
+        protected abstract UserRole RequiredRole { get; }
+        protected abstract string Description { get; }
+
+        protected BaseCommand(TelegramBot client)
+        {
+            this.Client = client;
+        }
+
         protected virtual bool CustomCanExecute(UserData user)
         {
             return user.Role >= RequiredRole;
@@ -65,10 +70,12 @@ namespace TelegramBot.Commands
         {
             if (CanExecute(user))
             {
-                return "Usage:\n" +
-                       $"{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}" +
-                       (Parameters.Any() ? "\n" : "") +
-                       $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
+                return "Usage:\n" + 
+                       $"/{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}" + 
+                       (Parameters.Any() ? "\n" : "") + 
+                       $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}" + 
+                       (Aliases.Any() ? "\n\nAliases: " : "") + 
+                       $"{string.Join(',', Aliases)}";
             }
 
             return BotMessages.NoPermission;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _3dArcheryRepos;
@@ -8,6 +9,15 @@ namespace TelegramBot.Commands
 {
     public class RegisterCommand : BaseCommand
     {
+        public RegisterCommand(TelegramBot client) : base(client){}
+        public override string Name => CommandName.Register;
+        protected override UserRole RequiredRole => UserRole.New;
+        protected override string Description => BotMessages.RegisterCommandDescription;
+        protected override IEnumerable<CommandParameter> Parameters => new List<CommandParameter>()
+        {
+            new CommandParameter() {Name = "nickname", Description = "Nickname used"}
+        };
+
         protected override bool CustomCanExecute(UserData user)
         {
             return user.Role == RequiredRole;

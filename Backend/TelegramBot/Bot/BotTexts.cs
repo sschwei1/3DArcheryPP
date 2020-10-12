@@ -1,19 +1,32 @@
+using TelegramBot.Commands;
+
 namespace TelegramBot
 {
     public static class CommandName
     {
-        public const string ListUser = "/list";
-        public const string Start = "/start";
-        public const string Help = "/help";
-        public const string Commands = "/commands";
-        public const string Register = "/register";
-        public const string ChangeNickname = "/nick";
-        public const string Website = "/website";
-        public const string ToggleLogging = "/logging";
-        public const string MakeAdmin = "/op";
-        public const string RemoveAdmin = "/deop";
-        public const string Broadcast = "/bc";
-        public const string DeactivateUser = "/deactivate";
+        public const string ListUser = "listUser";
+        public const string Start = "start";
+        public const string Help = "help";
+        public const string Commands = "commands";
+        public const string Register = "register";
+        public const string ChangeNickname = "changeNickname";
+        public const string Website = "website";
+        public const string ToggleLogging = "toggleLogging";
+        public const string MakeAdmin = "makeAdmin";
+        public const string RemoveAdmin = "removeAdmin";
+        public const string Broadcast = "broadcast";
+        public const string DeactivateUser = "deactivate";
+    }
+
+    public static class CommandAliases
+    {
+        public static readonly string[] ListUser = {"list"};
+        public static readonly string[] Commands = {"cmd"};
+        public static readonly string[] ChangeNickname = {"nick"};
+        public static readonly string[] ToggleLogging = {"toggle"};
+        public static readonly string[] MakeAdmin = {"op", "madmin"};
+        public static readonly string[] RemoveAdmin = {"deop", "muser"};
+        public static readonly string[] Broadcast = {"bc"};
     }
     
     public static class BotMessages
@@ -40,6 +53,10 @@ namespace TelegramBot
         // change nickname command
         public const string ChangeNicknameCommandChangedNick = "Nickname changed to: ";
         
+        // setRole message
+        public const string MakeAdminRoleChangeMessage = "You are now an Administrator";
+        public const string RemoveAdminRoleChangeMessage = "You are no longer an Administrator";
+        
         // bc command
         public const string BroadcastSent = "Broadcast sent successfully";
         
@@ -49,6 +66,7 @@ namespace TelegramBot
         // console returns
         public const string ConsoleChangeNickname = "Console nick can't be changed.";
         public const string ConsoleRegister = "Console can't register as user.";
+        public const string ConsoleDeactivate = "Console can't be deactivated.";
         
         // descriptions
         public const string ListUserCommandDescription = "Prints a list of all users who wrote a message to the bot.";

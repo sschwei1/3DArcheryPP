@@ -5,25 +5,18 @@ using _3dArcheryRepos.ServersideModels;
 
 namespace TelegramBot.Commands
 {
-    public class SetRankCommand : BaseCommand
+    public abstract class SetRankCommand : BaseCommand
     {
-        private static readonly Dictionary<UserRole, string> EnumDescriptionMapping = new Dictionary<UserRole, string>() {
-            {UserRole.New, "Something went wrong? This should not be possible..."},
-            {UserRole.Registered, "Role changed to standard user"},
-            {UserRole.Admin, "You are now an Administrator"},
-            {UserRole.Console, "?????"}
-        };
-        
-        public SetRankCommand()
+        protected abstract UserRole SetRole { get; }
+        protected abstract string ChangeMessage { get; }
+
+        protected SetRankCommand(TelegramBot client) : base(client){}
+        protected override UserRole RequiredRole => UserRole.Console;
+
+        protected override IEnumerable<CommandParameter> Parameters => new List<CommandParameter>()
         {
-            RequiredRole = UserRole.Console;
-            Parameters = new List<CommandParameter>()
-            {
-                new CommandParameter() {Description = "Name of user which should be promoted", Name = "name"}
-            };
-        }
-        
-        public UserRole SetRole { get; set; }
+            new CommandParameter() {Description = "Name of user which should be promoted", Name = "name"}
+        };
 
         protected override async void CustomExecute(string[] args, UserData user)
         {
@@ -44,7 +37,7 @@ namespace TelegramBot.Commands
             
             repos.SetUserRole(args[0], SetRole);
             await Client.SendMessage(user.ChatId, $"{SetRole} added to user {selectedUser.Username}");
-            await Client.SendMessage(selectedUser.ChatId, EnumDescriptionMapping[SetRole]);
+            await Client.SendMessage(selectedUser.ChatId, ChangeMessage);
         }
     }
 }

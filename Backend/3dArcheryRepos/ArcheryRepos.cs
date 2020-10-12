@@ -115,6 +115,7 @@ namespace _3dArcheryRepos
 
             user.Username = string.Empty;
             user.Role = UserRole.New;
+            Db.SaveChanges();
             return true;
         }
 

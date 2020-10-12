@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,16 @@ namespace TelegramBot.Commands
 {
     public class BroadcastCommand : BaseCommand
     {
+        public BroadcastCommand(TelegramBot client) : base(client){}
+        public override string Name => CommandName.Broadcast;
+        public override string[] Aliases => CommandAliases.Broadcast;
+        protected override UserRole RequiredRole => UserRole.Admin;
+        protected override string Description => BotMessages.BroadcastCommandDescription;
+        protected override IEnumerable<CommandParameter> Parameters => new List<CommandParameter>()
+        {
+            new CommandParameter() {Description = "Message which is sent", Name = "Message"}
+        };
+        
         protected override async Task<bool> CheckExecute(string[] args, UserData user)
         {
             if (!CanExecute(user))
