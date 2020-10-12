@@ -16,6 +16,7 @@ namespace TelegramBot
         public const string RemoveAdmin = "removeAdmin";
         public const string Broadcast = "broadcast";
         public const string DeactivateUser = "deactivate";
+        public const string Aliases = "aliases";
     }
 
     public static class CommandAliases
@@ -39,9 +40,7 @@ namespace TelegramBot
         public const string UsernameExists = "This username is already in use.\nTry to use a different one.";
         public const string InvalidNickname = "Invalid nickname entered\nA nickname needs to match following conditions:\n - needs to be alphanumeric\n - minimum 3 characters\n - maximum 15 characters";
         public const string UserNotExist = "This user does not exist.";
-
-        // help command
-        public const string HelpCommandCommandNotFound = "Command was not found\nTry '/commands' for a List of available commands";
+        public const string CommandCommandNotFound = "Command was not found\nTry '/commands' for a List of available commands";
         
         // commands command
         public const string CommandsCommandAvailableCommands = "Available commands for you:\n";
@@ -81,5 +80,6 @@ namespace TelegramBot
         public const string RemoveAdminCommandDescription = "Promotes user to admin.";
         public const string BroadcastCommandDescription = "Sends a message to all users.";
         public const string DeactivateUserCommandDescription = "Deactivate your user, so you will not receive any more messages. If you want to activate your account again, just register again.";
+        public const string AliasesCommandDescription = "Returns a list of all aliases for a command.";
     }
 }

@@ -73,9 +73,18 @@ namespace TelegramBot.Commands
                 return "Usage:\n" + 
                        $"/{Name} {string.Join(" ", this.Parameters.Select(e => $"<{e.Name}>"))}" + 
                        (Parameters.Any() ? "\n" : "") + 
-                       $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}" + 
-                       (Aliases.Any() ? "\n\nAliases: " : "") + 
-                       $"{string.Join(',', Aliases)}";
+                       $"{string.Join("\n", Parameters.Select(e => e.GetInfoString()))}";
+            }
+
+            return BotMessages.NoPermission;
+        }
+
+        public string GetAliasesString(UserData user)
+        {
+            if (CanExecute(user))
+            {
+                return $"Aliases for /{Name}:\n" +
+                       $" -> {string.Join(',', Aliases)}";
             }
 
             return BotMessages.NoPermission;
