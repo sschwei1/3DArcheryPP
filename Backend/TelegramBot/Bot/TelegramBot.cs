@@ -23,7 +23,6 @@ namespace TelegramBot
         private ITelegramBotClient Client { get; }
         private ConfigJson Config { get; set; }
         public CommandManager CommandManager { get; set; }
-        // public Dictionary<string, BaseCommand> Commands { get; set; }
         private bool IgnoreMessages { get; set; }
         public StringBuilder ConsoleCommandBuilder { get; private set; }
         public bool LoggingEnabled { get; set; }
@@ -83,7 +82,8 @@ namespace TelegramBot
                         break;
 
                     default:
-                        if (Regex.IsMatch(keyInfo.KeyChar.ToString(), "^[a-zA-Z0-9 ]*$"))
+                        var ch = keyInfo.KeyChar;
+                        if (Regex.IsMatch(keyInfo.KeyChar.ToString(), "^[ -~]*$"))
                         {
                             ConsoleCommandBuilder.Append(keyInfo.KeyChar);
                             Console.Write(keyInfo.KeyChar);

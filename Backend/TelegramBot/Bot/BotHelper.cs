@@ -68,7 +68,7 @@ namespace TelegramBot
             if (builder == null)
                 return new string[]{};
             
-            var args = builder.ToString().Split(' ');
+            var args = builder.ToString().Replace("\\n", "\n").Split(' ');
             builder.Clear();
             Console.Write('\n');
             return args;
