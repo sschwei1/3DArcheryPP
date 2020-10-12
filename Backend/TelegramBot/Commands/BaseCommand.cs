@@ -83,6 +83,8 @@ namespace TelegramBot.Commands
         {
             if (CanExecute(user))
             {
+                if (Aliases.Length == 0)
+                    return $"{BotMessages.NoAliasesString} {Name}";
                 return $"Aliases for /{Name}:\n" +
                        $" -> {string.Join(',', Aliases)}";
             }

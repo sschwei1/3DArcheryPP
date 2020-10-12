@@ -28,6 +28,7 @@ namespace TelegramBot
         public static readonly string[] MakeAdmin = {"op", "madmin"};
         public static readonly string[] RemoveAdmin = {"deop", "muser"};
         public static readonly string[] Broadcast = {"bc"};
+        public static readonly string[] Aliases = {"alias"};
     }
     
     public static class BotMessages
@@ -41,6 +42,7 @@ namespace TelegramBot
         public const string InvalidNickname = "Invalid nickname entered\nA nickname needs to match following conditions:\n - needs to be alphanumeric\n - minimum 3 characters\n - maximum 15 characters";
         public const string UserNotExist = "This user does not exist.";
         public const string CommandCommandNotFound = "Command was not found\nTry '/commands' for a List of available commands";
+        public const string NoAliasesString = "No aliases found for ";
         
         // commands command
         public const string CommandsCommandAvailableCommands = "Available commands for you:\n";
