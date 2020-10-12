@@ -27,7 +27,7 @@ namespace _3dArcheryRepos
                 ChatId = chatId
             };
         }
-        
+
         private DbUser CreateUser(long chatId)
         {
             var user = new DbUser()
@@ -36,7 +36,7 @@ namespace _3dArcheryRepos
                 Username = null,
                 ChatId = chatId
             };
-            
+
             Db.Users.Add(user);
             Db.SaveChanges();
 
@@ -64,7 +64,7 @@ namespace _3dArcheryRepos
 
             if (user == null)
                 return null;
-            
+
             return new UserData()
             {
                 Role = (UserRole)user.Role,
@@ -77,7 +77,7 @@ namespace _3dArcheryRepos
         {
             var dbUser = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
             if (dbUser == null) return false;
-            
+
             dbUser.Username = newUsername;
             Db.SaveChanges();
             return true;
@@ -87,7 +87,7 @@ namespace _3dArcheryRepos
         {
             var dbUser = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
             if (dbUser == null) return false;
-            
+
             dbUser.Role = (int)UserRole.Registered;
             dbUser.Username = username;
             Db.SaveChanges();
@@ -98,7 +98,7 @@ namespace _3dArcheryRepos
         {
             var dbUser = Db.Users.SingleOrDefault(e =>
                 string.Equals(e.Username, username, StringComparison.CurrentCultureIgnoreCase));
-            
+
             if (dbUser == null)
                 return false;
 
@@ -109,12 +109,12 @@ namespace _3dArcheryRepos
 
         public bool DeactivateUser(long id)
         {
-            var user = GetUserByChatId(id);
+            var user = Db.Users.SingleOrDefault(e => e.ChatId == id);
 
             if (user == null) return false;
 
-            user.Username = string.Empty;
-            user.Role = UserRole.New;
+            user.Username = null;
+            user.Role = (int) UserRole.New;
             Db.SaveChanges();
             return true;
         }
