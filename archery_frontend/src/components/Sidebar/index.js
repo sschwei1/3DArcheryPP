@@ -11,19 +11,19 @@ import {
 } from './SidebarElements';
 import {scrollProps} from '../ButtonEelement';
 
-import {navData} from '../Navbar/Data';
+import {navData} from '../../Data/Navbar';
 
 const Sidebar = ({isOpen, toggle}) => {
   return (
-    <SidebarContainer isOpen={isOpen} onClick={toggle}>
+    <SidebarContainer $isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
         <CloseIcon />
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
           {
-            navData.navItems.map(({link, text}) => (
-              <SidebarLink to={link} onClick={toggle} {...scrollProps}>{text}</SidebarLink>
+            navData.navItems.map(({link, text}, index) => (
+              <SidebarLink key={index} to={link} onClick={toggle} {...scrollProps}>{text}</SidebarLink>
             ))
           }
         </SidebarMenu>

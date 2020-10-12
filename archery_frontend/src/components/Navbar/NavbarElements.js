@@ -4,7 +4,7 @@ import { Link as LinkS } from 'react-scroll'
 import {color, convertHexToRgba} from '../../colors';
 
 export const Nav = styled.nav`
-  background: ${({scrollNav}) => (scrollNav ? color.dark1.bg : 'transparent')};
+  background: ${({$scrollNav}) => ($scrollNav ? color.dark1.bg : 'transparent')};
   height: 80px;
   margin-top: -80px;
   display: flex;
@@ -14,8 +14,8 @@ export const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: ${({scrollNav}) => (
-    scrollNav ?
+  box-shadow: ${({$scrollNav}) => (
+    $scrollNav ?
     `0 1px 2px 0 ${convertHexToRgba(color.light1.bg, 0.45)}`
     : 0
   )};

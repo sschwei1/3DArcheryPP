@@ -4,6 +4,7 @@ import {
   ButtonRoute as ButtonR,
   scrollProps
 } from '../ButtonEelement';
+import {ComponentWrapper} from '../Wrapper';
 import {
   InfoContainer,
   InfoWrapper,
@@ -21,12 +22,12 @@ import {
 
 const InfoSection = ({id, lightTheme, topLine, headline,
     description, buttonLabel, buttonLink, buttonPageLink,
-    imgStart, img, alt}) => {
+    imgStart, img, alt, children}) => {
 
   let buttonProps = {
     to: buttonLink,
-    primary: lightTheme ? 0 : 1,
-    dark: lightTheme ? 0 : 1
+    $primary: !lightTheme,
+    $dark: !lightTheme
   }
 
   let button = buttonPageLink ?
@@ -39,15 +40,15 @@ const InfoSection = ({id, lightTheme, topLine, headline,
     </ButtonR>;
 
   return (
-    <>
-      <InfoContainer lightBg={lightTheme} id={id}>
+    <ComponentWrapper id={id}>
+      <InfoContainer $lightBg={lightTheme}>
         <InfoWrapper>
           <InfoRow imgStart={imgStart}>
             <Column1>
               <TextWrapper>
                 <TopLine>{topLine}</TopLine>
-                <Heading lightText={!lightTheme}>{headline}</Heading>
-                <Subtitle lightText={!lightTheme}>{description}</Subtitle>
+                <Heading $lightText={!lightTheme}>{headline}</Heading>
+                <Subtitle $lightText={!lightTheme}>{description}</Subtitle>
                 <BtnWrap>
                   {button}
                 </BtnWrap>
@@ -61,7 +62,8 @@ const InfoSection = ({id, lightTheme, topLine, headline,
           </InfoRow>
         </InfoWrapper>
       </InfoContainer> 
-    </>
+      {children}
+    </ComponentWrapper>
   )
 }
 

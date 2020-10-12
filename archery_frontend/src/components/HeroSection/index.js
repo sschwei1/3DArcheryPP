@@ -38,8 +38,8 @@ const HeroSection = () => {
             to="about"
             onMouseEnter={onHover}
             onMouseLeave={onHover}
-            primary='true'
-            dark='true'
+            $primary={true}
+            $dark={true}
             {...scrollProps}
           >
             Get Started {hover ? <ArrowForward /> : <ArrowRight />}

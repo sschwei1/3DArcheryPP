@@ -1,15 +1,17 @@
+import React from 'react';
 import styled from 'styled-components';
 import {Link as LinkR} from 'react-router-dom';
+import {Link as LinkS} from 'react-scroll';
 import {color, convertHexToRgba} from '../../colors';
+import { FaRegCaretSquareLeft } from 'react-icons/fa';
 
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${color.dark1.bg};
+  background: ${({$lightBg}) => ($lightBg ? color.light1.bg : color.dark1.bg)};
   padding: 50px 0;
-  box-shadow: inset 0 -1px 2px 0 ${convertHexToRgba(color.light1.bg, 0.70)}
 `;
 
 export const CardWrapper = styled.div`
@@ -25,15 +27,15 @@ export const CardWrapper = styled.div`
   }
 `;
 
-export const Card = styled(LinkR)`
+export const Card = styled(LinkS)`
   height: 100%;
   min-width: 330px;
   max-width: 380px;
   margin: 0 10px;
-  color: ${color.dark1.fg};
+  color: ${({$lightTheme}) => ($lightTheme ? color.dark1.fg : color.light1.fg)};
   text-decoration: none;
   overflow: hidden;
-  background: ${color.light1.bg};
+  background: ${({$lightTheme}) => ($lightTheme ? color.light1.bg : color.dark1.bg)};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -52,14 +54,13 @@ export const Card = styled(LinkR)`
 `;
 
 export const CardIcon = styled.img`
-  height: 160px;
-  width: 160px;
+  width: 200px;
   margin-bottom: 10px;
 `;
 
 export const CardH1 = styled.h1`
   font-size: 2.5rem;
-  color: ${color.light1.fg};
+  color: ${({$lightText}) => ($lightText ? color.light1.fg : color.dark1.fg)};
   margin-bottom: 64px;
 
   @media screen and (max-width: 480px){

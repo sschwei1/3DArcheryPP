@@ -8,9 +8,9 @@ import InfoCards from '../components/InfoCards';
 import {
   AboutObject,
   HowObject,
-  CompanyObject 
-} from '../components/InfoSection/Data';
-import { DevTeam } from '../components/InfoCards/Data';
+  CompanyObject, SsweObject, KlarObject 
+} from '../Data/InfoSection';
+import { DevTeam } from '../Data/InfoCards';
 import Footer from '../components/Footer';
 
 const Home = () => {
@@ -26,9 +26,11 @@ const Home = () => {
       <Navbar toggle={toggle}/>
       <HeroSection />
       <InfoSection {...AboutObject} />
+      <InfoCards {...DevTeam}>
+        <InfoSection {...SsweObject}/>
+        <InfoSection {...KlarObject}/>
+      </InfoCards>
       <InfoSection {...HowObject} />
-      <InfoSection {...CompanyObject} />
-      <InfoCards {...DevTeam} />
       <Footer />
     </>
   );

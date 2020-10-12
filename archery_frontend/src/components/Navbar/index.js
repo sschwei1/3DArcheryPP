@@ -14,7 +14,7 @@ import {
   NavBtnLink
 } from './NavbarElements';
 
-import {navData} from './Data';
+import {navData} from '../../Data/Navbar';
 
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = ({toggle}) => {
 
   return (
     <>
-      <Nav scrollNav={scrollNav}>
+      <Nav $scrollNav={scrollNav}>
         <NavbarContainer>
           <NavLogoLink to='welcome' {...scrollProps}>
             <NavLogo src={require('../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
@@ -40,8 +40,8 @@ const Navbar = ({toggle}) => {
           </MobileIcon>
           <NavMenu>
             {
-              navData.navItems.map(({link,text}) => (
-                <NavItem>
+              navData.navItems.map(({link,text}, index) => (
+                <NavItem key={index}>
                   <NavLink to={link} {...scrollProps}>{text}</NavLink>
                 </NavItem>
               ))

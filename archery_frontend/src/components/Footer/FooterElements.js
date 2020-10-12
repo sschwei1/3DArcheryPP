@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import {Link as LinkR} from 'react-router-dom';
 import {Link as LinkS} from 'react-scroll';
-import { color } from '../../colors';
+import { color, convertHexToRgba } from '../../colors';
 import { FaAlignJustify } from 'react-icons/fa';
 
 export const FooterContainer = styled.div`
   background: ${color.dark1.bg};
-  box-shadow: 0 2px 4px
+  box-shadow: 0 2px 4px, 0 -1px 2px 0 ${convertHexToRgba(color.light1.bg, 0.70)};
+
 `;
 
 export const FooterWrap = styled.div`

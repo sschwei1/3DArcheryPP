@@ -10,13 +10,13 @@ export const AboutObject = {
   buttonLink: 'howto',
   buttonPageLink: true,
   imgStart: false,
-  img: require('../../images/archery_no_bg_test.png'),
+  img: require('../images/archery_no_bg_test.png'),
   alt: 'archer'
 };
 
 export const HowObject = {
   id: 'howto',
-  lightTheme: false,
+  lightTheme: true,
   topLine: 'Quick guide',
   headline: 'How to use!',
   description: 'You probably wonder how our tool works, right? Well, ' +
@@ -29,20 +29,48 @@ export const HowObject = {
   buttonLink: '/howto',
   buttonPageLink: false,
   imgStart: true,
-  img: require('../../images/setup_guide_test3.png'),
+  img: require('../images/setup_guide_test3.png'),
   alt: 'guide'
 };
 
-export const CompanyObject = {
-  id: 'company',
+// export const CompanyObject = {
+//   id: 'company',
+//   lightTheme: true,
+//   topLine: 'About us',
+//   headline: 'Who are we?',
+//   description: 'We are 3dium uwu',
+//   buttonLabel: 'Our team',
+//   buttonLink: 'devteam',
+//   buttonPageLink: true,
+//   imgStart: false,
+//   img: require('../images/logos/logo_no_name.png'),
+//   alt: 'archery'
+// };
+
+export const SsweObject = {
+  id: 'sswe_profile',
   lightTheme: true,
-  topLine: 'About us',
-  headline: 'Who are we?',
-  description: 'We are 3dium uwu',
-  buttonLabel: 'Our team',
+  topLine: 'sswe',
+  headline: 'Sebastian Schweiger',
+  description: 'Hello it\'s me',
+  buttonLabel: 'Go to team',
+  buttonLink: 'devteam',
+  buttonPageLink: true,
+  imgStart: true,
+  img: require('../images/sswe_profile_medium.png'),
+  alt: 'archery'
+};
+
+export const KlarObject = {
+  id: 'klar_profile',
+  lightTheme: false,
+  topLine: 'klar',
+  headline: 'Kevin Larson',
+  description: 'Hello it\'s me',
+  buttonLabel: 'Go to team',
   buttonLink: 'devteam',
   buttonPageLink: true,
   imgStart: false,
-  img: require('../../images/logos/logo_no_name.png'),
+  img: require('../images/klar_profile_medium.png'),
   alt: 'archery'
 };
