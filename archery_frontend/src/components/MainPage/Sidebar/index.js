@@ -9,9 +9,9 @@ import {
   SideBtnWrap,
   SidebarRoute
 } from './SidebarElements';
-import {scrollProps} from '../ButtonEelement';
+import {scrollProps} from '../../ButtonEelement';
 
-import {navData} from '../../Data/Navbar';
+import {navData} from '../../../Data/Navbar';
 
 const Sidebar = ({isOpen, toggle}) => {
   return (

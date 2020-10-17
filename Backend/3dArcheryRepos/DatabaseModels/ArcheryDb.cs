@@ -1,22 +1,18 @@
+using System.IO;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace _3dArcheryRepos.DatabaseContext
 {
     public class ArcheryDb : DbContext
     {
-        private static readonly string DefaultConnection =
-            "server=localhost;userid=admin;password=password321;database=archeryTestDb;";
-        
-        private string ConnectionString { get; set; }
-        
-        
-        
+        private ConfigJson Config { get; set; }
+
         public ArcheryDb(string connectionString = "")
         {
-            ConnectionString = (string.IsNullOrWhiteSpace(connectionString) ?
-                ArcheryDb.DefaultConnection : connectionString);
-            
-            this.Database.EnsureCreated();
+            InitConfig();
+            Database.EnsureCreated();
         }
         
         public DbSet<DbUser> Users { get; set; }
@@ -33,7 +29,7 @@ namespace _3dArcheryRepos.DatabaseContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql(this.ConnectionString);
+            optionsBuilder.UseMySql(Config.ConnectionString);
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,6 +47,20 @@ namespace _3dArcheryRepos.DatabaseContext
 
             modelBuilder.Entity<DbUserPoints>()
                 .HasKey(x => new {x.EventUserId, x.TargetId});
+        }
+        private void InitConfig()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+            
+            string json;
+            using(var fs = File.OpenRead("config.json"))
+            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            this.Config = JsonConvert.DeserializeObject<ConfigJson>(json, settings);
         }
     }
 }

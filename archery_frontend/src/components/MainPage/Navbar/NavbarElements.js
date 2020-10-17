@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Link as LinkR } from 'react-router-dom'
 import { Link as LinkS } from 'react-scroll'
-import {color, convertHexToRgba} from '../../colors';
+import {color, convertHexToRgba} from '../../../colors';
 
 export const Nav = styled.nav`
   background: ${({$scrollNav}) => ($scrollNav ? color.dark1.bg : 'transparent')};

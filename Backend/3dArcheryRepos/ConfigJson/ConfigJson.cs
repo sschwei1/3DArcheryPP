@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace _3dArcheryRepos.ConfigJson
+namespace _3dArcheryRepos
 {
     public class ConfigJson
     {

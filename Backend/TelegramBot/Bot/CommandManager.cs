@@ -21,7 +21,7 @@ namespace TelegramBot
             Commands = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.IsSubclassOf(typeof(BaseCommand)) && !type.IsAbstract)
-                .Select(type => (BaseCommand) Activator.CreateInstance(type, Client))
+                .Select(type => Activator.CreateInstance(type, Client) as BaseCommand)
                 .ToList();
         }
 

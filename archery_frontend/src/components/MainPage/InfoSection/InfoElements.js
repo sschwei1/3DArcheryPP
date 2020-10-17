@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {color} from '../../colors';
+import {color} from '../../../colors';
 
 export const InfoContainer = styled.div`
   color: ${color.light1.fg};

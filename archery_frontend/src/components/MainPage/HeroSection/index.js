@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Video from '../../videos/BlackBg.mp4';
+import Video from '../../../videos/BlackBg.mp4';
 import {
   ButtonScroll as Button,
   scrollProps
-} from '../ButtonEelement';
+} from '../../ButtonEelement';
 import {
   HeroContainer,
   HeroBg,

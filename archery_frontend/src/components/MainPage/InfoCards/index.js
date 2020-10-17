@@ -1,6 +1,6 @@
 import React from 'react';
-import { scrollProps } from '../ButtonEelement';
-import {ComponentWrapper} from '../Wrapper';
+import { scrollProps } from '../../ButtonEelement';
+import {ComponentWrapper} from '../../Wrapper';
 import {
   CardContainer,
   CardH1,

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link as LinkR} from 'react-router-dom';
 import {Link as LinkS} from 'react-scroll';
-import {color, convertHexToRgba} from '../../colors';
+import {color, convertHexToRgba} from '../../../colors';
 import { FaRegCaretSquareLeft } from 'react-icons/fa';
 
 export const CardContainer = styled.div`
@@ -11,7 +11,7 @@ export const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: ${({$lightBg}) => ($lightBg ? color.light1.bg : color.dark1.bg)};
-  padding: 50px 0;
+  padding: 60px 0 85px;
 `;
 
 export const CardWrapper = styled.div`

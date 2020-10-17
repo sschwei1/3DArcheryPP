@@ -11,6 +11,7 @@ namespace TelegramBot.Commands
         public override string[] Aliases => CommandAliases.Aliases;
         protected override UserRole RequiredRole => UserRole.New;
         protected override string Description => BotMessages.AliasesCommandDescription;
+        
         protected override IEnumerable<CommandParameter> Parameters => new List<CommandParameter>()
         {
             new CommandParameter(){Name = "command", Description = "Command which aliases should be returned."}

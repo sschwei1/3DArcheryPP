@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaFacebook, FaGithub, FaInstagram, FaReddit, FaRegCopyright, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { scrollProps } from '../ButtonEelement';
+import { scrollProps } from '../../ButtonEelement';
 import {
   FooterContainer,
   FooterWrap,
@@ -53,7 +53,7 @@ const Footer = () => {
         <SocialMedia>
           <SocialMediaWrap>
             <SocialLogoLink to='welcome' {...scrollProps}>
-              <SocialLogo src={require('../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
+              <SocialLogo src={require('../../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
               3dium
             </SocialLogoLink>
             <WebsiteRights>

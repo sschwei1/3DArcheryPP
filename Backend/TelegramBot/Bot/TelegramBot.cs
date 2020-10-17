@@ -162,15 +162,17 @@ namespace TelegramBot
 
         private void InitConfig()
         {
-            string json;
+            var settings = new JsonSerializerSettings();
+            settings.MissingMemberHandling = MissingMemberHandling.Ignore;
             
+            string json;
             using(var fs = File.OpenRead("config.json"))
             using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
             {
                 json = sr.ReadToEnd();
             }
 
-            this.Config = JsonConvert.DeserializeObject<ConfigJson>(json);
+            this.Config = JsonConvert.DeserializeObject<ConfigJson>(json, settings);
         }
     }
 }

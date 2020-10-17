@@ -3,8 +3,8 @@ import {
   ButtonScroll as ButtonS,
   ButtonRoute as ButtonR,
   scrollProps
-} from '../ButtonEelement';
-import {ComponentWrapper} from '../Wrapper';
+} from '../../ButtonEelement';
+import {ComponentWrapper} from '../../Wrapper';
 import {
   InfoContainer,
   InfoWrapper,
@@ -43,7 +43,7 @@ const InfoSection = ({id, lightTheme, topLine, headline,
     <ComponentWrapper id={id}>
       <InfoContainer $lightBg={lightTheme}>
         <InfoWrapper>
-          <InfoRow imgStart={imgStart}>
+          <InfoRow $imgStart={imgStart}>
             <Column1>
               <TextWrapper>
                 <TopLine>{topLine}</TopLine>

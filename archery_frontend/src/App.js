@@ -5,7 +5,6 @@ import Home from './pages';
 import CreateEventPage from './pages/createEvent'
 import EventOverviewPage from './pages/eventOverview';
 import HowToPage from './pages/howTo';
-import DevPage from './pages/dev';
 import PageNotFoundPage from './pages/pageNotFound';
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
         <Route path='/createevent' component={CreateEventPage} exact />
         <Route path='/eventoverview'component={EventOverviewPage} exact />
         <Route path='/howto'component={HowToPage} exact />
-        <Route path='/dev/:name?'component={DevPage} exact />
         <Route path='/' component={PageNotFoundPage} />
       </Switch>
     </Router>

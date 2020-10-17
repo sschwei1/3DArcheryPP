@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {MdKeyboardArrowRight, MdArrowForward} from 'react-icons/md';
-import {color} from '../../colors';
+import {color} from '../../../colors';
 
 export const HeroContainer = styled.div`
   background: ${color.dark1.bg};
@@ -12,7 +12,7 @@ export const HeroContainer = styled.div`
   position: relative;
   z-index: 1;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;

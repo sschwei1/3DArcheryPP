@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
-import {scrollProps} from '../ButtonEelement'
+import {scrollProps} from '../../ButtonEelement'
 import { 
   Nav,
   NavbarContainer,
@@ -14,7 +14,7 @@ import {
   NavBtnLink
 } from './NavbarElements';
 
-import {navData} from '../../Data/Navbar';
+import {navData} from '../../../Data/Navbar';
 
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -32,7 +32,7 @@ const Navbar = ({toggle}) => {
       <Nav $scrollNav={scrollNav}>
         <NavbarContainer>
           <NavLogoLink to='welcome' {...scrollProps}>
-            <NavLogo src={require('../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
+            <NavLogo src={require('../../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
             3dium
           </NavLogoLink>
           <MobileIcon onClick={toggle}>

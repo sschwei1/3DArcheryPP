@@ -1,8 +1,8 @@
 export const color = {
   primary: '#01bf71',
   dark1:{
-    fg: '#010606',
-    bg: '#010606'
+    fg: '#020C0C',
+    bg: '#020C0C'
   },
   light1:{
     fg: '#f7f8fa',
