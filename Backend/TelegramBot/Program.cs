@@ -15,10 +15,8 @@ namespace TelegramBot
 {
     public static class Program {
         public static async Task Main() {
-            // var bot = new TelegramBot();
-            // await bot.Start();
-            var client = new TelegramBotClient("1353936413:AAEDXgNywuvtDhMi-bREY6LD_TuSjsRf3N0");
-            await client.SendTextMessageAsync(1297488807, "test");
+            var bot = new TelegramBot();
+            await bot.Start();
         }
     }
 }
