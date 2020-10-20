@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Link as LinkR } from 'react-router-dom'
 import { Link as LinkS } from 'react-scroll'
 import {color, convertHexToRgba} from '../../../colors';
+import {isMobile} from 'react-device-detect';
 
 export const Nav = styled.nav`
   background: ${({$scrollNav}) => ($scrollNav ? color.dark1.bg : 'transparent')};
@@ -94,9 +95,11 @@ export const NavLink = styled(LinkS)`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
-  &:hover {
-    box-shadow: inset 0 -4px 0 0 ${convertHexToRgba(color.primary, 0.55)};
-  }
+  ${() => isMobile ? `` : `
+    &:hover {
+      box-shadow: inset 0 -4px 0 0 ${convertHexToRgba(color.primary, 0.55)};
+    }
+  `}
 
   &.active {
     box-shadow: inset 0 -4px 0 0 ${convertHexToRgba(color.primary, 0.85)};
