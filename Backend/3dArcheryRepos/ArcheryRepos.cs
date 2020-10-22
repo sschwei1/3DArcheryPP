@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using _3dArcheryRepos.DatabaseContext;
+using _3dArcheryRepos.Helper;
 using _3dArcheryRepos.ServersideModels;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
@@ -62,7 +63,7 @@ namespace _3dArcheryRepos
         public UserData GetUserByName(string name)
         {
             var user = Db.Users.SingleOrDefault(e => e.Username == name);
-
+            
             if (user == null)
                 return null;
 
@@ -125,7 +126,8 @@ namespace _3dArcheryRepos
             var track = new DbTrack()
             {
                 LocationId = trackData.LocationId,
-                Name = trackData.Name
+                Name = trackData.Name,
+                CreationDate = DateTime.UtcNow
             };
 
             Db.Tracks.Add(track);
@@ -147,6 +149,31 @@ namespace _3dArcheryRepos
             Db.SaveChanges();
             return true;
         }
+
+        public List<TrackMinModel> GetTrackFiltered(int filterFrom, int filterTo, string filterName, string filterLocation)
+        {
+            var trackList = Db.Tracks
+                .Where(e =>
+                    StringHelper.Contains(e.Location.Name, filterLocation) &&
+                    StringHelper.Contains(e.Name, filterName))
+                .OrderBy(e => e.CreationDate)
+                .Skip(filterFrom)
+                .Take(filterTo)
+                .Select(e => new TrackMinModel()
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    TargetCount = Db.TrackTargets.Where(x => x.TrackId == e.Id).Count(),
+                    Location = new LocationModel()
+                    {
+                        Id = e.Location.Id,
+                        Name = e.Location.Name
+                    }
+                }).ToList();
+
+            return trackList;
+        }
+           
 
         public void Dispose()
         {

@@ -64,5 +64,18 @@ namespace _3dArcheryApi.Controllers
          - nameFilter
          - locationFilter
          */
+
+         [HttpGet]
+         public JsonResult GetTrackFiltered([FromBody] int filterFrom, int filterTo, string filterName = "", string filterLocation = "")
+         {
+            var response = new JsonResponse();
+
+            using var repos = new ArcheryRepos();
+
+            var trackList = repos.GetTrackFiltered(filterFrom, filterTo, filterName, filterLocation);
+            
+
+            return new JsonResult(new JsonResponse<TrackMinModel>());
+         }
     }
 }
