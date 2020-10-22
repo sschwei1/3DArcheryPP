@@ -12,7 +12,7 @@ namespace _3dArcheryRepos.DatabaseContext
         public ArcheryDb(string connectionString = "")
         {
             InitConfig();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
         
         public DbSet<DbUser> Users { get; set; }
