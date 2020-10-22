@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using _3dArcheryRepos.DatabaseContext;
 using _3dArcheryRepos.ServersideModels;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -115,6 +116,34 @@ namespace _3dArcheryRepos
 
             user.Username = null;
             user.Role = (int) UserRole.New;
+            Db.SaveChanges();
+            return true;
+        }
+
+        public bool CreateTrack(CreateTrackModel trackData)
+        {
+            var track = new DbTrack()
+            {
+                LocationId = trackData.LocationId,
+                Name = trackData.Name
+            };
+
+            Db.Tracks.Add(track);
+
+            Db.SaveChanges();
+            return true;
+        }
+
+        public bool CreateLocation(CreateLocationModel locationData)
+        {
+            var location = new DbLocation()
+            {
+                Name = locationData.Name
+                
+            };
+
+            Db.Locations.Add(location);
+
             Db.SaveChanges();
             return true;
         }

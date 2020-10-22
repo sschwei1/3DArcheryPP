@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TeleBot = TelegramBot.TelegramBot;
 
 namespace _3dArcheryApi
 {
@@ -13,6 +15,9 @@ namespace _3dArcheryApi
     {
         public static void Main(string[] args)
         {
+            var botThread = new Thread(BotHelper.BotThread);
+            botThread.Start();
+
             CreateHostBuilder(args).Build().Run();
         }
 
