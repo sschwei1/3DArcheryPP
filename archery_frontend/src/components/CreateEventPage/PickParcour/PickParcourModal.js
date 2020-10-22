@@ -12,8 +12,8 @@ import {
   FormLabel
 } from '../CreateEventForm/FormElements';
 
-const PickParcourModal = ({showModal, setShowModal, pickCallback}) => {
-  const {handleFilterChange: trackNameFilterChange, filter: trackFilterValue} = useFilter(formFields[ParcourField].filter);
+const PickParcourModal = ({showModal, setShowModal, pickCallback, filter}) => {
+  // const {handleFilterChange: trackNameFilterChange, filter: trackFilterValue} = useFilter(filter);
 
   return (
     <Modal
@@ -34,7 +34,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback}) => {
               Save
           </Button>
         </ModalBtnWrapper>
-        <FormInputWrapper $col='col1'>
+        {/* <FormInputWrapper $col='col1'>
           <FormLabel>
             Track Name
             <FormInput
@@ -51,7 +51,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback}) => {
               onChange={trackNameFilterChange}
               value={trackFilterValue[filter.props.name]} />
           </FormLabel>
-        </FormInputWrapper>
+        </FormInputWrapper> */}
       </ModalWrapper>
     </Modal>
   )
