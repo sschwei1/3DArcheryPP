@@ -14,11 +14,11 @@ using _3dArcheryRepos.ServersideModels;
 namespace _3dArcheryApi.Controllers
 {
     [ApiController]
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]/[action]")]
+    [System.Web.Http.Route("api/[controller]/[action]")]
 
     public class TrackController : ControllerBase
     {
-        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [System.Web.Http.HttpPost]
         public JsonResult CreateTrack([Microsoft.AspNetCore.Mvc.FromBody] CreateTrackModel trackData)
         {
             var response = new JsonResponse();
@@ -39,7 +39,7 @@ namespace _3dArcheryApi.Controllers
             return new JsonResult(new JsonResponse());
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [System.Web.Http.HttpPost]
         public JsonResult CreateLocation([Microsoft.AspNetCore.Mvc.FromBody] CreateLocationModel locationData)
         {
             var response = new JsonResponse();
@@ -66,7 +66,7 @@ namespace _3dArcheryApi.Controllers
          - locationFilter
          */
 
-        [Microsoft.AspNetCore.Mvc.HttpGet]
+        [System.Web.Http.HttpGet]
         public JsonResult GetTrackFiltered([FromUri]int filterFrom, [FromUri]int filterTo, [FromUri]string filterName = "", [FromUri]string filterLocation = "")
          {
             var response = new JsonResponse();
