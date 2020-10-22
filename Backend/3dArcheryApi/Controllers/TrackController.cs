@@ -71,11 +71,9 @@ namespace _3dArcheryApi.Controllers
             var response = new JsonResponse();
 
             using var repos = new ArcheryRepos();
-
             var trackList = repos.GetTrackFiltered(filterFrom, filterTo, filterName, filterLocation);
             
-
-            return new JsonResult(new JsonResponse<TrackMinModel>());
+            return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList));
          }
     }
 }
