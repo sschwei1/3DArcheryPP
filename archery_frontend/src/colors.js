@@ -1,13 +1,19 @@
 export const color = {
+  // primary: '#01bf71',
   primary: '#01bf71',
   dark1:{
     fg: '#020C0C',
     bg: '#020C0C'
+    // fg: '#0D161C',
+    // bg: '#0D161C'
   },
   light1:{
-    fg: '#f7f8fa',
-    bg: '#f7f8fa'
-  }
+    // fg: '#f7f8fa',
+    // bg: '#f7f8fa'
+    fg: '#E9EAED',
+    bg: '#E9EAED'
+  },
+  placeholder: '#595959'
 };
 
 export const convertHexToRgba = (hexCode,opacity) => {
