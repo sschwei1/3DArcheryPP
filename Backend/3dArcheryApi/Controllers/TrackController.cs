@@ -14,7 +14,7 @@ using _3dArcheryRepos.ServersideModels;
 namespace _3dArcheryApi.Controllers
 {
     [ApiController]
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]/[action]")]
+    [Microsoft.AspNetCore.Mvc.Route("[controller]/[action]")]
 
     public class TrackController : ControllerBase
     {
