@@ -197,11 +197,11 @@ namespace _3dArcheryRepos
             return events.Count() != 0;
         }
 
-       // public bool EventCodeExists(string eventCode)
-       // {
-       //     var events = Db.Events.Where(e => e.Owner.ChatId == chatId && e.EndDate == null);
-        //    return events.Count() != 0;
-       // }
+       public bool EventCodeExists(string eventCode)
+        {
+            var events = Db.Events.Where(e => e.EventCode == eventCode && e.EndDate == null);
+            return events.Count() != 0;
+        }
 
 
 

@@ -21,11 +21,11 @@ namespace TelegramBot.Commands
         {
             using var repos = new ArcheryRepos();
 
-           // if (!repos.EventCodeExists(args[0]))
-            //{
-           //     await Client.SendMessage(user.ChatId, BotMessages.CreateEventNotFound);
-           //     return;
-           // }
+           if (!repos.EventCodeExists(args[0]))
+            {
+                await Client.SendMessage(user.ChatId, BotMessages.CreateEventNotFound);
+                return;
+            }
 
             if (repos.UserHasEvent(user.ChatId))
             {
@@ -33,8 +33,8 @@ namespace TelegramBot.Commands
                 return;
             }
 
-          //  repos.AddOwnerToEvent(user.ChatId, args[0]);
-           // await Client.SendMessage(user.ChatId, BotMessages.RegisterCommandRegistered + args[0]);
+            //repos.AddOwnerToEvent(user.ChatId, args[0]);
+            //await Client.SendMessage(user.ChatId, BotMessages.RegisterCommandRegistered + args[0]);
         }
     }
 }
