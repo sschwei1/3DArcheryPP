@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Web;
+using System.Web.Http;
 using Microsoft.AspNetCore.Http;
 using _3dArcheryApi.Response;
 using _3dArcheryRepos;
@@ -13,17 +14,17 @@ using _3dArcheryRepos.ServersideModels;
 namespace _3dArcheryApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Microsoft.AspNetCore.Mvc.Route("[controller]/[action]")]
 
     public class TrackController : ControllerBase
     {
-        [HttpPost]
-        public JsonResult CreateTrack([FromBody]CreateTrackModel trackData)
+        [System.Web.Http.HttpPost]
+        public JsonResult CreateTrack([Microsoft.AspNetCore.Mvc.FromBody] CreateTrackModel trackData)
         {
             var response = new JsonResponse();
 
             // validate data
-            if(trackData.Validate())
+            if (trackData.Validate())
             {
                 using var repos = new ArcheryRepos();
 
@@ -38,8 +39,8 @@ namespace _3dArcheryApi.Controllers
             return new JsonResult(new JsonResponse());
         }
 
-        [HttpPost]
-        public JsonResult CreateLocation([FromBody]CreateLocationModel locationData)
+        [System.Web.Http.HttpPost]
+        public JsonResult CreateLocation([Microsoft.AspNetCore.Mvc.FromBody] CreateLocationModel locationData)
         {
             var response = new JsonResponse();
             if (locationData.Validate())
@@ -65,17 +66,15 @@ namespace _3dArcheryApi.Controllers
          - locationFilter
          */
 
-         [HttpGet]
-         public JsonResult GetTrackFiltered([FromBody] int filterFrom, int filterTo, string filterName = "", string filterLocation = "")
+        [System.Web.Http.HttpGet]
+        public JsonResult GetTrackFiltered([FromUri]int filterFrom, [FromUri]int filterTo, [FromUri]string filterName = "", [FromUri]string filterLocation = "")
          {
             var response = new JsonResponse();
 
             using var repos = new ArcheryRepos();
-
             var trackList = repos.GetTrackFiltered(filterFrom, filterTo, filterName, filterLocation);
             
-
-            return new JsonResult(new JsonResponse<TrackMinModel>());
+            return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList));
          }
     }
 }

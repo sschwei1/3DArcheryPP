@@ -19,6 +19,9 @@ import { useForm } from '../../../FormFunctions/useForm';
 import {useFilter} from '../../../FormFunctions/useFilter';
 import {validateForm} from '../../../FormFunctions/validateForm';
 import FormInputElem from './FormInput';
+import { useState } from 'react';
+import ParcourPicker from '../PickParcour';
+import PickParcourField from '../PickParcour';
 
 // const createInput = (field, value, handleChange) => (
 // <FormInput {...field}
@@ -32,6 +35,7 @@ const ParcourField = 'parcourField';
 const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
   const {handleChange, handleSubmit, values, errors} = useForm(formFields, validateForm, submitForm);
   const {handleFilterChange: trackNameFilterChange, filter: trackFilterValue} = useFilter(formFields[ParcourField].filter);
+
   console.log("Re-Render");
   return (
     <SiteWrapper>
@@ -41,29 +45,13 @@ const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
             {title}
           </FormTitle>
           <FormInputElem
-             field={formFields[EventName]}
-             handleChange={handleChange}
-             value={values[EventName]}
-             error={errors[EventName]} />
-          <FormSectionDivider />
-          {/* <FormSectionWrapper>
-            <FormHeadWrapper>
-              <FormSectionName>Name</FormSectionName>
-              {
-                formFields[ParcourField].filter.map((filter, index) => 
-                  <FormInputWrapper key={index} $col={`col${index+1}`}>
-                    <FormLabel>
-                      {filter.label}
-                      <FormInput
-                        {...filter.props}
-                        onChange={trackNameFilterChange}
-                        value={trackFilterValue[filter.props.name]} />
-                    </FormLabel>
-                  </FormInputWrapper>
-                )
-              }
-            </FormHeadWrapper>
-          </FormSectionWrapper> */}
+            field={formFields[EventName]}
+            handleChange={handleChange}
+            value={values[EventName]}
+            error={errors[EventName]} />
+          {/* <FormSectionDivider /> */}
+          <PickParcourField />
+          {/* <FormSectionDivider /> */}
           <FormBtnWrapper>
             <Button
               type='submit'

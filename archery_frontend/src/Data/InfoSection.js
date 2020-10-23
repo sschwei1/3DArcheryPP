@@ -29,7 +29,7 @@ export const HowObject = {
   buttonLink: '/howto',
   buttonPageLink: false,
   imgStart: true,
-  img: require('../images/setup_guide_test3.png'),
+  img: require('../images/setup_guide.svg'),
   alt: 'guide'
 };
 

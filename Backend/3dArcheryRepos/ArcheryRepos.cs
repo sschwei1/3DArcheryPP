@@ -154,8 +154,8 @@ namespace _3dArcheryRepos
         {
             var trackList = Db.Tracks
                 .Where(e =>
-                    StringHelper.Contains(e.Location.Name, filterLocation) &&
-                    StringHelper.Contains(e.Name, filterName))
+                    (string.IsNullOrWhiteSpace(filterLocation) || e.Location.Name.ToLower().Contains(filterLocation.ToLower())) &&
+                    (string.IsNullOrWhiteSpace(filterName) || e.Name.ToLower().Contains(filterName.ToLower())))
                 .OrderBy(e => e.CreationDate)
                 .Skip(filterFrom)
                 .Take(filterTo)
@@ -170,7 +170,6 @@ namespace _3dArcheryRepos
                         Name = e.Location.Name
                     }
                 }).ToList();
-
             return trackList;
         }
            

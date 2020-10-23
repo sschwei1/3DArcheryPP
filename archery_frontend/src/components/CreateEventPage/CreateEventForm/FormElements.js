@@ -18,7 +18,7 @@ export const FormContainer = styled.div`
   padding: 20px 40px;
   margin: auto 10%;
   border-radius: 10px;
-  box-shadow: 0px 10px 50px #555;
+  box-shadow: 0 5px 16px ${color.dark1.bg};
   background: ${color.dark1.bg};
 `;
 
@@ -36,10 +36,10 @@ export const FormTitle = styled.h1`
 `;
 
 export const FormInputWrapper = styled.div`
-  margin-bottom: 1.2rem;
   width: 100%;
   padding: 0 15px;
   grid-area: ${({$col}) => $col};
+  margin-bottom: 1.2rem;
 `;
 
 export const FormLabel = styled.label`
@@ -64,14 +64,22 @@ export const FormInput = styled.input`
   background: ${color.light1.bg};
 
   &::placeholder{
-    color: #595959;
+    color: ${color.placeholder};
     font-size: 14px;
   }
+`;
+
+export const FormFilterWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: ${($colCnt) => ('repeat(colCnt, 1fr)')};
+  text-align: center;
 `;
 
 export const FormSectionDivider = styled.hr`
   width: 100%;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 `;
 
 export const FormSectionWrapper = styled.div`
@@ -92,7 +100,7 @@ export const FormHeadWrapper = styled.div`
 export const FormSectionName = styled.div`
   color: ${color.light1.fg};
   margin-bottom: 1rem;
-  grid-area: col0
+  grid-area: col0;
 `;
 
 export const FormBodyWrapper = styled.div``;

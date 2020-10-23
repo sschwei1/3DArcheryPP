@@ -15,15 +15,13 @@ export const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 10;
+  transition: 0.8s all ease;
+
   box-shadow: ${({$scrollNav}) => (
     $scrollNav ?
     `0 1px 2px 0 ${convertHexToRgba(color.light1.bg, 0.45)}`
     : 0
   )};
-
-  @media screen and (max-width: 960px){
-    transition: 0.8s all ease;
-  }
 `;
 
 export const NavbarContainer = styled.div`
