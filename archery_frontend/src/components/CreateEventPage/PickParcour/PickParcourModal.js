@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '../../ButtonEelement';
 import Modal from '../../Modals/Modal';
 import {
@@ -15,6 +15,15 @@ import {
 const PickParcourModal = ({showModal, setShowModal, pickCallback, filter}) => {
   // const {handleFilterChange: trackNameFilterChange, filter: trackFilterValue} = useFilter(filter);
 
+  useEffect(() => {
+    fetch("http://pp.sswe.me/api/track/GetTrackFiltered?filterFrom=0&filterTo=10")
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+      });
+    return () => {}
+  }, [])
+
   return (
     <Modal
       showModal={showModal}
@@ -25,15 +34,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filter}) => {
           aria-label='Close modal'
           onClick={() => setShowModal(false)}
           />
-        <ModalBtnWrapper>
-          <Button
-            $primary={true}
-            $dark={true}
-            onClick={pickCallback}
-            >
-              Save
-          </Button>
-        </ModalBtnWrapper>
+        
         {/* <FormInputWrapper $col='col1'>
           <FormLabel>
             Track Name
