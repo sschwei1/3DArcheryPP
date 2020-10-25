@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Runtime.CompilerServices;
 using _3dArcheryRepos.DatabaseContext;
 using _3dArcheryRepos.Helper;
 using _3dArcheryRepos.ServersideModels;
@@ -172,7 +172,38 @@ namespace _3dArcheryRepos
                 }).ToList();
             return trackList;
         }
-           
+
+        public bool CreateEvent(CreateEventModel evt)
+        {
+            var evnt = new DbEvent()
+            {
+                Name = evt.Name,
+                CreationDate = evt.CreationDate,
+                EventCode = evt.EventCode.ToString(),
+                TrackId = evt.TrackId,
+                CountTypeId = evt.CountTypeId,
+            };
+
+            Db.Events.Add(evnt);    
+
+            Db.SaveChanges();
+
+            return true;
+        }
+
+        public bool UserHasEvent(long chatId)
+        {
+            var events = Db.Events.Where(e => e.Owner.ChatId == chatId && e.EndDate == null);
+            return events.Count() != 0;
+        }
+
+       public bool EventCodeExists(string eventCode)
+        {
+            var events = Db.Events.Where(e => e.EventCode == eventCode && e.EndDate == null);
+            return events.Count() != 0;
+        }
+
+
 
         public void Dispose()
         {

@@ -12,7 +12,7 @@ namespace _3dArcheryRepos.DatabaseContext
         [Required]
         [MaxLength(64)]
         public string Name { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime CreationDate { get; set; }
         [Required]

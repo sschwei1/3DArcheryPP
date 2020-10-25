@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,16 +9,21 @@ using Microsoft.AspNetCore.Http;
 using _3dArcheryApi.Response;
 using _3dArcheryRepos;
 using _3dArcheryRepos.ServersideModels;
+using Microsoft.AspNetCore.Mvc;
+
+using HttpMvc = Microsoft.AspNetCore.Mvc;
+using HttpWeb = System.Web.Http;
+using _3dArcheryRepos.Helper;
 
 namespace _3dArcheryApi.Controllers
 {
-    [ApiController]
+    [HttpMvc.ApiController]
     [Microsoft.AspNetCore.Mvc.Route("[controller]/[action]")]
 
-    public class TrackController : ControllerBase
+    public class TrackController : HttpMvc.ControllerBase
     {
-        [System.Web.Http.HttpPost]
-        public JsonResult CreateTrack([Microsoft.AspNetCore.Mvc.FromBody] CreateTrackModel trackData)
+        [HttpWeb.HttpPost]
+        public JsonResult CreateTrack([HttpMvc.FromBody] CreateTrackModel trackData)
         {
             var response = new JsonResponse();
 
@@ -39,8 +43,8 @@ namespace _3dArcheryApi.Controllers
             return new JsonResult(new JsonResponse());
         }
 
-        [System.Web.Http.HttpPost]
-        public JsonResult CreateLocation([Microsoft.AspNetCore.Mvc.FromBody] CreateLocationModel locationData)
+        [HttpWeb.HttpPost]
+        public JsonResult CreateLocation([HttpMvc.FromBody] CreateLocationModel locationData)
         {
             var response = new JsonResponse();
             if (locationData.Validate())
@@ -66,7 +70,7 @@ namespace _3dArcheryApi.Controllers
          - locationFilter
          */
 
-        [System.Web.Http.HttpGet]
+        [HttpWeb.HttpGet]
         public JsonResult GetTrackFiltered([FromUri]int filterFrom, [FromUri]int filterTo, [FromUri]string filterName = "", [FromUri]string filterLocation = "")
          {
             var response = new JsonResponse();
@@ -76,5 +80,38 @@ namespace _3dArcheryApi.Controllers
             
             return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList));
          }
+
+        [HttpWeb.HttpPost]
+        public JsonResult CreateEvent([HttpMvc.FromBody]test data)
+        {
+            
+            DateTime creationDate = DateTime.Now;
+
+            var eventCode = StringHelper.RandomString(6);
+
+
+
+
+            using var repos = new ArcheryRepos();
+
+            var evt = new CreateEventModel();
+            evt.Name = data.Name;
+            evt.TrackId = data.TrackId;
+            evt.CreationDate = creationDate;
+            evt.EventCode = eventCode;
+            evt.CountTypeId = data.CountTypeId;
+
+
+            repos.CreateEvent(evt);
+
+            return new JsonResult(new JsonResponse<string>(eventCode));
+        }
+    }
+
+    public class test
+    {
+        public string Name { get; set; }
+        public int TrackId { get; set; }
+        public int CountTypeId { get; set; }
     }
 }

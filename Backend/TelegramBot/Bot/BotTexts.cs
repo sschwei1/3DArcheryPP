@@ -17,6 +17,7 @@ namespace TelegramBot
         public const string Broadcast = "broadcast";
         public const string DeactivateUser = "deactivate";
         public const string Aliases = "aliases";
+        public const string CreateEvent = "createEvent";
     }
 
     public static class CommandAliases
@@ -68,6 +69,10 @@ namespace TelegramBot
         public const string ConsoleChangeNickname = "Console nick can't be changed.";
         public const string ConsoleRegister = "Console can't register as user.";
         public const string ConsoleDeactivate = "Console can't be deactivated.";
+
+        // create event
+        public const string CreateEventNotFound = "Event with this code does not exist";
+        public const string CreateUserHasEvent = "You already have a registered event, if you don't know about it, use /abortEvent";
         
         // descriptions
         public const string ListUserCommandDescription = "Prints a list of all users who wrote a message to the bot.";
@@ -83,5 +88,6 @@ namespace TelegramBot
         public const string BroadcastCommandDescription = "Sends a message to all users.";
         public const string DeactivateUserCommandDescription = "Deactivate your user, so you will not receive any more messages. If you want to activate your account again, just register again.";
         public const string AliasesCommandDescription = "Returns a list of all aliases for a command.";
+        public const string CreateEventDescription = "Bind your user to an event via it's eventCode";
     }
 }
