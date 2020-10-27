@@ -82,7 +82,7 @@ namespace _3dArcheryApi.Controllers
          }
 
         [HttpWeb.HttpPost]
-        public JsonResult CreateEvent([HttpMvc.FromBody]test data)
+        public JsonResult CreateEvent([HttpMvc.FromBody]CreateEventGetDataModel data)
         {
             
             DateTime creationDate = DateTime.Now;
@@ -108,10 +108,5 @@ namespace _3dArcheryApi.Controllers
         }
     }
 
-    public class test
-    {
-        public string Name { get; set; }
-        public int TrackId { get; set; }
-        public int CountTypeId { get; set; }
-    }
+   
 }
