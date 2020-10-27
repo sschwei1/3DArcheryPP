@@ -1,19 +1,55 @@
-import React from 'react';
-import { Button } from '../../ButtonEelement';
+import React, { useEffect, useState } from 'react';
+import { ButtonDiv as Button } from '../../ButtonEelement';
 import Modal from '../../Modals/Modal';
 import {
   ModalWrapper,
   CloseModalButton,
-  ModalBtnWrapper
+  ModalBtnWrapper,
+  ModalParcourWrappper,
+  ModalFilterWrapper,
+  ModalParcourCol,
+  ModalListWrapper
 } from './PickerModalElements';
 import {
   FormInput,
   FormInputWrapper,
   FormLabel
 } from '../CreateEventForm/FormElements';
+import { GetTracks } from '../../../apiRequests/trackRequests';
 
-const PickParcourModal = ({showModal, setShowModal, pickCallback, filter}) => {
-  // const {handleFilterChange: trackNameFilterChange, filter: trackFilterValue} = useFilter(filter);
+const ParcoursPerLoad = 1;
+
+const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
+  const [parcours, setParcours] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
+  const [locationFilter, setLocationFilter] = useState('');
+
+  useEffect(() => {
+    GetTracks(0, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
+      console.log(ret);
+      setParcours(ret);
+    });
+  }, [nameFilter, locationFilter]);
+
+  const LoadMoreParcours = () => {
+    GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
+      console.log(ret);
+      setParcours(prev => prev.concat(ret))
+    });
+  };
+
+  console.log(filters);
+
+  filters[0].props.onChange=(e) => {
+    const {name, value} = e.target;
+    setNameFilter(value);
+  };
+
+  filters[1].props.onChange=(e) => {
+    const {name, value} = e.target;
+    setLocationFilter(value);
+  };
+
 
   return (
     <Modal
@@ -25,33 +61,183 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filter}) => {
           aria-label='Close modal'
           onClick={() => setShowModal(false)}
           />
+        <ModalFilterWrapper>
+          {filters.map((filter, index) => (
+            <FormInputWrapper key={index}>
+              <FormLabel htmlFor={filter.props.name}>
+                {filter.label}
+                <FormInput {...filter.props}/>
+              </FormLabel>
+            </FormInputWrapper>
+          ))}
+        </ModalFilterWrapper>
+        <ModalParcourWrappper $disableHover={true}>
+          <ModalParcourCol>
+            Parcour name
+          </ModalParcourCol>
+          <ModalParcourCol>
+            Location name
+          </ModalParcourCol>
+        </ModalParcourWrappper>
+        <ModalListWrapper>
+          {parcours?.map((parcour, index) => (
+            <>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            <ModalParcourWrappper
+              key={index}
+              onClick={() => {
+                pickCallback(parcour);
+              }}>
+                <ModalParcourCol>
+                  {parcour.name}
+                </ModalParcourCol>
+                <ModalParcourCol>
+                  {parcour.location.name}
+                </ModalParcourCol>
+            </ModalParcourWrappper>
+            </>
+          )) ?? ""}
+        </ModalListWrapper>
         <ModalBtnWrapper>
           <Button
             $primary={true}
             $dark={true}
-            onClick={pickCallback}
+            onClick={LoadMoreParcours}
             >
-              Save
+            Load More
           </Button>
         </ModalBtnWrapper>
-        {/* <FormInputWrapper $col='col1'>
-          <FormLabel>
-            Track Name
-            <FormInput
-              {...filter.props}
-              onChange={trackNameFilterChange}
-              value={trackFilterValue[filter.props.name]} />
-          </FormLabel>
-        </FormInputWrapper>
-        <FormInputWrapper key={index} $col='col2'>
-          <FormLabel>
-            Location Name
-            <FormInput
-              {...filter.props}
-              onChange={trackNameFilterChange}
-              value={trackFilterValue[filter.props.name]} />
-          </FormLabel>
-        </FormInputWrapper> */}
       </ModalWrapper>
     </Modal>
   )

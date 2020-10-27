@@ -30,11 +30,10 @@ import PickParcourField from '../PickParcour';
 //   onChange={handleChange} />);
 
 const EventName = 'eventName';
-const ParcourField = 'parcourField';
+const TrackField = 'trackId';
 
 const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
   const {handleChange, handleSubmit, values, errors} = useForm(formFields, validateForm, submitForm);
-  const {handleFilterChange: trackNameFilterChange, filter: trackFilterValue} = useFilter(formFields[ParcourField].filter);
 
   console.log("Re-Render");
   return (
@@ -50,7 +49,9 @@ const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
             value={values[EventName]}
             error={errors[EventName]} />
           {/* <FormSectionDivider /> */}
-          <PickParcourField />
+          <PickParcourField
+            handleChange={handleChange}
+            parcourPickData={formFields[TrackField]} />
           {/* <FormSectionDivider /> */}
           <FormBtnWrapper>
             <Button

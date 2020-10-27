@@ -14,12 +14,12 @@ using Microsoft.AspNetCore.Mvc;
 using HttpMvc = Microsoft.AspNetCore.Mvc;
 using HttpWeb = System.Web.Http;
 using _3dArcheryRepos.Helper;
+using Microsoft.AspNetCore.Cors;
 
 namespace _3dArcheryApi.Controllers
 {
     [HttpMvc.ApiController]
     [Microsoft.AspNetCore.Mvc.Route("[controller]/[action]")]
-
     public class TrackController : HttpMvc.ControllerBase
     {
         [HttpWeb.HttpPost]

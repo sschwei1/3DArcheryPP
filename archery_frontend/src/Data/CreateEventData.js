@@ -24,8 +24,8 @@ export const CreateEventData = {
         validate: validateFunc
       }
     },
-    parcourField: {
-      title: 'Parcour',
+    trackId: {
+      title: 'Track',
       filter:[{
         label: 'Track Name',
         props:{
