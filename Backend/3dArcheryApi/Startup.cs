@@ -26,6 +26,8 @@ namespace _3dArcheryApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            
             services.AddControllers();
             services.AddDbContext<ArcheryDb>();
         }
@@ -38,12 +40,19 @@ namespace _3dArcheryApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.Use(async (ctx, next) =>
+            {
+                ctx.Response.Headers["Access-Control-Allow-Credentials"] = "true";
+                ctx.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, DELETE, PUT, PATCH";
+                ctx.Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
 
+                await next.Invoke();
+            });
+            
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

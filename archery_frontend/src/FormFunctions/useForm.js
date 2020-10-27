@@ -9,6 +9,10 @@ export const useForm = (formFields, validate, callback) => {
     )
   );
 
+  useEffect(() => {
+    console.log("formData",values);
+  }, [values]);
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 

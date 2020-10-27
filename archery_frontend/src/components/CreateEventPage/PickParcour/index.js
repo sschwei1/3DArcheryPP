@@ -6,7 +6,7 @@ import {
   PickParcourTitle
 } from './PickParcourElements';
 
-const PickParcourField = () => {
+const PickParcourField = ({parcourPickData, handleChange}) => {
   const [parcour, setParcour] = useState();
   const [showModal, setShowModal] = useState(false);
 
@@ -14,8 +14,9 @@ const PickParcourField = () => {
     setShowModal(prev => !prev);
   };
 
-  const setParcourValue = (id) => {
-    setParcour(id);
+  const setParcourValue = (data) => {
+    setParcour(data);
+    handleChange({target:{name:"trackId", value:data.id}});
     setShowModal(false);
   };
 
@@ -23,14 +24,14 @@ const PickParcourField = () => {
     <>
       <PickParcourContainer>
         <PickParcourTitle>
-          Track
+          {parcourPickData.title}
         </PickParcourTitle>
         <PickParcourWrapper
           onClick={!showModal ? openModal : null}
           $isSelected={!!parcour}
           >
           {parcour ? (
-            'You selected a parcour'
+            parcour.name
           ) : (
             'Click here to select a parcour'
           )}
@@ -40,6 +41,7 @@ const PickParcourField = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         pickCallback={setParcourValue}
+        filters={parcourPickData.filter}
         />
     </>
   )
