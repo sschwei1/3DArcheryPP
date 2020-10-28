@@ -6,17 +6,17 @@ import {
 } from './PickUserElements';
 import { FormError } from '../CreateEventForm/FormElements';
 
-const PickParcourField = ({parcourPickData, handleChange, error}) => {
-  const [parcour, setParcour] = useState();
+const PickUserField = ({userPickData, handleChange, error}) => {
+  const [userList, setUserList] = useState();
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     setShowModal(prev => !prev);
   };
 
-  const setParcourValue = (data) => {
-    setParcour(data);
-    handleChange({target:{name:"trackId", value:data.id}});
+  const setUserListValue = (data) => {
+    setUserList(data);
+    handleChange({target:{name:"eventUsers", value:data.id}});
     setShowModal(false);
   };
 
@@ -24,7 +24,7 @@ const PickParcourField = ({parcourPickData, handleChange, error}) => {
     <>
       <PickUserContainer>
         <PickUserTitle>
-          {parcourPickData.title}
+          {userPickData.title}
         </PickUserTitle>
         <PickUserWrapper
           onClick={!showModal ? openModal : null}
@@ -48,4 +48,4 @@ const PickParcourField = ({parcourPickData, handleChange, error}) => {
   )
 }
 
-export default PickParcourField;
+export default PickUserField;
