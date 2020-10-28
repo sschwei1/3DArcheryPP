@@ -11,6 +11,6 @@ export const DevTeam = {
     title: 'Kevin Larson',
     cardLink: 'klar_profile',
     iconSrc: require('../images/klar_profile_small.png'),
-    description: 'Secretary\nBackend Developer\nDatabase access'
+    description: 'Infrastructure\nBackend Developer\nDatabase access'
   }]
 };
