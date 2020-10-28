@@ -4,8 +4,10 @@ using System.Text;
 
 namespace _3dArcheryRepos.ServersideModels
 {
-    class CreateEventUsersModel
+   public class GetUserFilteredModel
     {
-        public int MyProperty { get; set; }
+        public string Username { get; set; }
+
+        public int Id { get; set; }
     }
 }

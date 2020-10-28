@@ -10,5 +10,7 @@ namespace _3dArcheryRepos.ServersideModels
         public int TrackId { get; set; }
         public int CountTypeId { get; set; }
 
+        public List<int> EventUsers { get; set; }
+
     }
 }

@@ -104,6 +104,10 @@ namespace _3dArcheryApi.Controllers
 
             repos.CreateEvent(evt);
 
+            //repos.AddEventUsers(data.EventUsers, );
+
+            
+
             return new JsonResult(new JsonResponse<string>(eventCode));
         }
 
@@ -115,7 +119,7 @@ namespace _3dArcheryApi.Controllers
             using var repos = new ArcheryRepos();
             var userList = repos.GetUserFiltered(from, to, name);
 
-            return new JsonResult(new JsonResponse<List<UserData>>(userList));
+            return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList));
         }
     }
 

@@ -236,7 +236,7 @@ namespace _3dArcheryRepos
         }
 
 
-        public List<UserData> GetUserFiltered(int filterFrom, int filterTo, string filterName)
+        public List<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName)
         {
             var userList = Db.Users
                 .Where(e => (string.IsNullOrWhiteSpace(filterName) || e.Username.ToLower().Contains(filterName.ToLower())))
@@ -244,13 +244,18 @@ namespace _3dArcheryRepos
                 .OrderBy(e => e.Username)
                 .Skip(filterFrom)
                 .Take(filterTo)
-                .Select(e => new UserData()
+                .Select(e => new GetUserFilteredModel()
                 {
-                   ChatId = e.ChatId,
+                   Id = e.Id,
                    Username = e.Username,
                     
                 }).ToList();
             return userList;
+        }
+
+        public bool AddEventUsers (List<int> users, int trackId)
+        {
+            return true;
         }
 
 
