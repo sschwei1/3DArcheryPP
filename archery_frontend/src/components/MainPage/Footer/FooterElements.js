@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import {Link as LinkR} from 'react-router-dom';
 import {Link as LinkS} from 'react-scroll';
 import { color, convertHexToRgba } from '../../../colors';
-import { FaAlignJustify } from 'react-icons/fa';
 
 export const FooterContainer = styled.div`
   background: ${color.dark1.bg};

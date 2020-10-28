@@ -32,13 +32,10 @@ export const useForm = (formFields, validate, callback) => {
   };
 
   useEffect(() => {
-    console.log("error obj:", errors);
-    console.log("Callback error length:",Object.keys(errors).length);
-    console.log("Callback is submittung:",isSubmitting);
     if(Object.keys(errors).length === 0 && isSubmitting){
       callback();
     }
-  }, [errors]);
+  }, [errors, callback, isSubmitting]);
 
   return {handleChange, handleSubmit, values, errors};
 }

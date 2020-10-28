@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebook, FaGithub, FaInstagram, FaReddit, FaRegCopyright, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaGithub, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { scrollProps } from '../../ButtonEelement';
 import {
   FooterContainer,

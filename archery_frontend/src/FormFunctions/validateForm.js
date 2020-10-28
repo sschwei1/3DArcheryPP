@@ -1,6 +1,9 @@
 export const validateForm = (values, formFields) => {
   let errors = {};
 
+  console.log("################",formFields);
+
+
   for(const fieldName in formFields){
     console.log(formFields[fieldName]);
     const field = formFields[fieldName];

@@ -38,13 +38,15 @@ export const ModalParcourWrappper = styled.div`
   ` : ``)}
 
   ${({$disableHover, $light}) => {
-    let col = $light ? 0.7 : 0.3;
+    let col = $light ?
+      convertHexToRgba(color.dark1.bg, 0.8):
+      convertHexToRgba(color.light1.bg, 0.8);
     return !$disableHover ? `
       box-shadown: 0;
       cursor: pointer;
 
       &:hover{
-        box-shadow: inset 0 0 14px ${convertHexToRgba(color.dark1.bg, 0.7)};
+        box-shadow: inset 0 0 14px ${col};
       }
     ` : ``;
   }}

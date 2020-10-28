@@ -1,8 +1,15 @@
 export const CheckResponse = (res) => {
-  if(res.statusCode == 200){
-    return res.data;
+  let obj = {
+    payload: undefined,
+    error: undefined
+  }
+
+  if(res.statusCode === 200){
+    obj.payload = res.data;
   }
   else{
-    return res.status;
+    obj.error = res.status;
   }
+
+  return obj;
 }

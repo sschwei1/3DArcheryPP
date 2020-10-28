@@ -81,31 +81,31 @@ namespace _3dArcheryApi.Controllers
             return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList));
          }
 
-        [HttpWeb.HttpPost]
-        public JsonResult CreateEvent([HttpMvc.FromBody]CreateEventGetDataModel data)
-        {
-            
-            DateTime creationDate = DateTime.Now;
-
-            var eventCode = StringHelper.RandomString(6);
-
-
-
-
-            using var repos = new ArcheryRepos();
-
-            var evt = new CreateEventModel();
-            evt.Name = data.Name;
-            evt.TrackId = data.TrackId;
-            evt.CreationDate = creationDate;
-            evt.EventCode = eventCode;
-            evt.CountTypeId = data.CountTypeId;
-
-
-            repos.CreateEvent(evt);
-
-            return new JsonResult(new JsonResponse<string>(eventCode));
-        }
+        // [HttpWeb.HttpPost]
+        // public JsonResult CreateEvent([HttpMvc.FromBody]CreateEventGetDataModel data)
+        // {
+        //     
+        //     DateTime creationDate = DateTime.Now;
+        //
+        //     var eventCode = StringHelper.RandomString(6);
+        //
+        //
+        //
+        //
+        //     using var repos = new ArcheryRepos();
+        //
+        //     var evt = new CreateEventModel();
+        //     evt.Name = data.Name;
+        //     evt.TrackId = data.TrackId;
+        //     evt.CreationDate = creationDate;
+        //     evt.EventCode = eventCode;
+        //     evt.CountTypeId = data.CountTypeId;
+        //
+        //
+        //     repos.CreateEvent(evt);
+        //
+        //     return new JsonResult(new JsonResponse<string>(eventCode));
+        // }
     }
 
    

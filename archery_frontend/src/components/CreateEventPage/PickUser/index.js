@@ -1,17 +1,14 @@
 import React, {useState} from 'react'
-import PickParcourModal from './PickParcourModal';
 import {
-  PickParcourContainer,
-  PickParcourWrapper,
-  PickParcourTitle
-} from './PickParcourElements';
+  PickUserContainer,
+  PickUserWrapper,
+  PickUserTitle
+} from './PickUserElements';
 import { FormError } from '../CreateEventForm/FormElements';
 
 const PickParcourField = ({parcourPickData, handleChange, error}) => {
   const [parcour, setParcour] = useState();
   const [showModal, setShowModal] = useState(false);
-
-  console.log("ERROR ##########", error);
 
   const openModal = () => {
     setShowModal(prev => !prev);
@@ -25,11 +22,11 @@ const PickParcourField = ({parcourPickData, handleChange, error}) => {
 
   return (
     <>
-      <PickParcourContainer>
-        <PickParcourTitle>
+      <PickUserContainer>
+        <PickUserTitle>
           {parcourPickData.title}
-        </PickParcourTitle>
-        <PickParcourWrapper
+        </PickUserTitle>
+        <PickUserWrapper
           onClick={!showModal ? openModal : null}
           $isSelected={!!parcour}
           >
@@ -38,15 +35,15 @@ const PickParcourField = ({parcourPickData, handleChange, error}) => {
           ) : (
             'Click here to select a parcour'
           )}
-        </PickParcourWrapper>
+        </PickUserWrapper>
         {error && <FormError>{error}</FormError>}
-      </PickParcourContainer>
-      <PickParcourModal
+      </PickUserContainer>
+      {/* <PickUserModal
         showModal={showModal}
         setShowModal={setShowModal}
         pickCallback={setParcourValue}
         filters={parcourPickData.filter}
-        />
+        /> */}
     </>
   )
 }

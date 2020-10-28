@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 export const useFilter = (filterFields) => {
   const [filter, setFilter] = useState(

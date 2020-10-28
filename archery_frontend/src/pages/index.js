@@ -8,7 +8,7 @@ import InfoCards from '../components/MainPage/InfoCards';
 import {
   AboutObject,
   HowObject,
-  CompanyObject, SsweObject, KlarObject 
+  SsweObject, KlarObject 
 } from '../Data/InfoSection';
 import { DevTeam } from '../Data/InfoCards';
 import Footer from '../components/MainPage/Footer';
