@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using _3dArcheryRepos.DatabaseContext;
 using Microsoft.AspNetCore.Builder;
@@ -11,11 +13,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace _3dArcheryApi
 {
     public class Startup
     {
+        private ConfigJson Config;
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,6 +40,8 @@ namespace _3dArcheryApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            InitConfig();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -44,7 +51,7 @@ namespace _3dArcheryApi
             {
                 ctx.Response.Headers["Access-Control-Allow-Credentials"] = "true";
                 ctx.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, DELETE, PUT, PATCH";
-                ctx.Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+                ctx.Response.Headers["Access-Control-Allow-Origin"] = Config.HostAddress;
 
                 await next.Invoke();
             });
@@ -57,6 +64,21 @@ namespace _3dArcheryApi
             {
                 endpoints.MapControllers();
             });
+        }
+        
+        private void InitConfig()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+            
+            string json;
+            using(var fs = File.OpenRead("config.json"))
+            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            this.Config = JsonConvert.DeserializeObject<ConfigJson>(json, settings);
         }
     }
 }

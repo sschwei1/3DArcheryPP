@@ -3,17 +3,11 @@ import {color, convertHexToRgba} from '../../../colors';
 import {MdClose} from 'react-icons/md';
 
 export const ModalWrapper = styled.div`
-  max-width: 800px;
-  width: 90%;
-  height: 90%;
-  box-shadow: 0 5px 16px ${convertHexToRgba(color.dark1.bg, 0.2)};
-  background: ${color.dark1.bg};
-  color: ${color.light1.fg};
-  position: relative;
-  z-index: 10;
-  border-radius: 10px;
-  padding: 20px;
-  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding-top: 20px;
+  height: 100%;
 `;
 
 export const CloseModalButton = styled(MdClose)`
@@ -25,6 +19,8 @@ export const CloseModalButton = styled(MdClose)`
   height: 32px;
   padding: 0;
   z-index: 10;
+
+  flex: 0 1 auto;
 `;
 
 export const ModalParcourWrappper = styled.div`
@@ -34,14 +30,24 @@ export const ModalParcourWrappper = styled.div`
   display:grid;
   grid-template-columns: 1fr 1fr;
   transition: all 0.2s ease;
+  flex: 0 1 auto;
 
-  ${({$disableHover}) => !$disableHover ? `
-    cursor: pointer;
+  ${({$light}) => ($light ? `
+    background: ${color.light1.bg};
+    color: ${color.dark1.fg};
+  ` : ``)}
 
-    &:hover{
-      background: ${convertHexToRgba(color.light1.fg, 0.3)};
-    }
-  ` : ``}
+  ${({$disableHover, $light}) => {
+    let col = $light ? 0.7 : 0.3;
+    return !$disableHover ? `
+      box-shadown: 0;
+      cursor: pointer;
+
+      &:hover{
+        box-shadow: inset 0 0 14px ${convertHexToRgba(color.dark1.bg, 0.7)};
+      }
+    ` : ``;
+  }}
 `;
 
 export const ModalParcourCol = styled.div`
@@ -53,6 +59,7 @@ export const ModalBtnWrapper = styled.div`
   width: 100%;
   justify-content: center;
   display: flex;
+  flex: 0 1 auto;
 `;
 
 export const ModalFilterWrapper = styled.div`
@@ -65,8 +72,11 @@ export const ModalFilterWrapper = styled.div`
 `;
 
 export const ModalListWrapper = styled.div`
-  max-height: 73%;
+  max-height: 72%;
   overflow: auto;
+  padding: 0 8px;
+  flex: 1 1 auto;
+  min-height: 80px;
 
   &::-webkit-scrollbar,
   &::-webkit-scrollbar-button {
@@ -96,4 +106,9 @@ export const ModalListWrapper = styled.div`
   &::-webkit-scrollbar-corner {
     background: transparent;
   }
+`;
+
+export const ModalLoadMoreCol = styled.div`
+  grid-column: 1/3;
+  text-align: center;
 `;

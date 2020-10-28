@@ -8,7 +8,8 @@ import {
   ModalParcourWrappper,
   ModalFilterWrapper,
   ModalParcourCol,
-  ModalListWrapper
+  ModalListWrapper,
+  ModalLoadMoreCol
 } from './PickerModalElements';
 import {
   FormInput,
@@ -81,7 +82,6 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
         </ModalParcourWrappper>
         <ModalListWrapper>
           {parcours?.map((parcour, index) => (
-            <>
             <ModalParcourWrappper
               key={index}
               onClick={() => {
@@ -94,150 +94,15 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
                   {parcour.location.name}
                 </ModalParcourCol>
             </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            <ModalParcourWrappper
-              key={index}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
-                <ModalParcourCol>
-                  {parcour.name}
-                </ModalParcourCol>
-                <ModalParcourCol>
-                  {parcour.location.name}
-                </ModalParcourCol>
-            </ModalParcourWrappper>
-            </>
           )) ?? ""}
-        </ModalListWrapper>
-        <ModalBtnWrapper>
-          <Button
-            $primary={true}
-            $dark={true}
+          <ModalParcourWrappper
             onClick={LoadMoreParcours}
-            >
-            Load More
-          </Button>
-        </ModalBtnWrapper>
+            $light={true}>
+            <ModalLoadMoreCol>
+              LoadMore
+            </ModalLoadMoreCol>
+          </ModalParcourWrappper>
+        </ModalListWrapper>
       </ModalWrapper>
     </Modal>
   )

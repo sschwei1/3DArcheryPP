@@ -13,6 +13,20 @@ const Container = styled.div`
   align-items: center;
 `;
 
+const ContainerInside = styled.div`
+  max-width: 800px;
+  width: 90%;
+  height: 90%;
+  box-shadow: 0 5px 16px ${convertHexToRgba(color.dark1.bg, 0.2)};
+  background: ${color.dark1.bg};
+  color: ${color.light1.fg};
+  position: relative;
+  z-index: 10;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 40px 20px;
+`;
+
 const Modal = ({showModal, setShowModal, children}) => {
   const modalRef = useRef();
 
@@ -54,7 +68,9 @@ const Modal = ({showModal, setShowModal, children}) => {
             ref={modalRef}
             onClick={closeModal}
             >
-            {children}
+            <ContainerInside>
+              {children}
+            </ContainerInside>
           </Container>
         </animated.div>
       ) : null}
