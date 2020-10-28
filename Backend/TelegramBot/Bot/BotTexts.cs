@@ -1,3 +1,4 @@
+using System.Runtime.Serialization.Json;
 using TelegramBot.Commands;
 
 namespace TelegramBot
@@ -18,6 +19,7 @@ namespace TelegramBot
         public const string DeactivateUser = "deactivate";
         public const string Aliases = "aliases";
         public const string CreateEvent = "createEvent";
+        public const string AbortEvent = "abortEvent";
     }
 
     public static class CommandAliases
@@ -30,6 +32,7 @@ namespace TelegramBot
         public static readonly string[] RemoveAdmin = {"deop", "muser"};
         public static readonly string[] Broadcast = {"bc"};
         public static readonly string[] Aliases = {"alias"};
+        public static readonly string[] CreateEvent = {"cevt"};
     }
     
     public static class BotMessages
@@ -73,7 +76,12 @@ namespace TelegramBot
         // create event
         public const string CreateEventNotFound = "Event with this code does not exist";
         public const string CreateUserHasEvent = "You already have a registered event, if you don't know about it, use /abortEvent";
-        
+        public const string CreateEventSuccess = "Event successfully binded to you";
+
+        // abort event
+        public const string AbortEventNoEvent = "You have no event which could be aborted.";
+        public const string AbortEventSuccess = "Successfully aborted your event";
+
         // descriptions
         public const string ListUserCommandDescription = "Prints a list of all users who wrote a message to the bot.";
         public const string StartCommandDescription = "########\nOur project is still in development feel free to register and help us out as a tester!\n########\n\nWelcome to our 3dArchery bot!\nThis bot is created by 3dium.\n\nYou can register yourself by sending following command: 'register <username>'\nThis will enable you to be signed up for events and gives you access to more commands.\n\nFor a list of available commands type 'commands'.\nIf you need help on how to use specific commands, try 'help <command>'\n\nThanks for using our bot!";
@@ -89,5 +97,6 @@ namespace TelegramBot
         public const string DeactivateUserCommandDescription = "Deactivate your user, so you will not receive any more messages. If you want to activate your account again, just register again.";
         public const string AliasesCommandDescription = "Returns a list of all aliases for a command.";
         public const string CreateEventDescription = "Bind your user to an event via it's eventCode";
+        public const string AbortEventDescription = "Abort the event you are binded to";
     }
 }

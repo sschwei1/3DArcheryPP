@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using _3dArcheryRepos.DatabaseContext;
 using _3dArcheryRepos.Helper;
 using _3dArcheryRepos.ServersideModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace _3dArcheryRepos
@@ -203,6 +204,54 @@ namespace _3dArcheryRepos
             return events.Count() != 0;
         }
 
+        public bool AddOwnerToEvent (long chatId, string eventCode)
+        {
+            var evt = Db.Events.SingleOrDefault(e => e.EventCode == eventCode && e.EndDate == null);
+            var usr = Db.Users.SingleOrDefault(e => e.ChatId == chatId);
+
+            if(evt != null && usr != null)
+            {
+                evt.OwnerId = usr.Id;
+                evt.StartTime = DateTime.UtcNow;
+                Db.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool AbortEvent(UserData user)
+        {
+
+            var usr = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == usr.Id && e.EndDate == null);
+
+            
+            Db.Events.Remove(evt);
+
+           
+                Db.SaveChanges();
+                return true;
+         
+        }
+
+
+        public List<UserData> GetUserFiltered(int filterFrom, int filterTo, string filterName)
+        {
+            var userList = Db.Users
+                .Where(e => (string.IsNullOrWhiteSpace(filterName) || e.Username.ToLower().Contains(filterName.ToLower())))
+                .Where(e => (e.Role != (int)UserRole.New))
+                .OrderBy(e => e.Username)
+                .Skip(filterFrom)
+                .Take(filterTo)
+                .Select(e => new UserData()
+                {
+                   ChatId = e.ChatId,
+                   Username = e.Username,
+                    
+                }).ToList();
+            return userList;
+        }
 
 
         public void Dispose()

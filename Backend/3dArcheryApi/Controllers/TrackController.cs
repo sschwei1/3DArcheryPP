@@ -106,6 +106,17 @@ namespace _3dArcheryApi.Controllers
 
             return new JsonResult(new JsonResponse<string>(eventCode));
         }
+
+        [HttpWeb.HttpGet]
+        public JsonResult GetUserFiltered([FromUri] int from, [FromUri] int to, [FromUri] string name = "")
+        {
+            var response = new JsonResponse();
+
+            using var repos = new ArcheryRepos();
+            var userList = repos.GetUserFiltered(from, to, name);
+
+            return new JsonResult(new JsonResponse<List<UserData>>(userList));
+        }
     }
 
    

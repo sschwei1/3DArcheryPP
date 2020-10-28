@@ -11,6 +11,7 @@ namespace TelegramBot.Commands
     {
         public CreateEventCommand(TelegramBot client) : base(client) { }
         public override string Name => CommandName.CreateEvent;
+        public override string[] Aliases => CommandAliases.CreateEvent;
         protected override UserRole RequiredRole => UserRole.Registered;
         protected override string Description => BotMessages.CreateEventDescription;
         protected override IEnumerable<CommandParameter> Parameters => new List<CommandParameter>() {
@@ -33,8 +34,8 @@ namespace TelegramBot.Commands
                 return;
             }
 
-            //repos.AddOwnerToEvent(user.ChatId, args[0]);
-            //await Client.SendMessage(user.ChatId, BotMessages.RegisterCommandRegistered + args[0]);
+            repos.AddOwnerToEvent(user.ChatId, args[0]);
+            await Client.SendMessage(user.ChatId, BotMessages.CreateEventSuccess);
         }
     }
 }
