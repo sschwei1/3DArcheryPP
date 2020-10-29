@@ -49,7 +49,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
           setLoadDiff(ret.payload.length);
         }
         else{
-          setParcours(undefined);
+          setParcours([]);
           setError(ret.error);
         }
       });

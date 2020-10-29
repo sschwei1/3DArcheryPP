@@ -11,8 +11,6 @@ const PickParcourField = ({parcourPickData, handleChange, error}) => {
   const [parcour, setParcour] = useState();
   const [showModal, setShowModal] = useState(false);
 
-  console.log("ERROR ##########", error);
-
   const openModal = () => {
     setShowModal(prev => !prev);
   };

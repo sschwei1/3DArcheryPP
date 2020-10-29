@@ -7,23 +7,23 @@ import {
 import { FormError } from '../CreateEventForm/FormElements';
 
 const PickUserField = ({userPickData, handleChange, error}) => {
-  const [userList, setUserList] = useState();
-  const [showModal, setShowModal] = useState(false);
+  // const [userList, setUserList] = useState();
+  // const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(prev => !prev);
-  };
+  // const openModal = () => {
+  //   setShowModal(prev => !prev);
+  // };
 
-  const setUserListValue = (data) => {
-    setUserList(data);
-    handleChange({target:{name:"eventUsers", value:data.id}});
-    setShowModal(false);
-  };
+  // const setUserListValue = (data) => {
+  //   setUserList(data);
+  //   handleChange({target:{name:"eventUsers", value:data.id}});
+  //   setShowModal(false);
+  // };
 
   return (
     <>
       <PickUserContainer>
-        <PickUserTitle>
+        {/* <PickUserTitle>
           {userPickData.title}
         </PickUserTitle>
         <PickUserWrapper
@@ -36,7 +36,7 @@ const PickUserField = ({userPickData, handleChange, error}) => {
             'Click here to select a parcour'
           )}
         </PickUserWrapper>
-        {error && <FormError>{error}</FormError>}
+        {error && <FormError>{error}</FormError>} */}
       </PickUserContainer>
       {/* <PickUserModal
         showModal={showModal}
