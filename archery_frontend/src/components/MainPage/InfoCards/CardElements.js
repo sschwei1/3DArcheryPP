@@ -1,9 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
-import {Link as LinkR} from 'react-router-dom';
 import {Link as LinkS} from 'react-scroll';
-import {color, convertHexToRgba} from '../../../colors';
-import { FaRegCaretSquareLeft } from 'react-icons/fa';
+import {color} from '../../../colors';
 
 export const CardContainer = styled.div`
   display: flex;

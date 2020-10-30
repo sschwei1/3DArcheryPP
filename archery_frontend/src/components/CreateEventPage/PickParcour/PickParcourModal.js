@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonDiv as Button } from '../../ButtonEelement';
 import Modal from '../../Modals/Modal';
 import {
   ModalWrapper,
   CloseModalButton,
-  ModalBtnWrapper,
   ModalParcourWrappper,
   ModalFilterWrapper,
   ModalParcourCol,
@@ -24,33 +22,49 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
   const [parcours, setParcours] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
-
-  useEffect(() => {
-    GetTracks(0, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
-      console.log(ret);
-      setParcours(ret);
-    });
-  }, [nameFilter, locationFilter]);
+  const [error, setError] = useState();
+  const [loadDiff, setLoadDiff] = useState(1);
 
   const LoadMoreParcours = () => {
     GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
-      console.log(ret);
-      setParcours(prev => prev.concat(ret))
+      if(ret.payload){
+        setParcours(prev => prev.concat(ret.payload));
+        setLoadDiff(ret.payload.length);
+        setError(undefined);
+      }
+      else{
+        setError(ret.error);
+      }
     });
   };
 
-  console.log(filters);
+  console.log("parcours", parcours);
+
+  useEffect(() => {
+    if(showModal){
+      GetTracks(0, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
+        if(ret.payload){
+          setParcours(ret.payload);
+          setError(undefined);
+          setLoadDiff(ret.payload.length);
+        }
+        else{
+          setParcours([]);
+          setError(ret.error);
+        }
+      });
+    }
+  }, [nameFilter, locationFilter, showModal]);
 
   filters[0].props.onChange=(e) => {
-    const {name, value} = e.target;
+    const {value} = e.target;
     setNameFilter(value);
   };
 
   filters[1].props.onChange=(e) => {
-    const {name, value} = e.target;
+    const {value} = e.target;
     setLocationFilter(value);
   };
-
 
   return (
     <Modal
@@ -84,6 +98,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
           {parcours?.map((parcour, index) => (
             <ModalParcourWrappper
               key={index}
+              $disableHover={false}
               onClick={() => {
                 pickCallback(parcour);
               }}>
@@ -96,10 +111,18 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
             </ModalParcourWrappper>
           )) ?? ""}
           <ModalParcourWrappper
-            onClick={LoadMoreParcours}
-            $light={true}>
+            onClick={loadDiff < ParcoursPerLoad ? null : LoadMoreParcours}
+            $light={true}
+            $disableHover={loadDiff < ParcoursPerLoad }
+            >
             <ModalLoadMoreCol>
-              LoadMore
+              {
+                error ?
+                  'An error occoured: ' + error :
+                  loadDiff < ParcoursPerLoad  ?
+                    'No more entries found' :
+                    'Load more'
+              }
             </ModalLoadMoreCol>
           </ModalParcourWrappper>
         </ModalListWrapper>

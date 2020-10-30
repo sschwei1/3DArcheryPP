@@ -5,8 +5,9 @@ import {
   PickParcourWrapper,
   PickParcourTitle
 } from './PickParcourElements';
+import { FormError } from '../CreateEventForm/FormElements';
 
-const PickParcourField = ({parcourPickData, handleChange}) => {
+const PickParcourField = ({parcourPickData, handleChange, error}) => {
   const [parcour, setParcour] = useState();
   const [showModal, setShowModal] = useState(false);
 
@@ -36,6 +37,7 @@ const PickParcourField = ({parcourPickData, handleChange}) => {
             'Click here to select a parcour'
           )}
         </PickParcourWrapper>
+        {error && <FormError>{error}</FormError>}
       </PickParcourContainer>
       <PickParcourModal
         showModal={showModal}

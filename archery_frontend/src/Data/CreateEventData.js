@@ -26,6 +26,9 @@ export const CreateEventData = {
     },
     trackId: {
       title: 'Track',
+      props:{
+        name: 'trackId'
+      },
       filter:[{
         label: 'Track Name',
         props:{
@@ -44,7 +47,14 @@ export const CreateEventData = {
           maxLength: '128',
           autoComplete: 'off'
         },
-      }]
+      }],
+      validator:{
+        rules:[{
+          checkError: (val) => !val,
+          error: (ctx) => `${ctx.title ?? 'Field'} is required`
+        }],
+        validate: validateFunc
+      }
     }
   }
 };
