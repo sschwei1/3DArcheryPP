@@ -78,7 +78,7 @@ namespace _3dArcheryApi.Controllers
             using var repos = new ArcheryRepos();
             var trackList = repos.GetTrackFiltered(filterFrom, filterTo, filterName, filterLocation);
             
-            return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList));
+            return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList.ToList()));
          }
 
         [HttpWeb.HttpPost]
@@ -102,9 +102,17 @@ namespace _3dArcheryApi.Controllers
             evt.CountTypeId = data.CountTypeId;
 
 
-            repos.CreateEvent(evt);
+           var eventId = repos.CreateEvent(evt);
 
-            //repos.AddEventUsers(data.EventUsers, );
+
+            var userList = repos.AddEventUsers(data.EventUsers, eventId);
+            var chatIdList = repos.GetChatIdsFromUserIds(userList);
+
+            if (BotHelper.TeleBot != null) {
+                Parallel.ForEach(chatIdList, chatId => {
+                    _ = BotHelper.TeleBot.SendMessage(chatId, "You are invited to an event type /accept to participate");
+                });
+            }
 
             
 
@@ -119,7 +127,7 @@ namespace _3dArcheryApi.Controllers
             using var repos = new ArcheryRepos();
             var userList = repos.GetUserFiltered(from, to, name);
 
-            return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList));
+            return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList.ToList()));
         }
     }
 

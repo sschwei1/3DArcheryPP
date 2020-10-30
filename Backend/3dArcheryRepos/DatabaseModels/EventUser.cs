@@ -9,6 +9,8 @@ namespace _3dArcheryRepos.DatabaseContext
     {
         [Key] public int Id { get; set; }
 
+        public bool HasAccepted { get; set; }
+
         [ForeignKey("User")]
         public int UserId { get; set; }
         public virtual DbUser User { get; set; }
