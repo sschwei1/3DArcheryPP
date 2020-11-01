@@ -11,9 +11,11 @@ import { useForm } from '../../../FormFunctions/useForm';
 import {validateForm} from '../../../FormFunctions/validateForm';
 import FormInputElem from './FormInput';
 import PickParcourField from '../PickParcour';
+import CountTypeSelectField from '../CountTypeSelect';
 import PickUserField from '../PickUser';
 
-const EventName = 'eventName';
+const EventName = 'name';
+const CountTypeField = 'countTypeId'
 const TrackField = 'trackId';
 
 const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
@@ -32,6 +34,11 @@ const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
             handleChange={handleChange}
             value={values[EventName]}
             error={errors[EventName]} />
+          <CountTypeSelectField
+            countTypeSelectData={formFields[CountTypeField]}
+            handleChange={handleChange}
+            error={errors[CountTypeField]}
+          />
           <PickParcourField
             handleChange={handleChange}
             parcourPickData={formFields[TrackField]}

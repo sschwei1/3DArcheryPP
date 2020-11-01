@@ -7,6 +7,7 @@ export const ModalWrapper = styled.div`
   flex-direction: column;
   overflow: auto;
   padding-top: 20px;
+  padding: 0 20px;
   height: 100%;
 `;
 
@@ -32,6 +33,8 @@ export const ModalParcourWrappper = styled.div`
   transition: all 0.2s ease;
   flex: 0 1 auto;
 
+  font-weight: ${({$bold}) => ($bold ? 'bold' : 'normal')};
+
   ${({$light}) => ($light ? `
     background: ${color.light1.bg};
     color: ${color.dark1.fg};
@@ -41,6 +44,7 @@ export const ModalParcourWrappper = styled.div`
     let col = $light ?
       convertHexToRgba(color.dark1.bg, 0.8):
       convertHexToRgba(color.light1.bg, 0.8);
+
     return !$disableHover ? `
       box-shadown: 0;
       cursor: pointer;
@@ -64,6 +68,13 @@ export const ModalBtnWrapper = styled.div`
   flex: 0 1 auto;
 `;
 
+export const ModalTitle = styled.h1`
+  text-align: center;
+  width: 100%;
+  margin-bottom: 24px;
+  color: ${color.light1.fg};
+`;
+
 export const ModalFilterWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -76,7 +87,6 @@ export const ModalFilterWrapper = styled.div`
 export const ModalListWrapper = styled.div`
   max-height: 72%;
   overflow: auto;
-  padding: 0 8px;
   flex: 1 1 auto;
   min-height: 80px;
 

@@ -7,7 +7,8 @@ import {
   ModalFilterWrapper,
   ModalParcourCol,
   ModalListWrapper,
-  ModalLoadMoreCol
+  ModalLoadMoreCol,
+  ModalTitle
 } from './PickerModalElements';
 import {
   FormInput,
@@ -16,7 +17,7 @@ import {
 } from '../CreateEventForm/FormElements';
 import { GetTracks } from '../../../apiRequests/trackRequests';
 
-const ParcoursPerLoad = 1;
+const ParcoursPerLoad = 5;
 
 const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
   const [parcours, setParcours] = useState([]);
@@ -76,6 +77,9 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
           aria-label='Close modal'
           onClick={() => setShowModal(false)}
           />
+        <ModalTitle>
+          Pick a track
+        </ModalTitle>
         <ModalFilterWrapper>
           {filters.map((filter, index) => (
             <FormInputWrapper key={index}>
@@ -86,7 +90,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
             </FormInputWrapper>
           ))}
         </ModalFilterWrapper>
-        <ModalParcourWrappper $disableHover={true}>
+        <ModalParcourWrappper $disableHover={true} $bold={true}>
           <ModalParcourCol>
             Parcour name
           </ModalParcourCol>
@@ -99,6 +103,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
             <ModalParcourWrappper
               key={index}
               $disableHover={false}
+              $bold={false}
               onClick={() => {
                 pickCallback(parcour);
               }}>

@@ -7,43 +7,43 @@ import {
 import { FormError } from '../CreateEventForm/FormElements';
 
 const PickUserField = ({userPickData, handleChange, error}) => {
-  // const [userList, setUserList] = useState();
-  // const [showModal, setShowModal] = useState(false);
+  const [userList, setUserList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-  // const openModal = () => {
-  //   setShowModal(prev => !prev);
-  // };
+  const openModal = () => {
+    setShowModal(prev => !prev);
+  };
 
-  // const setUserListValue = (data) => {
-  //   setUserList(data);
-  //   handleChange({target:{name:"eventUsers", value:data.id}});
-  //   setShowModal(false);
-  // };
+  const setUserListValue = (data) => {
+    setUserList(data);
+    handleChange({target:{name:"eventUsers", value:data.id}});
+    setShowModal(false);
+  };
 
   return (
     <>
       <PickUserContainer>
-        {/* <PickUserTitle>
+        <PickUserTitle>
           {userPickData.title}
         </PickUserTitle>
         <PickUserWrapper
           onClick={!showModal ? openModal : null}
-          $isSelected={!!parcour}
+          $isSelected={userList.length > 0}
           >
-          {parcour ? (
-            parcour.name
+          {userList.length > 0 ? (
+            userList.length + ' user selected'
           ) : (
-            'Click here to select a parcour'
+            'Click here to add user'
           )}
         </PickUserWrapper>
-        {error && <FormError>{error}</FormError>} */}
+        {error && <FormError>{error}</FormError>}
       </PickUserContainer>
-      {/* <PickUserModal
+      <PickUserModal
         showModal={showModal}
         setShowModal={setShowModal}
         pickCallback={setParcourValue}
         filters={parcourPickData.filter}
-        /> */}
+        />
     </>
   )
 }

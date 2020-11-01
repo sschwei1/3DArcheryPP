@@ -4,11 +4,11 @@ export const CreateEventData = {
   title: 'Create Event',
   buttonLabel: 'Submit',
   formFields: {
-    eventName: {
+    name: {
       label: 'Event Name',
       props:{
         type: 'text',
-        name: 'eventName',
+        name: 'name',
         placeholder: 'Event Name',
         maxLength: '64',
         autoComplete: 'off'
@@ -55,6 +55,27 @@ export const CreateEventData = {
         }],
         validate: validateFunc
       }
-    }
+    },
+    countTypeId: {
+      title: 'Count Type',
+      props: {
+        name: 'countTypeId'
+      },
+      selectFields:[{
+        name: '3 Shot',
+        id: 1,
+      },{
+        name: '2 Shot',
+        id: 2
+      }],
+      validator:{
+        rules:[{
+          checkError: (val) => !val,
+          error: (ctx) => `${ctx.title ?? 'Field'} is not selected`
+        }],
+        validate: validateFunc
+      }
+    },
+    // userList
   }
 };
