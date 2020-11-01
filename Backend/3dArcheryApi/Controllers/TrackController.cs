@@ -71,7 +71,7 @@ namespace _3dArcheryApi.Controllers
          */
 
         [HttpWeb.HttpGet]
-        public JsonResult GetTrackFiltered([FromUri]int filterFrom, [FromUri]int filterTo, [FromUri]string filterName = "", [FromUri]string filterLocation = "")
+        public JsonResult GetTrackFiltered([FromUri]int filterFrom, [FromUri]int filterTo, [FromUri]string filterName, [FromUri]string filterLocation)
          {
             var response = new JsonResponse();
 
@@ -112,12 +112,16 @@ namespace _3dArcheryApi.Controllers
         }
 
         [HttpWeb.HttpGet]
-        public JsonResult GetUserFiltered([FromUri] int from, [FromUri] int to, [FromUri] string name = "")
+        public JsonResult GetUserFiltered([FromUri] int from, [FromUri] int to, [FromUri] string name, [FromUri] string exceptIds)
         {
             var response = new JsonResponse();
-
+            var exceptIdsArray = exceptIds.Split(',')
+                .Select(e => int.TryParse(e, out var n) ? n : -1)
+                .Where(e => e >= 0)
+                .ToArray();
+            
             using var repos = new ArcheryRepos();
-            var userList = repos.GetUserFiltered(from, to, name);
+            var userList = repos.GetUserFiltered(from, to, name, exceptIdsArray);
 
             return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList));
         }

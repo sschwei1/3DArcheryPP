@@ -236,10 +236,11 @@ namespace _3dArcheryRepos
         }
 
 
-        public List<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName)
+        public List<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName, int[] except)
         {
             var userList = Db.Users
                 .Where(e => (string.IsNullOrWhiteSpace(filterName) || e.Username.ToLower().Contains(filterName.ToLower())))
+                .Where(e => except == null || except.Contains(e.Id))
                 .Where(e => (e.Role != (int)UserRole.New))
                 .OrderBy(e => e.Username)
                 .Skip(filterFrom)
@@ -248,7 +249,6 @@ namespace _3dArcheryRepos
                 {
                    Id = e.Id,
                    Username = e.Username,
-                    
                 }).ToList();
             return userList;
         }

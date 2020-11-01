@@ -89,7 +89,7 @@ namespace TelegramBot
         public const string CommandsCommandDescription = "Returns a list of all available commands for user.";
         public const string RegisterCommandDescription = "Register yourself in our 3dArchery program with a username.";
         public const string ChangeNicknameCommandDescription = "Change your nickname, used in Events";
-        public const string WebsiteCommandDescription = "Our website:\nhttp://sswe.me\n(will change to pp.sswe.me once our actual webserver is set up)";
+        public const string WebsiteCommandDescription = "Our website:\nhttp://3dium.digital";
         public const string ToggleLoggingDescription = "Toggles weather messages are logged or not";
         public const string MakeAdminCommandDescription = "Promotes user to admin.";
         public const string RemoveAdminCommandDescription = "Promotes user to admin.";
