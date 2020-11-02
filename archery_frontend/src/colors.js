@@ -13,7 +13,8 @@ export const color = {
     fg: '#E9EAED',
     bg: '#E9EAED'
   },
-  placeholder: '#595959'
+  placeholder: '#595959',
+  error: '#f00e0e'
 };
 
 export const convertHexToRgba = (hexCode,opacity) => {

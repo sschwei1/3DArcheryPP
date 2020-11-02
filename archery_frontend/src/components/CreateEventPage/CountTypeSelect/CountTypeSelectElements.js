@@ -4,7 +4,6 @@ import {color, convertHexToRgba} from '../../../colors';
 export const CountTypeWrapper = styled.div`
   color: ${color.light1.fg};
   width: 100%;
-  padding: 0 15px;
   margin-bottom: 1.2rem;
 `;
 

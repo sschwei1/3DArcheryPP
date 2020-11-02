@@ -4,6 +4,7 @@ import {
   PickUserWrapper,
   PickUserTitle
 } from './PickUserElements';
+import PickUserModal from './PickUserModal';
 import { FormError } from '../CreateEventForm/FormElements';
 
 const PickUserField = ({userPickData, handleChange, error}) => {
@@ -16,7 +17,7 @@ const PickUserField = ({userPickData, handleChange, error}) => {
 
   const setUserListValue = (data) => {
     setUserList(data);
-    handleChange({target:{name:"eventUsers", value:data.id}});
+    handleChange({target:{name:"userList", value:data.map(usr => usr.id).join(',')}});
     setShowModal(false);
   };
 
@@ -41,8 +42,8 @@ const PickUserField = ({userPickData, handleChange, error}) => {
       <PickUserModal
         showModal={showModal}
         setShowModal={setShowModal}
-        pickCallback={setParcourValue}
-        filters={parcourPickData.filter}
+        pickCallback={setUserListValue}
+        filters={userPickData.filter}
         />
     </>
   )

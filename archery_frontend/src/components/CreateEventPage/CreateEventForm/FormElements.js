@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {color} from '../../../colors'
+import {color, convertHexToRgba} from '../../../colors'
 
 export const SiteWrapper = styled.div`
   height: 100vh;
@@ -13,13 +13,46 @@ export const SiteWrapper = styled.div`
 
 export const FormContainer = styled.div`
   max-width: 1000px;
+  max-height: 90%;
+  overflow: auto;
   display: flex;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: 20px 30px;
   margin: auto 10%;
   border-radius: 10px;
   box-shadow: 0 5px 16px ${color.dark1.bg};
   background: ${color.dark1.bg};
+
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-button {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${convertHexToRgba(color.light1.bg, 0.7)};
+    border: 0;
+    border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb:hover,
+  &::-webkit-scrollbar-thumb:active {
+    background: ${convertHexToRgba(color.light1.bg, 0.9)};
+  }
+  &::-webkit-scrollbar-track {
+    background: ${convertHexToRgba(color.light1.bg, 0.2)};
+    border: solid 5px transparent;
+    border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-track:hover,
+  &::-webkit-scrollbar-track:active {
+    background: ${convertHexToRgba(color.light1.bg, 0.2)};
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+
 `;
 
 export const FormWrapper = styled.form`
@@ -37,7 +70,6 @@ export const FormTitle = styled.h1`
 
 export const FormInputWrapper = styled.div`
   width: 100%;
-  padding: 0 15px;
   grid-area: ${({$col}) => $col};
   margin-bottom: 1.2rem;
 `;
@@ -108,7 +140,9 @@ export const FormBodyWrapper = styled.div``;
 export const FormError = styled.p`
   font-size: 0.8rem;
   margin-top: 0.5rem;
-  color: #f00e0e;
+  color: ${color.error};
 `;
 
-export const FormBtnWrapper = styled.div``;
+export const FormBtnWrapper = styled.div`
+  width: 100%
+`;

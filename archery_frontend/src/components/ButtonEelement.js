@@ -17,6 +17,7 @@ export const ButtonScroll = styled(LinkS)`
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
+  ${({$maxWidth}) => ($maxWidth ? 'width: 100%;' : '')}
 
   &:hover {
     transition: all0.2s ease-in-out;
@@ -39,6 +40,7 @@ export const ButtonRoute = styled(LinkR)`
   align-items: center;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
+  ${({$maxWidth}) => ($maxWidth ? 'width: 100%;' : '')}
 
   &:hover {
     transition: all0.2s ease-in-out;
@@ -60,6 +62,7 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
+  ${({$maxWidth}) => ($maxWidth ? 'width: 100%;' : '')}
 
   &:hover {
     transition: all0.2s ease-in-out;
@@ -82,7 +85,9 @@ export const ButtonDiv = styled.div`
   align-items: center;
   transition: all 0.2s ease-in-out;
   display: inline-block;
-
+  text-align: center;
+  ${({$maxWidth}) => ($maxWidth ? 'width: 100%;' : '')}
+  
   &:hover {
     transition: all0.2s ease-in-out;
     background: ${({$primary}) => ($primary ? color.light1.bg : color.primary)};

@@ -76,6 +76,28 @@ export const CreateEventData = {
         validate: validateFunc
       }
     },
-    // userList
+    userList: {
+      title: 'User List',
+      props: {
+        name: 'userList'
+      },
+      filter:[{
+        label: 'Username',
+        props:{
+        type: 'text',
+          name: 'username',
+          placeholder: 'Username',
+          maxLength: '16',
+          autoComplete: 'off'
+        }
+      }],
+      validator:{
+        rules:[{
+          checkError: (val) => !val,
+          error: (ctx) => `No user selected`
+        }],
+        validate: validateFunc
+      }
+    }
   }
 };

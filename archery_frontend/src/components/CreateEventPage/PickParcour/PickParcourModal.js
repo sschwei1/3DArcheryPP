@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import Modal from '../../Modals/Modal';
 import {
   ModalWrapper,
   CloseModalButton,
-  ModalParcourWrappper,
+  ModalTitle,
   ModalFilterWrapper,
+  ModalListWrapper
+} from '../../Modals/ModalDefaultElements';
+import {
+  ModalParcourWrappper,
   ModalParcourCol,
-  ModalListWrapper,
   ModalLoadMoreCol,
-  ModalTitle
 } from './PickerModalElements';
 import {
   FormInput,
   FormInputWrapper,
   FormLabel
 } from '../CreateEventForm/FormElements';
-import { GetTracks } from '../../../apiRequests/trackRequests';
+import {GetTracks} from '../../../apiRequests/trackRequests';
 
 const ParcoursPerLoad = 5;
 
@@ -24,10 +27,15 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
   const [nameFilter, setNameFilter] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
   const [error, setError] = useState();
-  const [loadDiff, setLoadDiff] = useState(1);
+  const [loadDiff, setLoadDiff] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const LoadMoreParcours = () => {
-    GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
+  console.log("parcour render", parcours, nameFilter, locationFilter, error, loadDiff, isLoading);
+
+  const LoadMoreParcours = async () => {
+    setIsLoading(true);
+    await GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
+      setIsLoading(false);
       if(ret.payload){
         setParcours(prev => prev.concat(ret.payload));
         setLoadDiff(ret.payload.length);
@@ -39,20 +47,22 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
     });
   };
 
-  console.log("parcours", parcours);
-
   useEffect(() => {
     if(showModal){
+      setIsLoading(true);
       GetTracks(0, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
-        if(ret.payload){
-          setParcours(ret.payload);
-          setError(undefined);
-          setLoadDiff(ret.payload.length);
-        }
-        else{
-          setParcours([]);
-          setError(ret.error);
-        }
+        ReactDOM.unstable_batchedUpdates(() => {
+          setIsLoading(false);
+          if(ret.payload){
+            setParcours(ret.payload);
+            setError(undefined);
+            setLoadDiff(ret.payload.length);
+          }
+          else{
+            setParcours([]);
+            setError(ret.error);
+          }
+        });
       });
     }
   }, [nameFilter, locationFilter, showModal]);
@@ -80,7 +90,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
         <ModalTitle>
           Pick a track
         </ModalTitle>
-        <ModalFilterWrapper>
+        <ModalFilterWrapper $columns={2}>
           {filters.map((filter, index) => (
             <FormInputWrapper key={index}>
               <FormLabel htmlFor={filter.props.name}>
@@ -104,9 +114,8 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
               key={index}
               $disableHover={false}
               $bold={false}
-              onClick={() => {
-                pickCallback(parcour);
-              }}>
+              onClick={() => pickCallback(parcour)}
+              >
                 <ModalParcourCol>
                   {parcour.name}
                 </ModalParcourCol>
@@ -116,17 +125,19 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
             </ModalParcourWrappper>
           )) ?? ""}
           <ModalParcourWrappper
-            onClick={loadDiff < ParcoursPerLoad ? null : LoadMoreParcours}
+            onClick={loadDiff < ParcoursPerLoad || !isLoading ? null : LoadMoreParcours}
             $light={true}
-            $disableHover={loadDiff < ParcoursPerLoad }
+            $disableHover={ isLoading || loadDiff < ParcoursPerLoad }
             >
             <ModalLoadMoreCol>
               {
-                error ?
-                  'An error occoured: ' + error :
-                  loadDiff < ParcoursPerLoad  ?
-                    'No more entries found' :
-                    'Load more'
+                isLoading ?
+                  'Loading ...' :
+                  error ?
+                    'An error occoured: ' + error :
+                    loadDiff < ParcoursPerLoad  ?
+                      'No more entries found' :
+                      'Load more'
               }
             </ModalLoadMoreCol>
           </ModalParcourWrappper>

@@ -17,11 +17,12 @@ import PickUserField from '../PickUser';
 const EventName = 'name';
 const CountTypeField = 'countTypeId'
 const TrackField = 'trackId';
+const UserField = 'userList';
 
 const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
   const {handleChange, handleSubmit, values, errors} = useForm(formFields, validateForm, submitForm);
 
-  console.log("trackError", errors[TrackField]);
+  console.log("data", formFields);
   return (
     <SiteWrapper>
       <FormContainer>
@@ -43,12 +44,16 @@ const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
             handleChange={handleChange}
             parcourPickData={formFields[TrackField]}
             error={errors[TrackField]} />
-          <PickUserField />
+          <PickUserField
+            handleChange={handleChange}
+            userPickData={formFields[UserField]}
+            error={errors[UserField]} />
           <FormBtnWrapper>
             <Button
               type='submit'
               $primary={true}
-              $dark={true} >
+              $dark={true}
+              $maxWidth={true} >
               {buttonLabel}
             </Button>
           </FormBtnWrapper>
