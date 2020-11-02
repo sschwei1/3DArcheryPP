@@ -32,9 +32,9 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
 
   console.log("parcour render", parcours, nameFilter, locationFilter, error, loadDiff, isLoading);
 
-  const LoadMoreParcours = async () => {
+  const LoadMoreParcours = () => {
     setIsLoading(true);
-    await GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
+    GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
       setIsLoading(false);
       if(ret.payload){
         setParcours(prev => prev.concat(ret.payload));
@@ -66,6 +66,8 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
       });
     }
   }, [nameFilter, locationFilter, showModal]);
+
+  console.log(loadDiff < ParcoursPerLoad || !isLoading);
 
   filters[0].props.onChange=(e) => {
     const {value} = e.target;
@@ -125,7 +127,7 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
             </ModalParcourWrappper>
           )) ?? ""}
           <ModalParcourWrappper
-            onClick={loadDiff < ParcoursPerLoad || !isLoading ? null : LoadMoreParcours}
+            onClick={isLoading || loadDiff < ParcoursPerLoad ? null : LoadMoreParcours}
             $light={true}
             $disableHover={ isLoading || loadDiff < ParcoursPerLoad }
             >
