@@ -26,7 +26,8 @@ namespace TelegramBot.Commands
                 return;
             }
 
-            if (repos.AcceptEvent(user){
+            if (repos.AcceptEvent(user))
+            {
                 await Client.SendMessage(user.ChatId, BotMessages.AcceptEventSuccess);
             }
             else
