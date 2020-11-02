@@ -39,19 +39,24 @@ export const ModalUserListItem = styled.div`
 `;
 
 export const SelectedUserWrapper = styled.div`
-  border: 1px solid green;
+  border: 1px solid ${color.light1.bg};
+  border-radius: 5px;
   display: flex;
   justify-content: flex-start;
-  color: ${color.dark1.fg};
+  color: ${color.light1.fg};
+  padding: ${({$padding}) => ($padding ? '5px' : '0')};
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 `;
 
 export const SelectedUserElem = styled.div`
   background: ${color.light1.bg};
+  color: ${color.dark1.fg};
   padding: 5px 22px 5px 12px;
   border-radius: 200px;
   cursor: pointer;
   position: relative;
-  margin-right: 10px;
+  margin: 5px;
 
   &::after{
     content: 'x';

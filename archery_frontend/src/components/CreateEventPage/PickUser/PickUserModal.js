@@ -98,7 +98,12 @@ const PickUserModal = ({showModal, setShowModal, pickCallback, filters}) => {
         <ModalTitle>
           Pick Users
         </ModalTitle>
-        <SelectedUserWrapper>
+        <FormLabel>
+          Selected Users
+        </FormLabel>
+        <SelectedUserWrapper
+          $padding={selectedUsers?.length === 0} >
+          {selectedUsers?.length === 0 ? 'No user selected' : ''}
           {selectedUsers?.map((user, index) => (
             <SelectedUserElem
               key={index}
