@@ -123,7 +123,7 @@ namespace _3dArcheryApi.Controllers
         public JsonResult GetUserFiltered([FromUri] int from, [FromUri] int to, [FromUri] string name, [FromUri] string exceptIds)
         {
             var response = new JsonResponse();
-            var exceptIdsArray = exceptIds.Split(',')
+            var exceptIdsArray = (exceptIds ?? "").Split(',')
                 .Select(e => int.TryParse(e, out var n) ? n : -1)
                 .Where(e => e >= 0)
                 .ToArray();
