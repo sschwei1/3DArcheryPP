@@ -77,14 +77,14 @@ namespace _3dArcheryApi.Controllers
 
             using var repos = new ArcheryRepos();
             var trackList = repos.GetTrackFiltered(filterFrom, filterTo, filterName, filterLocation);
-
-            return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList));
+            
+            return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList.ToList()));
          }
 
         [HttpWeb.HttpPost]
         public JsonResult CreateEvent([HttpMvc.FromBody]CreateEventGetDataModel data)
         {
-
+            
             DateTime creationDate = DateTime.Now;
 
             var eventCode = StringHelper.RandomString(6);
@@ -102,11 +102,19 @@ namespace _3dArcheryApi.Controllers
             evt.CountTypeId = data.CountTypeId;
 
 
-            repos.CreateEvent(evt);
-
-            //repos.AddEventUsers(data.EventUsers, );
+           var eventId = repos.CreateEvent(evt);
 
 
+            var userList = repos.AddEventUsers(data.EventUsers, eventId);
+            var chatIdList = repos.GetChatIdsFromUserIds(userList);
+
+            if (BotHelper.TeleBot != null) {
+                Parallel.ForEach(chatIdList, chatId => {
+                    _ = BotHelper.TeleBot.SendMessage(chatId, "You are invited to an event type /accept to participate");
+                });
+            }
+
+            
 
             return new JsonResult(new JsonResponse<string>(eventCode));
         }
@@ -123,9 +131,9 @@ namespace _3dArcheryApi.Controllers
             using var repos = new ArcheryRepos();
             var userList = repos.GetUserFiltered(from, to, name, exceptIdsArray);
 
-            return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList));
+            return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList.ToList()));
         }
     }
 
-
+   
 }

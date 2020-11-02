@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
 
 namespace _3dArcheryRepos.DatabaseContext
@@ -47,6 +48,11 @@ namespace _3dArcheryRepos.DatabaseContext
 
             modelBuilder.Entity<DbUserPoints>()
                 .HasKey(x => new {x.EventUserId, x.TargetId});
+
+            var countType = modelBuilder.Entity<DbCountType>();
+            countType.HasData(new DbCountType() { Id = 1, Name = "3 Shot" });
+            countType.HasData(new DbCountType() { Id = 2, Name = "2 Shot" });
+
         }
         private void InitConfig()
         {

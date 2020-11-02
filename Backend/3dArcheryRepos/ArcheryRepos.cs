@@ -64,7 +64,7 @@ namespace _3dArcheryRepos
         public UserData GetUserByName(string name)
         {
             var user = Db.Users.SingleOrDefault(e => e.Username == name);
-            
+
             if (user == null)
                 return null;
 
@@ -142,7 +142,7 @@ namespace _3dArcheryRepos
             var location = new DbLocation()
             {
                 Name = locationData.Name
-                
+
             };
 
             Db.Locations.Add(location);
@@ -151,7 +151,7 @@ namespace _3dArcheryRepos
             return true;
         }
 
-        public List<TrackMinModel> GetTrackFiltered(int filterFrom, int filterTo, string filterName, string filterLocation)
+        public IEnumerable<TrackMinModel> GetTrackFiltered(int filterFrom, int filterTo, string filterName, string filterLocation)
         {
             var trackList = Db.Tracks
                 .Where(e =>
@@ -170,11 +170,11 @@ namespace _3dArcheryRepos
                         Id = e.Location.Id,
                         Name = e.Location.Name
                     }
-                }).ToList();
+                });
             return trackList;
         }
 
-        public bool CreateEvent(CreateEventModel evt)
+        public int CreateEvent(CreateEventModel evt)
         {
             var evnt = new DbEvent()
             {
@@ -185,11 +185,12 @@ namespace _3dArcheryRepos
                 CountTypeId = evt.CountTypeId,
             };
 
-            Db.Events.Add(evnt);    
+            Db.Events.Add(evnt);
 
             Db.SaveChanges();
 
-            return true;
+
+            return evnt.Id;
         }
 
         public bool UserHasEvent(long chatId)
@@ -212,7 +213,7 @@ namespace _3dArcheryRepos
             if(evt != null && usr != null)
             {
                 evt.OwnerId = usr.Id;
-                evt.StartTime = DateTime.UtcNow;
+
                 Db.SaveChanges();
                 return true;
             }
@@ -226,17 +227,17 @@ namespace _3dArcheryRepos
             var usr = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
             var evt = Db.Events.SingleOrDefault(e => e.OwnerId == usr.Id && e.EndDate == null);
 
-            
+
             Db.Events.Remove(evt);
 
-           
+
                 Db.SaveChanges();
                 return true;
-         
+
         }
 
 
-        public List<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName, int[] except)
+        public IEnumerable<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName, int[] except)
         {
             var userList = Db.Users
                 .Where(e => (string.IsNullOrWhiteSpace(filterName) || e.Username.ToLower().Contains(filterName.ToLower())))
@@ -248,16 +249,61 @@ namespace _3dArcheryRepos
                 .Select(e => new GetUserFilteredModel()
                 {
                    Id = e.Id,
-                   Username = e.Username,
-                }).ToList();
+                   Username = e.Username
+                });
             return userList;
         }
 
-        public bool AddEventUsers (List<int> users, int trackId)
+        public IEnumerable<int> AddEventUsers (List<int> users, int eventId)
         {
-            return true;
+            var evtUsers = users.Select(usrId => new DbEventUser()
+            {
+                UserId = usrId,
+                EventId = eventId,
+                HasAccepted = false
+            });
+
+            Db.EventUsers.AddRange(evtUsers);
+
+            Db.SaveChanges();
+
+
+            return evtUsers.Select(e => e.UserId);
         }
 
+        public IEnumerable<long> GetChatIdsFromUserIds(IEnumerable<int> userId)
+        {
+            return Db.Users.Where(e => userId.Contains(e.Id)).Select(e => e.ChatId);
+        }
+
+
+        public bool UserHasInvite(long chatId)
+        {
+            var user = Db.Users.SingleOrDefault(e => e.ChatId == chatId);
+
+            var invites = Db.EventUsers.Include(e => e.Event).SingleOrDefault(e => e.UserId == user.Id && e.HasAccepted == false && e.Event.StartTime == null);
+            return invites != null;
+        }
+
+        public bool AcceptEvent(UserData user)
+        {
+            var usr = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
+
+            var evtusr = Db.EventUsers.Include(e =>e.Event).SingleOrDefault(e => e.UserId == usr.Id && e.Event.StartTime == null);
+
+
+            if (evtusr != null)
+            {
+                evtusr.HasAccepted=true;
+
+                Db.SaveChanges();
+                return true;
+            }
+
+            return false;
+
+
+        }
 
         public void Dispose()
         {
