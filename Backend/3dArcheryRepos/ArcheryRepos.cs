@@ -267,7 +267,8 @@ namespace _3dArcheryRepos
                 .Include(e => e.User)
                 .Include(e => e.Event)
                 .Where(e => users.Contains(e.UserId) && e.Event.EndDate == null)
-                .Select(e => e.UserId);
+                .Select(e => e.UserId)
+                .ToList();
             
             var evtUsers = users.Except(excludeUsers).Select(usrId => new DbEventUser()
             {
