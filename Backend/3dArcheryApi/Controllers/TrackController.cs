@@ -133,6 +133,18 @@ namespace _3dArcheryApi.Controllers
 
             return new JsonResult(new JsonResponse<List<GetUserFilteredModel>>(userList.ToList()));
         }
+
+        [HttpWeb.HttpGet]
+        public JsonResult GetToken([FromUri] string shortToken)
+        {
+            var response = new JsonResponse();
+            using var repos = new ArcheryRepos();
+
+            var token = repos.GetToken(shortToken);
+
+
+            return new JsonResult(new JsonResponse<string>(token));
+        }
     }
 
    

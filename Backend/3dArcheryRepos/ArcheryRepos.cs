@@ -336,6 +336,18 @@ namespace _3dArcheryRepos
             return null;
         }
 
+        public string GetToken(string shortToken)
+        {
+            string token = Db.Users
+               .SingleOrDefault(e =>
+                   e.ShortToken.ToLower() == shortToken.ToLower()
+                   )?.Token??"";
+              
+               
+
+            return token;
+        }
+
         public void Dispose()
         {
 
