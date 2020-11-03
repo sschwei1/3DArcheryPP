@@ -21,6 +21,7 @@ namespace TelegramBot
         public const string CreateEvent = "createEvent";
         public const string AbortEvent = "abortEvent";
         public const string AcceptEvent = "accept";
+        public const string GenerateToken = "generateToken";
     }
 
     public static class CommandAliases
@@ -35,6 +36,7 @@ namespace TelegramBot
         public static readonly string[] Aliases = {"alias"};
         public static readonly string[] CreateEvent = {"cevt"};
         public static readonly string[] AcceptEvent = { "ac" };
+        public static readonly string[] GenerateToken = { "gentok" };
     }
     
     public static class BotMessages
@@ -69,6 +71,10 @@ namespace TelegramBot
         
         // deactivate user command
         public const string DeactivateUserMessage = "Your account was successfully deactivated, if you wish to participate in further events, just register again.\nThank you for using our tool!";
+
+        // generate short token
+        public const string TokenGenerated = "Your Token: ";
+        public const string NotAOwner = "You are not binded to any event!";
 
         // console returns
         public const string ConsoleChangeNickname = "Console nick can't be changed.";
@@ -106,5 +112,6 @@ namespace TelegramBot
         public const string CreateEventDescription = "Bind your user to an event via it's eventCode";
         public const string AbortEventDescription = "Abort the event you are binded to";
         public const string AcceptEventDescription = "Accept event invite";
+        public const string GenerateTokenDescription = "Generate Token to start your event";
     }
 }

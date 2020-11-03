@@ -13,5 +13,10 @@ namespace _3dArcheryRepos.DatabaseContext
         [MaxLength(16)]
         public string Username { get; set; }
         public int Role { get; set; }
+
+        [MaxLength(32)]
+        public string Token { get; set; }
+
+        public string ShortToken { get; set; }
     }
 }
