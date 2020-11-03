@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Cors;
 namespace _3dArcheryApi.Controllers
 {
     [HttpMvc.ApiController]
-    [Microsoft.AspNetCore.Mvc.Route("[controller]/[action]")]
+    [HttpMvc.Route("[controller]/[action]")]
     public class TrackController : HttpMvc.ControllerBase
     {
         [HttpWeb.HttpPost]
@@ -80,7 +80,8 @@ namespace _3dArcheryApi.Controllers
             
             return new JsonResult(new JsonResponse<List<TrackMinModel>>(trackList.ToList()));
          }
-
+        
+        
         [HttpWeb.HttpPost]
         public JsonResult CreateEvent([HttpMvc.FromBody]CreateEventGetDataModel data)
         {
