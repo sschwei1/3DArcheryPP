@@ -11,7 +11,7 @@ namespace _3dArcheryApi.Response
     {
         public JsonResponse()
         {
-            this.Status = "Ok";
+            this.Status = "OK";
             this.StatusCode = 200;
         }
 

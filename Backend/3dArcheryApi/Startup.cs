@@ -19,7 +19,11 @@ namespace _3dArcheryApi
 {
     public class Startup
     {
+        private readonly string AllowSpecificOrigins = "_allowSpecificOrigins";
+
+        
         private ConfigJson Config;
+        
         
         public Startup(IConfiguration configuration)
         {
@@ -31,7 +35,14 @@ namespace _3dArcheryApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000");
+                    });
+            });
             
             services.AddControllers();
             services.AddDbContext<ArcheryDb>();
@@ -51,12 +62,12 @@ namespace _3dArcheryApi
             {
                 ctx.Response.Headers["Access-Control-Allow-Credentials"] = "true";
                 ctx.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, DELETE, PUT, PATCH";
-                ctx.Response.Headers["Access-Control-Allow-Origin"] = Config.HostAddress;
-
                 await next.Invoke();
             });
+
             
             app.UseRouting();
+            app.UseCors(AllowSpecificOrigins);
 
             app.UseAuthorization();
             
