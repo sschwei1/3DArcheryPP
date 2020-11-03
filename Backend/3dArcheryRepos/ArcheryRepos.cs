@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using _3dArcheryRepos.DatabaseContext;
 using _3dArcheryRepos.Helper;
@@ -239,19 +240,23 @@ namespace _3dArcheryRepos
 
         public IEnumerable<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName, int[] except)
         {
-            var userList = Db.Users
-                .Where(e => (string.IsNullOrWhiteSpace(filterName) || e.Username.ToLower().Contains(filterName.ToLower())))
-                .Where(e => except == null || !except.Contains(e.Id))
-                .Where(e => (e.Role != (int)UserRole.New))
-                .OrderBy(e => e.Username)
-                .Skip(filterFrom)
-                .Take(filterTo)
+            var userList = (
+                from usr in Db.Users
+                join eu in Db.EventUsers on usr.Id equals eu.UserId into joinTbl
+                from evtUsr in joinTbl.DefaultIfEmpty()
+                where string.IsNullOrEmpty(filterName) || usr.Username.ToLower().Contains(filterName.ToLower())
+                where except == null || !except.Contains(usr.Id)
+                where usr.Role != (int) UserRole.New
+                where evtUsr == null || (evtUsr.HasAccepted && evtUsr.Event.EndDate != null)
+                orderby usr
+                select usr)
+                .Skip(filterFrom).Take(filterTo)
                 .Select(e => new GetUserFilteredModel()
                 {
-                   Id = e.Id,
-                   Username = e.Username
+                    Id = e.Id,
+                    Username = e.Username
                 });
-            
+
             return userList;
         }
 

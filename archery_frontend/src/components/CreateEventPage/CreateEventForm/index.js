@@ -22,7 +22,6 @@ const UserField = 'userList';
 const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
   const {handleChange, handleSubmit, values, errors} = useForm(formFields, validateForm, submitForm);
 
-  console.log("data", formFields);
   return (
     <SiteWrapper>
       <FormContainer>
