@@ -35,6 +35,10 @@ export const ModalUserListItem = styled.div`
 
   @media screen and (max-width: 768px){
     text-align: center;
+
+    &:hover{
+      box-shadow: 0;
+    }
   }
 `;
 

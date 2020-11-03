@@ -9,7 +9,6 @@ export const useFilter = (filterFields) => {
   );
   
   const handleFilterChange = e => {
-    console.log(filter);
     const {name, value} = e.target;
     setFilter({
       ...filter,

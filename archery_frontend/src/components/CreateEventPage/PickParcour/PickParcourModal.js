@@ -30,8 +30,6 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
   const [loadDiff, setLoadDiff] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("parcour render", parcours, nameFilter, locationFilter, error, loadDiff, isLoading);
-
   const LoadMoreParcours = () => {
     setIsLoading(true);
     GetTracks(parcours.length, ParcoursPerLoad, nameFilter, locationFilter).then((ret) => {
@@ -66,8 +64,6 @@ const PickParcourModal = ({showModal, setShowModal, pickCallback, filters}) => {
       });
     }
   }, [nameFilter, locationFilter, showModal]);
-
-  console.log(loadDiff < ParcoursPerLoad || !isLoading);
 
   filters[0].props.onChange=(e) => {
     const {value} = e.target;

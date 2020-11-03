@@ -35,8 +35,6 @@ const PickUserModal = ({showModal, setShowModal, pickCallback, filters}) => {
   const [loadDiff, setLoadDiff] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("render user modal");
-
   const LoadMoreUser = () => {
     setIsLoading(true);
     GetUsers(loadedUsers.length, UsersPerLoad, nameFilter, selectedUsers).then((ret) => {
