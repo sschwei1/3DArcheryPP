@@ -263,7 +263,13 @@ namespace _3dArcheryRepos
 
         public IEnumerable<int> AddEventUsers (List<int> users, int eventId)
         {
-            var evtUsers = users.Select(usrId => new DbEventUser()
+            var excludeUsers = Db.EventUsers
+                .Include(e => e.User)
+                .Include(e => e.Event)
+                .Where(e => users.Contains(e.UserId) && e.Event.EndDate == null)
+                .Select(e => e.UserId);
+            
+            var evtUsers = users.Except(excludeUsers).Select(usrId => new DbEventUser()
             {
                 UserId = usrId,
                 EventId = eventId,

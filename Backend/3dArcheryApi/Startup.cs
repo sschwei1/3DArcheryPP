@@ -61,12 +61,15 @@ namespace _3dArcheryApi
             app.Use(async (ctx, next) =>
             {
                 ctx.Response.Headers["Access-Control-Allow-Credentials"] = "true";
-                ctx.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, DELETE, PUT, PATCH";
+                ctx.Response.Headers["Access-Control-Allow-Headers"] = "*";
+                ctx.Response.Headers["Access-Control-Allow-Methods"] = "*";
+
                 await next.Invoke();
             });
 
             
             app.UseRouting();
+            
             app.UseCors(AllowSpecificOrigins);
 
             app.UseAuthorization();

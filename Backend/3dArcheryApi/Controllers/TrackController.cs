@@ -85,13 +85,9 @@ namespace _3dArcheryApi.Controllers
         [HttpWeb.HttpPost]
         public JsonResult CreateEvent([HttpMvc.FromBody]CreateEventGetDataModel data)
         {
-            
             DateTime creationDate = DateTime.Now;
 
             var eventCode = StringHelper.RandomString(6);
-
-
-
 
             using var repos = new ArcheryRepos();
 
@@ -101,19 +97,17 @@ namespace _3dArcheryApi.Controllers
             evt.CreationDate = creationDate;
             evt.EventCode = eventCode;
             evt.CountTypeId = data.CountTypeId;
-
-
+            
            var eventId = repos.CreateEvent(evt);
 
+           var userList = repos.AddEventUsers(data.EventUsers, eventId);
+           var chatIdList = repos.GetChatIdsFromUserIds(userList);
 
-            var userList = repos.AddEventUsers(data.EventUsers, eventId);
-            var chatIdList = repos.GetChatIdsFromUserIds(userList);
-
-            if (BotHelper.TeleBot != null) {
-                Parallel.ForEach(chatIdList, chatId => {
-                    _ = BotHelper.TeleBot.SendMessage(chatId, "You are invited to an event type /accept to participate");
-                });
-            }
+           if (BotHelper.TeleBot != null) {
+               Parallel.ForEach(chatIdList, chatId => {
+                   _ = BotHelper.TeleBot.SendMessage(chatId, "You are invited to an event type /accept to participate");
+               });
+           }
 
             
 
