@@ -93,6 +93,7 @@ namespace _3dArcheryRepos
 
             dbUser.Role = (int)UserRole.Registered;
             dbUser.Username = username;
+            dbUser.Token = StringHelper.RandomString(32);
             Db.SaveChanges();
             return true;
         }
@@ -306,8 +307,33 @@ namespace _3dArcheryRepos
 
         }
 
+        public bool UserIsOwner(long chatId)
+        {
+            var user = Db.Users.SingleOrDefault(e => e.ChatId == chatId);
+
+            var owner = Db.Events.Where(e => e.Owner.ChatId == chatId && e.EndDate == null);
+            return owner.Count() != 0;
+        }
+
+        public DbUser GenerateShortToken(UserData user)
+        {
+            var usr = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
+
+           
+
+            if (usr != null)
+            {
+                usr.ShortToken = StringHelper.RandomString(6);
+
+                Db.SaveChanges();
+                return usr;
+            }
+            return null;
+        }
+
         public void Dispose()
         {
+
             Db.Dispose();
         }
     }
