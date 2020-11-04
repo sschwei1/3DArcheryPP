@@ -184,17 +184,28 @@ namespace _3dArcheryApi.Controllers
         }
 
         [HttpWeb.HttpPost]
-        public JsonResult UpdateTarget([FromUri] string token, int userId, int trackId)
+        public JsonResult UpdateTarget([HttpMvc.FromBody] UpdateTargetModel data)
         {
             using var repos = new ArcheryRepos();
-            repos.UpdateTarget(token, userId, trackId);
+
+            if(repos.TokenIsAllowed(data.Token))
+            {
+                repos.UpdateTarget(data);
+                return new JsonResult(new JsonResponse());
+            }
+            return new JsonResult(new JsonResponse() { Status = "Token not permitted", StatusCode = 404 });
         }
 
         [HttpWeb.HttpGet]
-        public JsonResult EndEvent([FromUri] int eventId)
+        public JsonResult EndEvent([FromUri] string token)
         {
             using var repos = new ArcheryRepos();
-            repos.EndEvent(eventId);
+            if (repos.TokenIsAllowed(token))
+            {
+                var data = repos.EndEvent(token);
+                return new JsonResult(new JsonResponse<IEnumerable<EndEventModel>>(data));
+            }
+            return new JsonResult(new JsonResponse() { Status = "Token not permitted", StatusCode = 404 });
         }
 
 
