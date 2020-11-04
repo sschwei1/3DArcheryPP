@@ -393,6 +393,71 @@ namespace _3dArcheryRepos
             return evtusers;
         }
 
+        public StartEventResponseModel StartEvent(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null);
+            var evtusers = Db.EventUsers.Include(e => e.User).Where(e => e.EventId == evt.Id)
+                .Select(e => new UserMinModel
+                {
+                    Id = e.Id,
+                    Name = e.User.Username
+                });
+
+
+            var track = Db.Tracks.SingleOrDefault(e => e.Id == evt.TrackId);
+
+            var targets = Db.TrackTargets.Include(e => e.Target).Include(e => e.Target.Type).Where(e => e.TrackId == track.Id)
+                .Select(e => new TargetMinModel()
+                {
+                    Id = e.TargetId,
+                    Name = e.Target.Type.Name,
+                    Size = e.Target.Size
+
+                }) ;
+           
+
+            var trackData = new TrackStartEventModel();
+            trackData.Id = track.Id;
+            trackData.Name = track.Name;
+           
+
+
+
+            var evtData = new StartEventResponseModel();
+            evtData.Users = evtusers.ToList();
+            evtData.Targets = targets.ToList();
+            evtData.CountType = evt.CountTypeId;
+            evtData.TrackInfo = trackData;
+
+            return evtData;
+            
+        }
+
+        public bool CheckEventForUsers(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null);
+
+            var evtusers = Db.EventUsers.Include(e => e.User).Where(e => e.EventId == evt.Id && e.HasAccepted == false);
+            Db.EventUsers.RemoveRange(evtusers);
+
+
+            Db.SaveChanges();
+
+
+            return Db.EventUsers.FirstOrDefault(e=> e.EventId == evt.Id) != null;
+        }
+
+        public bool DeleteEvent(string token)
+        {
+
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            Db.Events.Remove(Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null));
+
+            return true;
+
+        }
 
         public void Dispose()
         {

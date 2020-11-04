@@ -162,6 +162,28 @@ namespace _3dArcheryApi.Controllers
 
             return new JsonResult(new JsonResponse<List<GetEventUsersModel>>(users.ToList()));
         }
+
+        [HttpWeb.HttpGet]
+        public JsonResult StartEvent([FromUri] string token)
+        {
+            using var repos = new ArcheryRepos();
+
+            if(repos.CheckEventForUsers(token))
+            {
+                var evtData = repos.StartEvent(token);
+                return new JsonResult(new JsonResponse<StartEventResponseModel>(evtData));
+            }
+            
+            
+                repos.DeleteEvent(token);
+                return new JsonResult(new JsonResponse() { Status = "Event deleted", StatusCode = 404 });
+            
+           
+
+           
+        }
+
+
     }
 
    
