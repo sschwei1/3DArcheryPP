@@ -343,6 +343,7 @@ namespace _3dArcheryRepos
             if (usr != null)
             {
                 usr.ShortToken = StringHelper.RandomString(6);
+                usr.ShortTokenCreationDate = DateTime.UtcNow;
 
                 Db.SaveChanges();
                 return usr;
@@ -352,10 +353,21 @@ namespace _3dArcheryRepos
 
         public string GetToken(string shortToken)
         {
-            string token = Db.Users
-               .SingleOrDefault(e =>
-                   e.ShortToken.ToLower() == shortToken.ToLower()
-                   )?.Token??"";
+            string token = null;
+            var user = Db.Users.SingleOrDefault(e => e.ShortToken == shortToken);
+
+            var now = DateTime.UtcNow.AddMinutes(-10);
+            
+           
+            if(now < user.ShortTokenCreationDate)
+            {
+                token = Db.Users
+                        .SingleOrDefault(e =>
+                         e.ShortToken.ToLower() == shortToken.ToLower()
+                         )?.Token ?? "";
+            }
+
+           
               
                
 

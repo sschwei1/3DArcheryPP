@@ -18,5 +18,7 @@ namespace _3dArcheryRepos.DatabaseContext
         public string Token { get; set; }
 
         public string ShortToken { get; set; }
+
+        public DateTime ShortTokenCreationDate { get; set; }
     }
 }
