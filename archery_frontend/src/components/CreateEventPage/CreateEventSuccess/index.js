@@ -19,16 +19,16 @@ const CreateEventSuccess = ({payload, error}) => {
       <InfoContainer>
         <Title>
           {
-            payload?.eventCreated ?
+            payload ?
               'Your Event Code' :
               'An error occured:'
           }
         </Title>
         {
-          payload?.eventCreated ? (
+          payload ? (
             <>
               <EventCodeField>
-                {payload.message}
+                {payload}
               </EventCodeField>
               <BtnWrapper>
                 <Button
@@ -44,9 +44,7 @@ const CreateEventSuccess = ({payload, error}) => {
           ) : (
             <Info>
               {
-                error ?
-                  error :
-                  payload.message
+                error
               }
             </Info>
           )
