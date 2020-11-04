@@ -183,6 +183,20 @@ namespace _3dArcheryApi.Controllers
            
         }
 
+        [HttpWeb.HttpPost]
+        public JsonResult UpdateTarget([FromUri] string token, int userId, int trackId)
+        {
+            using var repos = new ArcheryRepos();
+            repos.UpdateTarget(token, userId, trackId);
+        }
+
+        [HttpWeb.HttpGet]
+        public JsonResult EndEvent([FromUri] int eventId)
+        {
+            using var repos = new ArcheryRepos();
+            repos.EndEvent(eventId);
+        }
+
 
     }
 

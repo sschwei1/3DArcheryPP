@@ -430,6 +430,8 @@ namespace _3dArcheryRepos
             evtData.CountType = evt.CountTypeId;
             evtData.TrackInfo = trackData;
 
+            Db.SaveChanges();
+
             return evtData;
             
         }
@@ -455,6 +457,24 @@ namespace _3dArcheryRepos
             var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
             Db.Events.Remove(Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null));
 
+            return true;
+
+        }
+
+        public bool UpdateTarget(string token, int userId, int trackId)
+        {
+
+           
+
+            return true;
+
+        }
+
+        public bool EndEvent(int eventId)
+        {
+
+
+            var evnt = Db.Events.SingleOrDefault(e => e.Id == eventId);
             return true;
 
         }
