@@ -288,7 +288,6 @@ namespace _3dArcheryRepos
 
             Db.SaveChanges();
 
-
             return evtUsers.Select(e => e.UserId);
         }
 

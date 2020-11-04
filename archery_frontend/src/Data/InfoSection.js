@@ -10,7 +10,7 @@ export const AboutObject = {
   buttonLink: 'howto',
   buttonPageLink: true,
   imgStart: false,
-  img: require('../images/archery_no_bg_test.png'),
+  img: require('../images/archery_no_bg_test.png').default,
   alt: 'archer'
 };
 
@@ -29,7 +29,7 @@ export const HowObject = {
   buttonLink: '/howto',
   buttonPageLink: false,
   imgStart: true,
-  img: require('../images/setup_guide.svg'),
+  img: require('../images/setup_guide.svg').default,
   alt: 'guide'
 };
 
@@ -57,7 +57,7 @@ export const SsweObject = {
   buttonLink: 'devteam',
   buttonPageLink: true,
   imgStart: true,
-  img: require('../images/sswe_profile_medium.png'),
+  img: require('../images/sswe_profile_medium.png').default,
   alt: 'archery'
 };
 
@@ -71,6 +71,6 @@ export const KlarObject = {
   buttonLink: 'devteam',
   buttonPageLink: true,
   imgStart: false,
-  img: require('../images/klar_profile_medium.png'),
+  img: require('../images/klar_profile_medium.png').default,
   alt: 'archery'
 };

@@ -32,7 +32,7 @@ const Navbar = ({toggle}) => {
       <Nav $scrollNav={scrollNav}>
         <NavbarContainer>
           <NavLogoLink to='welcome' {...scrollProps}>
-            <NavLogo src={require('../../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
+            <NavLogo src={require('../../../images/logos/logo_transparent_no_name_swapped_colors.png').default} />
             3dium
           </NavLogoLink>
           <MobileIcon onClick={toggle}>
