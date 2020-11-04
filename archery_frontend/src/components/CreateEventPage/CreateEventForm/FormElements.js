@@ -151,6 +151,7 @@ export const NavBtn = styled(ButtonRoute)`
   color: ${color.light1.fg};
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   border-radius: 0;
   box-shadow: 0;

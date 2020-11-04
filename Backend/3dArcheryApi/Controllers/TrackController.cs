@@ -115,11 +115,14 @@ namespace _3dArcheryApi.Controllers
                    });
            }
 
-           var response = !idList.Any()
-               ? new CreateEventResponse() {EventCreated = false, Message = "You have to select Users in order to create an event!"}
-               : new CreateEventResponse() {EventCreated = true, Message = eventCode};
-           
-           return new JsonResult(new JsonResponse<CreateEventResponse>(response));
+           if (idList.Any())
+           {
+               return new JsonResult(new JsonResponse<string>(eventCode));
+           }
+           else
+           {
+               return new JsonResult(new JsonResponse(){Status = "You have to select Users in order to create an event!", StatusCode = 404});
+           }
         }
 
         [HttpWeb.HttpGet]
