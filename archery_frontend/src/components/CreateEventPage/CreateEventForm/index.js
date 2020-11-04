@@ -5,7 +5,8 @@ import {
   FormContainer,
   FormWrapper,
   FormTitle,
-  FormBtnWrapper
+  FormBtnWrapper,
+  NavBtn
 } from './FormElements';
 import { useForm } from '../../../FormFunctions/useForm';
 import {validateForm} from '../../../FormFunctions/validateForm';
@@ -17,13 +18,16 @@ import PickUserField from '../PickUser';
 const EventName = 'name';
 const CountTypeField = 'countTypeId'
 const TrackField = 'trackId';
-const UserField = 'userList';
+const UserField = 'eventUsers';
 
 const CreateEventForm = ({title, buttonLabel, formFields, submitForm}) => {
   const {handleChange, handleSubmit, values, errors} = useForm(formFields, validateForm, submitForm);
 
   return (
     <SiteWrapper>
+      <NavBtn to='/event'>
+        Already created an event?
+      </NavBtn>
       <FormContainer>
         <FormWrapper onSubmit={handleSubmit}>
           <FormTitle>

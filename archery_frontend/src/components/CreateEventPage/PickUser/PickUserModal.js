@@ -23,7 +23,7 @@ import {
   ButtonDiv as Button
 } from '../../ButtonEelement';
 
-import { GetUsers } from '../../../apiRequests/trackRequests';
+import { GetUsers } from '../../../apiRequests/apiRequests';
 
 const UsersPerLoad = 5;
 
@@ -51,7 +51,9 @@ const PickUserModal = ({showModal, setShowModal, pickCallback, filters}) => {
   };
 
   const AddSelectedUser = (user) => {
-    setSelectedUsers(prev => prev.concat(user));
+    if(selectedUsers.filter(usr => usr.id === user.id).length === 0){
+      setSelectedUsers(prev => prev.concat(user));
+    }
   };
 
   const RemoveSelectedUser = (user) => {

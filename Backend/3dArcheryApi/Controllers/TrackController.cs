@@ -103,15 +103,23 @@ namespace _3dArcheryApi.Controllers
            var userList = repos.AddEventUsers(data.EventUsers, eventId);
            var chatIdList = repos.GetChatIdsFromUserIds(userList);
 
-           if (BotHelper.TeleBot != null) {
-               Parallel.ForEach(chatIdList, chatId => {
-                   _ = BotHelper.TeleBot.SendMessage(chatId, "You are invited to an event type /accept to participate");
-               });
+           var idList = chatIdList as long[] ?? chatIdList.ToArray();
+           
+           if (BotHelper.TeleBot != null && idList.Any())
+           {
+               Parallel.ForEach(idList,
+                   chatId =>
+                   {
+                       _ = BotHelper.TeleBot.SendMessage(chatId,
+                           "You are invited to an event type /accept to participate");
+                   });
            }
 
-            
-
-            return new JsonResult(new JsonResponse<string>(eventCode));
+           var response = !idList.Any()
+               ? new CreateEventResponse() {EventCreated = false, Message = "You have to select Users in order to create an event!"}
+               : new CreateEventResponse() {EventCreated = true, Message = eventCode};
+           
+           return new JsonResult(new JsonResponse<CreateEventResponse>(response));
         }
 
         [HttpWeb.HttpGet]

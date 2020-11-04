@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import { CreateEvent } from '../apiRequests/apiRequests';
 
 export const useForm = (formFields, validate, callback) => {
   const [values, setValues] = useState(
@@ -15,6 +16,7 @@ export const useForm = (formFields, validate, callback) => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitEnable, setSubmitEnable] = useState(true);
 
   const handleChange = e => {
     const {name, value} = e.target;
@@ -27,13 +29,16 @@ export const useForm = (formFields, validate, callback) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    setErrors(validate(values, formFields));
-    setIsSubmitting(true);
+    if(submitEnable){
+      setErrors(validate(values, formFields));
+      setIsSubmitting(true);
+    }
   };
 
   useEffect(() => {
     if(Object.keys(errors).length === 0 && isSubmitting){
-      callback();
+      setSubmitEnable(false);
+      callback(values);
     }
   }, [errors, callback, isSubmitting]);
 

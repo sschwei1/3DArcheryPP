@@ -76,10 +76,10 @@ export const CreateEventData = {
         validate: validateFunc
       }
     },
-    userList: {
+    eventUsers: {
       title: 'User List',
       props: {
-        name: 'userList'
+        name: 'eventUsers'
       },
       filter:[{
         label: 'Username',

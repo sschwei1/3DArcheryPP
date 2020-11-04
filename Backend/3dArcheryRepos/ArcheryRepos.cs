@@ -269,7 +269,7 @@ namespace _3dArcheryRepos
                 .Where(e => users.Contains(e.UserId) && e.Event.EndDate == null)
                 .Select(e => e.UserId)
                 .ToList();
-            
+
             var evtUsers = users.Except(excludeUsers).Select(usrId => new DbEventUser()
             {
                 UserId = usrId,
@@ -277,7 +277,14 @@ namespace _3dArcheryRepos
                 HasAccepted = false
             });
 
-            Db.EventUsers.AddRange(evtUsers);
+            if (evtUsers.Count() > 0)
+            {
+                Db.EventUsers.AddRange(evtUsers);
+            }
+            else
+            {
+                Db.Events.Remove(Db.Events.SingleOrDefault(e => e.Id == eventId));
+            }
 
             Db.SaveChanges();
 

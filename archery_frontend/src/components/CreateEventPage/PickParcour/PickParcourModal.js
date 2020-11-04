@@ -18,7 +18,7 @@ import {
   FormInputWrapper,
   FormLabel
 } from '../CreateEventForm/FormElements';
-import {GetTracks} from '../../../apiRequests/trackRequests';
+import {GetTracks} from '../../../apiRequests/apiRequests';
 
 const ParcoursPerLoad = 5;
 

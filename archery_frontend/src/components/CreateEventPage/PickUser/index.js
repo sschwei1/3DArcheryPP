@@ -17,7 +17,7 @@ const PickUserField = ({userPickData, handleChange, error}) => {
 
   const setUserListValue = (data) => {
     setUserList(data);
-    handleChange({target:{name:"userList", value:data.map(usr => usr.id).join(',')}});
+    handleChange({target:{name:"eventUsers", value:data.map(usr => usr.id)}});
     setShowModal(false);
   };
 

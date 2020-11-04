@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import {color, convertHexToRgba} from '../../../colors'
+import {color, convertHexToRgba} from '../../../colors';
+import { ButtonRoute } from '../../ButtonEelement';
 
 export const SiteWrapper = styled.div`
   height: 100vh;
@@ -51,8 +52,6 @@ export const FormContainer = styled.div`
   &::-webkit-scrollbar-corner {
     background: transparent;
   }
-
-
 `;
 
 export const FormWrapper = styled.form`
@@ -144,5 +143,20 @@ export const FormError = styled.p`
 `;
 
 export const FormBtnWrapper = styled.div`
-  width: 100%
+  width: 100%;
+`;
+
+export const NavBtn = styled(ButtonRoute)`
+  background: ${color.dark1.bg};
+  color: ${color.light1.fg};
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: 0;
+
+  &:hover{
+    background: ${color.dark1.bg};
+    box-shadow: inset 0 0 14px ${convertHexToRgba(color.light1.bg, 0.7)};
+  }
 `;
