@@ -329,7 +329,7 @@ namespace _3dArcheryRepos
         {
             var user = Db.Users.SingleOrDefault(e => e.ChatId == chatId);
 
-            var owner = Db.Events.Where(e => e.Owner.ChatId == chatId && e.EndDate == null);
+            var owner = Db.Events.Where(e => e.Owner.ChatId == chatId && e.StartTime == null);
             return owner.Count() != 0;
         }
 
@@ -341,7 +341,13 @@ namespace _3dArcheryRepos
 
             if (usr != null)
             {
-                usr.ShortToken = StringHelper.RandomString(6);
+                string shortToken;
+                do
+                {
+                    shortToken = StringHelper.RandomString(6);
+                } while (Db.Users.Any(e => e.ShortToken == shortToken));
+
+                usr.ShortToken = shortToken;
                 usr.ShortTokenCreationDate = DateTime.UtcNow;
 
                 Db.SaveChanges();
@@ -352,25 +358,158 @@ namespace _3dArcheryRepos
 
         public string GetToken(string shortToken)
         {
-            string token = null;
-            var user = Db.Users.SingleOrDefault(e => e.ShortToken == shortToken);
-
-            var now = DateTime.UtcNow.AddMinutes(-10);
-            
            
-            if(now < user.ShortTokenCreationDate)
-            {
-                token = Db.Users
+            var user = Db.Users
                         .SingleOrDefault(e =>
                          e.ShortToken.ToLower() == shortToken.ToLower()
-                         )?.Token ?? "";
-            }
+                         );
 
-           
-              
+            var now = DateTime.UtcNow.AddMinutes(-10);
+
+
+            string token = user?.ShortTokenCreationDate != null
+                           && user.ShortTokenCreationDate > now ?
+                           user.Token : null;
                
-
+            
             return token;
+        }
+
+        public IEnumerable<GetEventUsersModel> GetEventUsers(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null);
+
+            var evtusers = Db.EventUsers.Include(e=>e.User).Where(e => e.EventId == evt.Id)
+
+                .Select(e => new GetEventUsersModel()
+                {
+                    Id = e.User.Id,
+                    Name = e.User.Username,
+                    HasAccepted = e.HasAccepted
+                });
+
+            return evtusers;
+        }
+
+        public StartEventResponseModel StartEvent(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null);
+            var evtusers = Db.EventUsers.Include(e => e.User).Where(e => e.EventId == evt.Id)
+                .Select(e => new UserMinModel
+                {
+                    Id = e.Id,
+                    Name = e.User.Username
+                });
+
+
+            var track = Db.Tracks.SingleOrDefault(e => e.Id == evt.TrackId);
+
+            var targets = Db.TrackTargets.Include(e => e.Target).Include(e => e.Target.Type).Where(e => e.TrackId == track.Id)
+                .Select(e => new TargetMinModel()
+                {
+                    Id = e.TargetId,
+                    Name = e.Target.Type.Name,
+                    Size = e.Target.Size
+
+                }) ;
+           
+
+            var trackData = new TrackStartEventModel();
+            trackData.Id = track.Id;
+            trackData.Name = track.Name;
+           
+
+
+
+            var evtData = new StartEventResponseModel();
+            evtData.Users = evtusers.ToList();
+            evtData.Targets = targets.ToList();
+            evtData.CountType = evt.CountTypeId;
+            evtData.TrackInfo = trackData;
+
+            evt.StartTime = DateTime.UtcNow;
+
+            Db.SaveChanges();
+
+            return evtData;
+            
+        }
+
+        public bool CheckEventForUsers(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null);
+
+            var evtusers = Db.EventUsers.Include(e => e.User).Where(e => e.EventId == evt.Id && e.HasAccepted == false);
+            Db.EventUsers.RemoveRange(evtusers);
+
+
+            Db.SaveChanges();
+
+
+            return Db.EventUsers.FirstOrDefault(e=> e.EventId == evt.Id) != null;
+        }
+
+        public bool DeleteEvent(string token)
+        {
+
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            Db.Events.Remove(Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null));
+
+            return true;
+
+        }
+
+        public bool UpdateTarget(UpdateTargetModel data)
+        {
+
+            var eventUserId = Db.EventUsers.SingleOrDefault(e => e.UserId == data.UserId);
+
+
+            var userPoint = new DbUserPoints()
+            {
+               
+            EventUserId = data.UserId,
+            TargetId = data.targetId,
+            Points = data.points
+
+            };
+
+            Db.UserPoints.Add(userPoint);
+            Db.SaveChanges();
+
+            return true;
+
+        }
+
+        public IEnumerable<EndEventModel> EndEvent(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.EndDate == null);
+
+            var data = Db.UserPoints.Include(e=>e.EventUser).Include(e=>e.EventUser.User).Where(e => e.EventUser.EventId == evt.Id)
+                      .GroupBy(e=>e.EventUser)
+                      .Select(e=>new EndEventModel { 
+                      
+                          UserId = e.Key.UserId,
+                          Username = e.Key.User.Username,
+                          Points = e.Sum(e=>e.Points)
+
+                      
+                      });
+            return data;
+
+        }
+
+        public bool TokenIsAllowed(string token)
+        {
+
+            var user = Db.Users.SingleOrDefault(e => e.Token == token);
+
+            var owner = Db.Events.Where(e => e.OwnerId == user.Id && e.EndDate == null);
+            return owner.Count() != 0;
         }
 
         public void Dispose()

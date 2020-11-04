@@ -152,6 +152,63 @@ namespace _3dArcheryApi.Controllers
 
             return new JsonResult(new JsonResponse<string>(token));
         }
+
+        [HttpWeb.HttpGet]
+        public JsonResult GetEventUser([FromUri] string token)
+        {
+            using var repos = new ArcheryRepos();
+
+            var users = repos.GetEventUsers(token);
+
+            return new JsonResult(new JsonResponse<List<GetEventUsersModel>>(users.ToList()));
+        }
+
+        [HttpWeb.HttpGet]
+        public JsonResult StartEvent([FromUri] string token)
+        {
+            using var repos = new ArcheryRepos();
+
+            if(repos.CheckEventForUsers(token))
+            {
+                var evtData = repos.StartEvent(token);
+                return new JsonResult(new JsonResponse<StartEventResponseModel>(evtData));
+            }
+            
+            
+                repos.DeleteEvent(token);
+                return new JsonResult(new JsonResponse() { Status = "Event deleted", StatusCode = 404 });
+            
+           
+
+           
+        }
+
+        [HttpWeb.HttpPost]
+        public JsonResult UpdateTarget([HttpMvc.FromBody] UpdateTargetModel data)
+        {
+            using var repos = new ArcheryRepos();
+
+            if(repos.TokenIsAllowed(data.Token))
+            {
+                repos.UpdateTarget(data);
+                return new JsonResult(new JsonResponse());
+            }
+            return new JsonResult(new JsonResponse() { Status = "Token not permitted", StatusCode = 404 });
+        }
+
+        [HttpWeb.HttpGet]
+        public JsonResult EndEvent([FromUri] string token)
+        {
+            using var repos = new ArcheryRepos();
+            if (repos.TokenIsAllowed(token))
+            {
+                var data = repos.EndEvent(token);
+                return new JsonResult(new JsonResponse<IEnumerable<EndEventModel>>(data));
+            }
+            return new JsonResult(new JsonResponse() { Status = "Token not permitted", StatusCode = 404 });
+        }
+
+
     }
 
    
