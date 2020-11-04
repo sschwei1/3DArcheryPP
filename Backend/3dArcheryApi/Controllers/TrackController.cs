@@ -152,6 +152,16 @@ namespace _3dArcheryApi.Controllers
 
             return new JsonResult(new JsonResponse<string>(token));
         }
+
+        [HttpWeb.HttpGet]
+        public JsonResult GetEventUser([FromUri] string token)
+        {
+            using var repos = new ArcheryRepos();
+
+            var users = repos.GetEventUsers(token);
+
+            return new JsonResult(new JsonResponse<List<GetEventUsersModel>>(users.ToList()));
+        }
     }
 
    

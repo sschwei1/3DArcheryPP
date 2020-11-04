@@ -342,7 +342,13 @@ namespace _3dArcheryRepos
 
             if (usr != null)
             {
-                usr.ShortToken = StringHelper.RandomString(6);
+                string shortToken;
+                do
+                {
+                    shortToken = StringHelper.RandomString(6);
+                } while (Db.Users.Any(e => e.ShortToken == shortToken));
+
+                usr.ShortToken = shortToken;
                 usr.ShortTokenCreationDate = DateTime.UtcNow;
 
                 Db.SaveChanges();
@@ -353,26 +359,40 @@ namespace _3dArcheryRepos
 
         public string GetToken(string shortToken)
         {
-            string token = null;
-            var user = Db.Users.SingleOrDefault(e => e.ShortToken == shortToken);
-
-            var now = DateTime.UtcNow.AddMinutes(-10);
-            
            
-            if(now < user.ShortTokenCreationDate)
-            {
-                token = Db.Users
+            var user = Db.Users
                         .SingleOrDefault(e =>
                          e.ShortToken.ToLower() == shortToken.ToLower()
-                         )?.Token ?? "";
-            }
+                         );
 
-           
-              
+            var now = DateTime.UtcNow.AddMinutes(-10);
+
+
+            string token = user?.ShortTokenCreationDate != null
+                           && user.ShortTokenCreationDate > now ?
+                           user.Token : null;
                
-
+            
             return token;
         }
+
+        public IEnumerable<GetEventUsersModel> GetEventUsers(string token)
+        {
+            var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
+            var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null);
+
+            var evtusers = Db.EventUsers.Include(e=>e.User).Where(e => e.EventId == evt.Id)
+
+                .Select(e => new GetEventUsersModel()
+                {
+                    Id = e.User.Id,
+                    Name = e.User.Username,
+                    HasAccepted = e.HasAccepted
+                });
+
+            return evtusers;
+        }
+
 
         public void Dispose()
         {
