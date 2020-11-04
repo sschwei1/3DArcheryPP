@@ -28,7 +28,7 @@ const CreateEventSuccess = ({payload, error}) => {
           payload ? (
             <>
               <EventCodeField>
-                {payload.message}
+                {payload}
               </EventCodeField>
               <BtnWrapper>
                 <Button

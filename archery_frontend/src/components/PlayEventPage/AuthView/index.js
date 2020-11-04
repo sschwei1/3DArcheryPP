@@ -9,6 +9,8 @@ import {
 const AuthView = ({callback = () => {}}) => {
   const [authToken, setAuthToken] = useState('');
   const [authError, setAuthError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  
   const handleChange = (e) => {
     setAuthToken(e.target.value.toUpperCase());
   }
@@ -19,7 +21,9 @@ const AuthView = ({callback = () => {}}) => {
     }
     else{
       setAuthError(undefined);
+      setIsLoading(true);
       GetAuthToken(authToken).then(ret => {
+        setIsLoading(false);
         if(ret.payload){
           callback(ret.payload);
         }
@@ -54,8 +58,8 @@ const AuthView = ({callback = () => {}}) => {
           $primary={true}
           $dark={true}
           $maxWidth={true}
-          onClick={handleSubmit} >
-          Start your event
+          onClick={isLoading ? null : handleSubmit} >
+          {isLoading ? 'Loading' : 'Start your event'}
         </ButtonDiv>
       </FormBtnWrapper>
     </AuthWrapper>

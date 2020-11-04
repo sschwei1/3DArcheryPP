@@ -353,9 +353,8 @@ namespace _3dArcheryRepos
         public string GetToken(string shortToken)
         {
             string token = Db.Users
-               .SingleOrDefault(e =>
-                   e.ShortToken.ToLower() == shortToken.ToLower()
-                   )?.Token??"";
+               .SingleOrDefault(e => e.ShortToken.ToLower() == shortToken.ToLower())
+               ?.Token;
               
                
 

@@ -1,7 +1,7 @@
 import { CheckResponse } from "./errorHandling";
 
-// export const apiDomain = 'http://3dium.digital/api';
-export const apiDomain = 'http://localhost:5000';
+export const apiDomain = 'http://3dium.digital/api';
+// export const apiDomain = 'http://localhost:5000';
 
 export const GetTracks = (from, to, filterName = '', filterLocation = '') => {  
   return fetch(`${apiDomain}/track/GetTrackFiltered?filterFrom=${from}&filterTo=${to}&filterName=${filterName}&filterLocation=${filterLocation}`)

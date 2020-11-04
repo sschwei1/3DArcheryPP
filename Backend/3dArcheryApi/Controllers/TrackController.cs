@@ -119,10 +119,8 @@ namespace _3dArcheryApi.Controllers
            {
                return new JsonResult(new JsonResponse<string>(eventCode));
            }
-           else
-           {
-               return new JsonResult(new JsonResponse(){Status = "You have to select Users in order to create an event!", StatusCode = 404});
-           }
+
+           return new JsonResult(new JsonResponse(){Status = "You have to select Users in order to create an event!", StatusCode = 404});
         }
 
         [HttpWeb.HttpGet]
@@ -143,11 +141,14 @@ namespace _3dArcheryApi.Controllers
         [HttpWeb.HttpGet]
         public JsonResult GetToken([FromUri] string shortToken)
         {
-            var response = new JsonResponse();
             using var repos = new ArcheryRepos();
 
             var token = repos.GetToken(shortToken);
 
+            if (token == null)
+            {
+                return new JsonResult(new JsonResponse(){Status = "No user with this token found", StatusCode = 404});
+            }
 
             return new JsonResult(new JsonResponse<string>(token));
         }
