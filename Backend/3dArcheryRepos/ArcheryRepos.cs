@@ -507,7 +507,7 @@ namespace _3dArcheryRepos
                     UserId = e.Key.UserId,
                     Username = e.Key.User.Username,
                     Points = e.Sum(x=> x.Points)
-                });
+                }).ToList();
             Console.WriteLine(JsonSerializer.Serialize(data));
             return data;
         }
