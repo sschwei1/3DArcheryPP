@@ -469,7 +469,8 @@ namespace _3dArcheryRepos
         public bool UpdateTarget(UpdateTargetModel data)
         {
 
-            var eventUser = Db.EventUsers.SingleOrDefault(e => e.UserId == data.UserId);
+            var eventUser = Db.EventUsers.Include(e=>e.Event)
+                .SingleOrDefault(e => e.UserId == data.UserId && e.Event.StartTime != null && e.Event.EndDate == null);
             var userPoint = Db.UserPoints
                 .FirstOrDefault(e => e.EventUserId == eventUser.Id && e.TargetId == data.TargetId);
 
