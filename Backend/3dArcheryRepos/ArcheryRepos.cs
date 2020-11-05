@@ -469,16 +469,15 @@ namespace _3dArcheryRepos
         public bool UpdateTarget(UpdateTargetModel data)
         {
 
-            var eventUserId = Db.EventUsers.SingleOrDefault(e => e.UserId == data.UserId);
-
+            var eventUser = Db.EventUsers.SingleOrDefault(e => e.UserId == data.UserId);
             var userPoint = Db.UserPoints
-                .FirstOrDefault(e => e.EventUserId == eventUserId.Id && e.TargetId == data.TargetId);
+                .FirstOrDefault(e => e.EventUserId == eventUser.Id && e.TargetId == data.TargetId);
 
             if (userPoint == null)
             {
                 Db.UserPoints.Add(new DbUserPoints() 
                 {
-                    EventUserId = data.UserId,
+                    EventUserId = eventUser.Id,
                     TargetId = data.TargetId,
                     Points = data.Points
                 });
