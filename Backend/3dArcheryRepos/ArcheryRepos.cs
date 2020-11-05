@@ -497,17 +497,25 @@ namespace _3dArcheryRepos
         {
             var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
             var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.EndDate == null);
+            var data = Db.EventUsers.Include(e => e.User).Where(e => e.EventId == evt.Id)
+                .Select(e => new EndEventModel()
+                {
+                    UserId = e.UserId,
+                    Username = e.User.Username,
+                    Points = Db.UserPoints.Where(x => x.EventUserId == e.Id).Select(e => e.Points).Sum()
+                });
 
-            var data = Db.UserPoints
-                .Include(e=>e.EventUser)
-                .Include(e=>e.EventUser.User)
-                .Where(e => e.EventUser.EventId == evt.Id)
-                .GroupBy(e=>e.EventUser)
-                .Select(e=>new EndEventModel {
-                    UserId = e.Key.UserId,
-                    Username = e.Key.User.Username,
-                    Points = e.Sum(x=> x.Points)
-                }).ToList();
+
+            // var evtUsers = Db.UserPoints
+            //     .Include(e=>e.EventUser)
+            //     .Include(e=>e.EventUser.User)
+            //     .Where(e => e.EventUser.EventId == evt.Id)
+            //     .GroupBy(e=>e.EventUser)
+            //     .Select(e=>new EndEventModel {
+            //         UserId = e.Key.UserId,
+            //         Username = e.Key.User.Username,
+            //         Points = e.Sum(x=> x.Points)
+            //     }).ToList();
             Console.WriteLine(JsonSerializer.Serialize(data));
             return data;
         }
