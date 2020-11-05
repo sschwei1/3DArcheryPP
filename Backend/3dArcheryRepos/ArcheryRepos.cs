@@ -132,10 +132,18 @@ namespace _3dArcheryRepos
                 LocationId = trackData.LocationId,
                 Name = trackData.Name,
                 CreationDate = DateTime.UtcNow
+                
             };
 
             Db.Tracks.Add(track);
 
+            Db.SaveChanges();
+            Db.TrackTargets.AddRange(trackData.Targets.Select(e => new DbTrackTarget() {
+            
+                TargetId = e,
+                TrackId = track.Id
+            
+            }));
             Db.SaveChanges();
             return true;
         }
@@ -534,6 +542,39 @@ namespace _3dArcheryRepos
 
             var owner = Db.Events.Where(e => e.OwnerId == user.Id && e.EndDate == null);
             return owner.Count() != 0;
+        }
+
+        public IEnumerable<GetTargetsModel> GetTargets()
+        {
+            var targets = Db.Targets.Include(e=>e.Type)
+                .Select(e => new GetTargetsModel() { 
+                
+                Id = e.Id,
+                Name = e.Type.Name,
+                Size = e.Size
+                });
+
+            return targets;
+        }
+
+        public bool DeclineEvent(UserData user)
+        {
+            var usr = Db.Users.SingleOrDefault(e => e.ChatId == user.ChatId);
+
+            var evtusr = Db.EventUsers.Include(e => e.Event).SingleOrDefault(e => e.UserId == usr.Id && e.Event.StartTime == null);
+
+
+            if (evtusr != null)
+            {
+                Db.EventUsers.Remove(evtusr);
+
+                Db.SaveChanges();
+                return true;
+            }
+
+            return false;
+
+
         }
 
         public void Dispose()
