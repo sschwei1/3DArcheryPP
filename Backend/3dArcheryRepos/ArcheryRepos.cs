@@ -499,17 +499,13 @@ namespace _3dArcheryRepos
             var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.EndDate == null);
 
             var data = Db.UserPoints.Include(e=>e.EventUser).Include(e=>e.EventUser.User).Where(e => e.EventUser.EventId == evt.Id)
-                      .GroupBy(e=>e.EventUser)
-                      .Select(e=>new EndEventModel { 
-                      
-                          UserId = e.Key.UserId,
-                          Username = e.Key.User.Username,
-                          Points = e.Sum(e=>e.Points)
-
-                      
-                      });
+              .GroupBy(e=>e.EventUser)
+              .Select(e=>new EndEventModel {
+                  UserId = e.Key.UserId,
+                  Username = e.Key.User.Username,
+                  Points = e.Sum(x=>x.Points)
+              });
             return data;
-
         }
 
         public bool TokenIsAllowed(string token)
