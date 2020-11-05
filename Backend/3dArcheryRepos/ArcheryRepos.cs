@@ -247,8 +247,8 @@ namespace _3dArcheryRepos
                 .Where(e => except == null || !except.Contains(e.Id))
                 .Where(e => e.Role != (int) UserRole.New)
                 .Where(e => !Db.EventUsers
-                    .Include(e => e.Event)
-                    .Any(x => x.UserId == e.Id && x.Event.EndDate != null))
+                    .Include(x => x.Event)
+                    .Any(x => x.UserId == e.Id && x.Event.EndDate == null))
                 .OrderBy(e => e.Id)
                 .Skip(filterFrom)
                 .Take(filterTo)
