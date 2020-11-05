@@ -242,22 +242,37 @@ namespace _3dArcheryRepos
 
         public IEnumerable<GetUserFilteredModel> GetUserFiltered(int filterFrom, int filterTo, string filterName, int[] except)
         {
-            var userList = (
-                from usr in Db.Users
-                join eu in Db.EventUsers on usr.Id equals eu.UserId into joinTbl
-                from evtUsr in joinTbl.DefaultIfEmpty()
-                where string.IsNullOrEmpty(filterName) || usr.Username.ToLower().Contains(filterName.ToLower())
-                where except == null || !except.Contains(usr.Id)
-                where usr.Role != (int) UserRole.New
-                where evtUsr == null || (evtUsr.HasAccepted && evtUsr.Event.EndDate != null)
-                orderby usr
-                select usr)
-                .Skip(filterFrom).Take(filterTo)
+            var userList = Db.Users
+                .Where(e => string.IsNullOrEmpty(filterName) || e.Username.ToLower().Contains(filterName.ToLower()))
+                .Where(e => except == null || !except.Contains(e.Id))
+                .Where(e => e.Role != (int) UserRole.New)
+                .Where(e => !Db.EventUsers
+                    .Include(e => e.Event)
+                    .Any(x => x.UserId == e.Id && x.Event.EndDate != null))
+                .OrderBy(e => e.Id)
+                .Skip(filterFrom)
+                .Take(filterTo)
                 .Select(e => new GetUserFilteredModel()
                 {
                     Id = e.Id,
                     Username = e.Username
                 });
+            // var userList = (
+            //     from usr in Db.Users
+            //     join eu in Db.EventUsers on usr.Id equals eu.UserId into joinTbl
+            //     from evtUsr in joinTbl.DefaultIfEmpty()
+            //     where string.IsNullOrEmpty(filterName) || usr.Username.ToLower().Contains(filterName.ToLower())
+            //     where except == null || !except.Contains(usr.Id)
+            //     where usr.Role != (int) UserRole.New
+            //     where evtUsr == null || (evtUsr.HasAccepted && evtUsr.Event.EndDate != null)
+            //     orderby usr
+            //     select usr)
+            //     .Skip(filterFrom).Take(filterTo)
+            //     .Select(e => new GetUserFilteredModel()
+            //     {
+            //         Id = e.Id,
+            //         Username = e.Username
+            //     });
 
             return userList;
         }
