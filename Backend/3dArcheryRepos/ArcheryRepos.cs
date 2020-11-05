@@ -498,13 +498,17 @@ namespace _3dArcheryRepos
             var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
             var evt = Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.EndDate == null);
 
-            var data = Db.UserPoints.Include(e=>e.EventUser).Include(e=>e.EventUser.User).Where(e => e.EventUser.EventId == evt.Id)
-              .GroupBy(e=>e.EventUser)
-              .Select(e=>new EndEventModel {
-                  UserId = e.Key.UserId,
-                  Username = e.Key.User.Username,
-                  Points = e.Sum(x=>x.Points)
-              });
+            var data = Db.UserPoints
+                .Include(e=>e.EventUser)
+                .Include(e=>e.EventUser.User)
+                .Where(e => e.EventUser.EventId == evt.Id)
+                .GroupBy(e=>e.EventUser)
+                .Select(e=>new EndEventModel {
+                    UserId = e.Key.UserId,
+                    Username = e.Key.User.Username,
+                    Points = e.Sum(x=> x.Points)
+                });
+            Console.WriteLine(JsonSerializer.Serialize(data));
             return data;
         }
 
