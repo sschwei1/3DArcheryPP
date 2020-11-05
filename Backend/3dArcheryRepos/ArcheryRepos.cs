@@ -458,7 +458,7 @@ namespace _3dArcheryRepos
 
             var owner = Db.Users.SingleOrDefault(e => e.Token.ToUpper() == token.ToUpper());
             Db.Events.Remove(Db.Events.SingleOrDefault(e => e.OwnerId == owner.Id && e.StartTime == null));
-
+            Db.SaveChanges();
             return true;
 
         }
