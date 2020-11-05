@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { SubmitPoints } from '../../../../apiRequests/apiRequests';
 import { ButtonDiv } from '../../../ButtonEelement';
 import { FormBtnWrapper } from '../../../CreateEventPage/CreateEventForm/FormElements';
@@ -8,12 +9,14 @@ import {
   ViewRow,
   ViewCol,
   ShotButtonWrapper,
-  ShotButton
+  ShotButton,
+  ViewBtnWrapper
 } from '../EventGameViewElements';
 import {ShotValues} from './ThreeShotData';
 
 
-const ThreeShotGame = ({name, targets, trackInfo, users, authToken}) => {
+const ThreeShotGame = ({name, targets, trackInfo, users, authToken, finishCallback}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [currentTarget, setCurrentTarget] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [currentShot, setCurrentShot] = useState(0);
@@ -26,24 +29,26 @@ const ThreeShotGame = ({name, targets, trackInfo, users, authToken}) => {
       targetId: targets[currentTarget].id,
       points: currentPoints
     }
-
+    setIsLoading(true);
     SubmitPoints(data).then((ret) => {
-      console.log('response', ret);
-      if(ret?.payload === 'success'){
-        if(currentPlayer + 1 >= users.length){
-          setCurrentPlayer(0);
-          setCurrentTarget(prev => prev + 1);
+      ReactDOM.unstable_batchedUpdates(() => {
+        setIsLoading(false);
+        if(ret?.payload === 'success'){
+          setCurrentPoints(0);
+          setCurrentShot(0);
+          if(currentPlayer + 1 >= users.length){
+            setCurrentPlayer(0);
+            setCurrentTarget(prev => prev + 1);
+          }
+          else{
+            currentPlayer(prev => prev + 1);
+          }
         }
-        else{
-          currentPlayer(prev => prev + 1);
-        }
-      }
+      });
     });
   }
 
-  console.log("target", targets[0]);
-
-  return (
+  return (currentTarget < targets.length ? (
     <>
       <ViewTitle>{name} playing on {trackInfo.name}</ViewTitle>
       <ViewRow>
@@ -104,13 +109,28 @@ const ThreeShotGame = ({name, targets, trackInfo, users, authToken}) => {
             $primary={true}
             $dark={true}
             $maxWidth={true}
-            onClick={handleSubmit} >
+            onClick={isLoading ? null : handleSubmit} >
               Submit
           </ButtonDiv>
         </FormBtnWrapper>
       </ContentWrapper>
     </>
-  )
+  ) : (
+    <>
+      <ViewTitle>
+        Event finished
+      </ViewTitle>
+      <ViewBtnWrapper>
+        <ButtonDiv
+          $primary={true}
+          $dark={true}
+          $maxWidth={true}
+          onClick={isLoading ? null : finishCallback} >
+            End Event
+        </ButtonDiv>
+      </ViewBtnWrapper>
+    </>
+  ));
 }
 
 export default ThreeShotGame;

@@ -140,3 +140,7 @@ export const ShotButton = styled.div`
     border-radius: 0 10px 10px 0;
   }
 `;
+
+export const ViewBtnWrapper = styled.div`
+  padding: 20px 10px;
+`;

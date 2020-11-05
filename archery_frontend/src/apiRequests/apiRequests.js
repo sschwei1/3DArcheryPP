@@ -75,3 +75,10 @@ export const SubmitPoints = (updateData) => {
     .then(res => CheckResponse(res))
     .catch(err => ({payload: undefined, error: err.message}));
 }
+
+export const EndEvent = (authToken) => {
+return fetch(`${apiDomain}/track/EndEvent?token=${authToken}`)
+  .then(res => res.json())
+  .then(res => CheckResponse(res))
+  .catch(err => ({payload: undefined, error: err.message}));
+}

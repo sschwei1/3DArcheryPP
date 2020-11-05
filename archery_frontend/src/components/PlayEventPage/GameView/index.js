@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import GamePreStartView from '../GamePreStartView';
 import ThreeShotGame from './ThreeShotGame';
 import TwoShot from './TwoShotGame';
+import EventEndView from '../EventEndOverview';
 import {
   GameWrapper,
   GameInnerWrapper,
@@ -10,19 +11,21 @@ import {
 } from './EventGameViewElements';
 import {useCookies} from 'react-cookie';
 import { ButtonDiv, ButtonRoute } from '../../ButtonEelement';
+import { EndEvent } from '../../../apiRequests/apiRequests';
 
 export const EventCookie = 'eventData';
 
 const GameView = ({authToken, clearParentCookies = () => {}}) => {
   const [cookies, setCookie, removeCookie] = useCookies([EventCookie]);
   const [eventData, setEventData] = useState(cookies[EventCookie]);
+  const [eventFinishData, setEventFinishData] = useState();
 
   console.log("evtData", eventData);
 
-  const evaluateGameView = (data) => {
+  const evaluateGameView = (data, finishCallback) => {
     switch(data.countType){
-      case 1: return <ThreeShotGame authToken={authToken} {...data} />;
-      case 2: return <TwoShot authToken={authToken} {...data} />;
+      case 1: return <ThreeShotGame authToken={authToken} finishCallback={finishCallback} {...data} />;
+      case 2: return <TwoShot authToken={authToken} finishCallback={finishCallback} {...data} />;
       default: return <ErrorView>Invalid CountType</ErrorView>;
     }
   }
@@ -43,44 +46,54 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
     clearParentCookies();
   }
 
+  const eventFinishedCallback = () => {
+    EndEvent(authToken).then(ret => {
+      console.log(ret);
+    });
+  }
+
   console.log("view rendered:",
     eventData ?
       eventData?.specialMessage ? 'Error' : 'GameView' :
       'pre start');
 
-  return (
-    <>
-      <NavBtn onClick={clearCookies}>
-        Not your event?
-      </NavBtn>
-      <GameWrapper>
-        <GameInnerWrapper>
-          {
-            eventData ? (
-              eventData?.specialMessage ? (
-                <>
-                  <ErrorView>{eventData.specialMessage}</ErrorView>
-                  <ButtonDiv
-                    $primary={true}
-                    $dark={true}
-                    $maxWidth={true}
-                    onClick={clearCookies}>
-                      Go back
-                  </ButtonDiv>
-                </>
+  return eventFinishData ? (
+      <EventEndView>
+
+      </EventEndView>
+    ) : (
+      <>
+        <NavBtn onClick={clearCookies}>
+          Not your event?
+        </NavBtn>
+        <GameWrapper>
+          <GameInnerWrapper>
+            {
+              eventData ? (
+                eventData?.specialMessage ? (
+                  <>
+                    <ErrorView>{eventData.specialMessage}</ErrorView>
+                    <ButtonDiv
+                      $primary={true}
+                      $dark={true}
+                      $maxWidth={true}
+                      onClick={clearCookies}>
+                        Go back
+                    </ButtonDiv>
+                  </>
+                ) : (
+                  evaluateGameView(eventData, eventFinishedCallback)
+                )
               ) : (
-                evaluateGameView(eventData)
+                <GamePreStartView
+                  authToken={authToken}
+                  callback={startEventCallback} />
               )
-            ) : (
-              <GamePreStartView
-                authToken={authToken}
-                callback={startEventCallback} />
-            )
-          }
-        </GameInnerWrapper>
-      </GameWrapper>
-    </>
-  )
+            }
+          </GameInnerWrapper>
+        </GameWrapper>
+      </>
+    )
 }
 
 export default GameView
