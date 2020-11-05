@@ -22,7 +22,9 @@ namespace TelegramBot
         public const string AbortEvent = "abortEvent";
         public const string AcceptEvent = "accept";
         public const string GenerateToken = "generateToken";
+        public const string DeclineEvent = "decline";
     }
+}
 
     public static class CommandAliases
     {
@@ -93,7 +95,12 @@ namespace TelegramBot
         // accept user
         public const string AcceptEventNoInvite = "You have no invite to an event";
         public const string AcceptEventSuccess = "You are now a member of the event";
-        public const string AcceptEventFailed = "There was an error acceptiong the event, try again later";
+        public const string AcceptEventFailed = "There was an error accepting the event, try again later";
+
+
+        //decline user
+        public const string DeclineEventSuccess = "You have declined the invite";
+        public const string DeclineEventFailed = "There was an error declining the event, try again later";
 
         // descriptions
         public const string ListUserCommandDescription = "Prints a list of all users who wrote a message to the bot.";
@@ -112,6 +119,7 @@ namespace TelegramBot
         public const string CreateEventDescription = "Bind your user to an event via it's eventCode";
         public const string AbortEventDescription = "Abort the event you are binded to";
         public const string AcceptEventDescription = "Accept event invite";
+        public const string DeclineEventDescription = "Decline event invite";
         public const string GenerateTokenDescription = "Generate Token to start your event";
     }
 }

@@ -111,7 +111,7 @@ namespace _3dArcheryApi.Controllers
                    chatId =>
                    {
                        _ = BotHelper.TeleBot.SendMessage(chatId,
-                           "You are invited to an event type /accept to participate");
+                           "You are invited to an event type /accept to participate or /decline to decline the invite");
                    });
            }
 
@@ -205,6 +205,19 @@ namespace _3dArcheryApi.Controllers
             }
             
             return new JsonResult(new JsonResponse() { Status = "Token not permitted", StatusCode = 404 });
+        }
+
+        [HttpWeb.HttpGet]
+        public JsonResult GetTargets()
+        {
+            using var repos = new ArcheryRepos();
+            
+            
+                var data = repos.GetTargets();
+                return new JsonResult(new JsonResponse<List<GetTargetsModel>>(data.ToList()));
+            
+
+          
         }
 
 

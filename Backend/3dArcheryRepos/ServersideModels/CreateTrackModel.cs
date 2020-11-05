@@ -9,6 +9,7 @@ namespace _3dArcheryRepos.ServersideModels
     {
         public string Name { get; set; }
         public int LocationId { get; set; }
+        public List<int> Targets { get; set; }
 
         public bool Validate()
         {
