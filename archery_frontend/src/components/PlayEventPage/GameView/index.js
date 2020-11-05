@@ -17,10 +17,12 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
   const [cookies, setCookie, removeCookie] = useCookies([EventCookie]);
   const [eventData, setEventData] = useState(cookies[EventCookie]);
 
+  console.log("evtData", eventData);
+
   const evaluateGameView = (data) => {
     switch(data.countType){
-      case 1: return <ThreeShotGame {...data} />;
-      case 2: return <TwoShot {...data} />;
+      case 1: return <ThreeShotGame authToken={authToken} {...data} />;
+      case 2: return <TwoShot authToken={authToken} {...data} />;
       default: return <ErrorView>Invalid CountType</ErrorView>;
     }
   }

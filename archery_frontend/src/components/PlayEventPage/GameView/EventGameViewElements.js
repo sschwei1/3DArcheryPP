@@ -96,3 +96,47 @@ export const NavBtn = styled(ButtonDiv)`
     box-shadow: inset 0 0 14px ${convertHexToRgba(color.light1.bg, 0.7)};
   }
 `;
+
+export const ViewRow = styled.div`
+  width: 100%;
+  padding: 10px 0;
+  display:flex;
+  grid-template-columns: 50% 50%;
+  transition: all 0.2s ease;
+  color: ${color.light1.fg};
+`;
+
+export const ViewCol = styled.div`
+  padding: 0 10px;
+  overflow-wrap: break-word;
+  font-weight: ${({$bold}) => ($bold ? 'bold' : 'normal')};
+`;
+
+export const ShotButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+`;
+
+export const ShotButton = styled.div`
+  color:white;
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 10px 0;
+
+  ${({$isSelected}) => ($isSelected ? `background: ${convertHexToRgba(color.light1.bg, 0.3)};` : '')}
+
+  &:hover{
+    background: ${convertHexToRgba(color.light1.bg, 0.3)};
+  }
+
+  &:first-child{
+    border-radius: 10px 0 0 10px;
+  }
+
+  &:last-child{
+    border-radius: 0 10px 10px 0;
+  }
+`;
