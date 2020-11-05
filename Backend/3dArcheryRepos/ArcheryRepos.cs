@@ -504,19 +504,7 @@ namespace _3dArcheryRepos
                     Username = e.User.Username,
                     Points = Db.UserPoints.Where(x => x.EventUserId == e.Id).Select(e => e.Points).Sum()
                 });
-
-
-            // var evtUsers = Db.UserPoints
-            //     .Include(e=>e.EventUser)
-            //     .Include(e=>e.EventUser.User)
-            //     .Where(e => e.EventUser.EventId == evt.Id)
-            //     .GroupBy(e=>e.EventUser)
-            //     .Select(e=>new EndEventModel {
-            //         UserId = e.Key.UserId,
-            //         Username = e.Key.User.Username,
-            //         Points = e.Sum(x=> x.Points)
-            //     }).ToList();
-            Console.WriteLine(JsonSerializer.Serialize(data));
+            
             return data;
         }
 

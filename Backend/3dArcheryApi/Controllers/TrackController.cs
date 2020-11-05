@@ -201,8 +201,9 @@ namespace _3dArcheryApi.Controllers
             if (repos.TokenIsAllowed(token))
             {
                 var data = repos.EndEvent(token);
-                return new JsonResult(new JsonResponse<IEnumerable<EndEventModel>>(data));
+                return new JsonResult(new JsonResponse<List<EndEventModel>>(data.ToList()));
             }
+            
             return new JsonResult(new JsonResponse() { Status = "Token not permitted", StatusCode = 404 });
         }
 
