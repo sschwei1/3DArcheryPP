@@ -471,20 +471,17 @@ namespace _3dArcheryRepos
 
             var eventUserId = Db.EventUsers.SingleOrDefault(e => e.UserId == data.UserId);
 
-            Console.WriteLine(JsonSerializer.Serialize(eventUserId));
-            Console.WriteLine(JsonSerializer.Serialize(data));
             var userPoint = Db.UserPoints
                 .FirstOrDefault(e => e.EventUserId == eventUserId.Id && e.TargetId == data.TargetId);
 
             if (userPoint == null)
             {
-                userPoint = new DbUserPoints() 
+                Db.UserPoints.Add(new DbUserPoints() 
                 {
                     EventUserId = data.UserId,
                     TargetId = data.TargetId,
                     Points = data.Points
-                };
-                Db.UserPoints.Add(userPoint);
+                });
             }
             else
             {

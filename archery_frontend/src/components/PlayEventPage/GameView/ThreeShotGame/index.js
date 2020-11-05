@@ -29,7 +29,7 @@ const ThreeShotGame = ({name, targets, trackInfo, users, authToken}) => {
 
     SubmitPoints(data).then((ret) => {
       console.log('response', ret);
-      if(ret === 'success'){
+      if(ret?.payload === 'success'){
         if(currentPlayer + 1 >= users.length){
           setCurrentPlayer(0);
           setCurrentTarget(prev => prev + 1);
