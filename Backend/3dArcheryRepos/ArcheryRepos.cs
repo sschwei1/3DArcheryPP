@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using _3dArcheryRepos.DatabaseContext;
 using _3dArcheryRepos.Helper;
 using _3dArcheryRepos.ServersideModels;
@@ -470,8 +471,10 @@ namespace _3dArcheryRepos
 
             var eventUserId = Db.EventUsers.SingleOrDefault(e => e.UserId == data.UserId);
 
+            Console.WriteLine(JsonSerializer.Serialize(eventUserId));
+            Console.WriteLine(JsonSerializer.Serialize(data));
             var userPoint = Db.UserPoints
-                .SingleOrDefault(e => e.EventUserId == eventUserId.Id && e.TargetId == data.TargetId);
+                .FirstOrDefault(e => e.EventUserId == eventUserId.Id && e.TargetId == data.TargetId);
 
             if (userPoint == null)
             {
