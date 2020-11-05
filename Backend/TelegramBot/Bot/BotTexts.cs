@@ -24,7 +24,6 @@ namespace TelegramBot
         public const string GenerateToken = "generateToken";
         public const string DeclineEvent = "decline";
     }
-}
 
     public static class CommandAliases
     {

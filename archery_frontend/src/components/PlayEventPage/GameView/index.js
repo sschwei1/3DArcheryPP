@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import GamePreStartView from '../GamePreStartView';
 import ThreeShotGame from './ThreeShotGame';
 import TwoShot from './TwoShotGame';
-import EventEndView from '../EventEndOverview';
 import {
   GameWrapper,
   GameInnerWrapper,
@@ -15,7 +14,7 @@ import { EndEvent } from '../../../apiRequests/apiRequests';
 
 export const EventCookie = 'eventData';
 
-const GameView = ({authToken, clearParentCookies = () => {}}) => {
+const GameView = ({authToken, callback, clearParentCookies = () => {}}) => {
   const [cookies, setCookie, removeCookie] = useCookies([EventCookie]);
   const [eventData, setEventData] = useState(cookies[EventCookie]);
   const [eventFinishData, setEventFinishData] = useState();
@@ -46,29 +45,25 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
     clearParentCookies();
   }
 
-  const eventFinishedCallback = () => {
-    clearCookies();
-    EndEvent(authToken).then(ret => {
-      if(ret.payload){
-        setEventFinishData(ret.payload)
-      }
-      else{
-        setEventData({specialMessage: ret.error});
-      }
-      console.log(ret);
-    });
-  }
+  // const eventFinishedCallback = () => {
+  //   clearCookies();
+  //   EndEvent(authToken).then(ret => {
+  //     if(ret.payload){
+  //       setEventFinishData(ret.payload)
+  //     }
+  //     else{
+  //       setEventData({specialMessage: ret.error});
+  //     }
+  //     console.log(ret);
+  //   });
+  // }
 
   console.log("view rendered:",
     eventData ?
       eventData?.specialMessage ? 'Error' : 'GameView' :
       'pre start');
 
-  return eventFinishData ? (
-      <EventEndView>
-
-      </EventEndView>
-    ) : (
+  return (
       <>
         <NavBtn onClick={clearCookies}>
           Not your event?
@@ -89,7 +84,7 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
                     </ButtonDiv>
                   </>
                 ) : (
-                  evaluateGameView(eventData, eventFinishedCallback)
+                  evaluateGameView(eventData, callback)
                 )
               ) : (
                 <GamePreStartView

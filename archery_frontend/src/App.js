@@ -7,6 +7,7 @@ import EventOverviewPage from './pages/eventOverview';
 import HowToPage from './pages/howTo';
 import PageNotFoundPage from './pages/pageNotFound';
 import PlayEvent from './pages/playEvent';
+import CreateTrackPage from './pages/CreateTrackPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/eventoverview'component={EventOverviewPage} exact />
         <Route path='/event' component={PlayEvent} exact />
         <Route path='/howto'component={HowToPage} exact />
+        <Route path='/createTrack' component={CreateTrackPage} />
         <Route path='/' component={PageNotFoundPage} />
       </Switch>
     </Router>

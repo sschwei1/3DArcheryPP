@@ -56,7 +56,7 @@ const ThreeShotGame = ({name, targets, trackInfo, users, authToken, finishCallba
           Target:
         </ViewCol>
         <ViewCol>
-          {targets[currentTarget].name}
+          #{currentTarget + 1}. {targets[currentTarget].name}
         </ViewCol>
       </ViewRow>
       <ViewRow>
