@@ -21,7 +21,7 @@ namespace TelegramBot.Commands
                 using var repos = new ArcheryRepos();
 
 
-                if (!repos.UserHasInvite(user.ChatId))
+                if (!repos.UserHasInviteDecline(user.ChatId))
                 {
                     await Client.SendMessage(user.ChatId, BotMessages.AcceptEventNoInvite);
                     return;
