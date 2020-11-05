@@ -21,7 +21,7 @@ const ThreeShotGame = ({name, targets, trackInfo, users, authToken, finishCallba
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [currentShot, setCurrentShot] = useState(0);
   const [currentPoints, setCurrentPoints] = useState(0);
-  console.log(currentPlayer, users.length);
+
   const handleSubmit = () => {
     let data = {
       token: authToken,
@@ -41,7 +41,7 @@ const ThreeShotGame = ({name, targets, trackInfo, users, authToken, finishCallba
             setCurrentTarget(prev => prev + 1);
           }
           else{
-            currentPlayer(prev => prev + 1);
+            setCurrentPlayer(prev => prev + 1);
           }
         }
       });
