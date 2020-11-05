@@ -504,6 +504,9 @@ namespace _3dArcheryRepos
                     Username = e.User.Username,
                     Points = Db.UserPoints.Where(x => x.EventUserId == e.Id).Select(e => e.Points).Sum()
                 });
+
+            evt.EndDate = DateTime.UtcNow;
+            Db.SaveChanges();
             
             return data;
         }
