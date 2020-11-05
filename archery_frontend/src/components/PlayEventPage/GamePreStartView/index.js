@@ -25,6 +25,15 @@ const GamePreStart = ({authToken, callback}) => {
     return () => {mounted = false;};
   }, [])
 
+  const refreshUsers = () => {
+    setIsLoading(true);
+    GetEventUsers(authToken).then((ret) => {
+      console.log("result", ret);
+      setIsLoading(false);
+      setUserList(ret);
+    });
+  }
+
   const handleSubmit = () => {
     setStartEventLoad(true);
     StartEvent(authToken).then((ret) => {
@@ -69,6 +78,15 @@ const GamePreStart = ({authToken, callback}) => {
                     .map((usr, index) => <ListElement key={index}>{usr.name}</ListElement>)
                   }
                 </ListWrapper>
+                <FormBtnWrapper>
+                  <ButtonDiv
+                    $primary={true}
+                    $dark={true}
+                    $maxWidth={true}
+                    onClick={refreshUsers} >
+                      Refresh
+                  </ButtonDiv>
+                </FormBtnWrapper>
                 <FormBtnWrapper>
                   <ButtonDiv
                     $primary={true}

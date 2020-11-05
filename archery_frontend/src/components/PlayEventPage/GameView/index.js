@@ -9,6 +9,7 @@ import {
   NavBtn
 } from './EventGameViewElements';
 import {useCookies} from 'react-cookie';
+import { ButtonDiv, ButtonRoute } from '../../ButtonEelement';
 
 export const EventCookie = 'eventData';
 
@@ -61,7 +62,16 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
           {
             eventData ? (
               eventData?.specialMessage ? (
-                <ErrorView>{eventData.specialMessage}</ErrorView>
+                <>
+                  <ErrorView>{eventData.specialMessage}</ErrorView>
+                  <ButtonDiv
+                    $primary={true}
+                    $dark={true}
+                    $maxWidth={true}
+                    onClick={clearCookies}>
+                      Go back
+                  </ButtonDiv>
+                </>
               ) : (
                 evaluateGameView(eventData)
               )

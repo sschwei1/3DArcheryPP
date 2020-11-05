@@ -6,7 +6,7 @@ export const ModalParcourWrappper = styled.div`
   border-bottom: solid 1px ${color.light1.fg};
   padding: 10px 0;
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 50% 50%;
   transition: all 0.2s ease;
   flex: 0 1 auto;
 
@@ -35,6 +35,9 @@ export const ModalParcourWrappper = styled.div`
 
 export const ModalParcourCol = styled.div`
   padding: 0 10px;
+  width: 100%;
+  overflow-wrap: break-word;
+  font-size: 14px;
 `;
 
 export const ModalLoadMoreCol = styled.div`

@@ -1,10 +1,9 @@
 import React from 'react'
 
-const ThreeShotGame = () => {
+const ThreeShotGame = ({gameData}) => {
   return (
-    <div>
-      3 Shot uwu
-    </div>
+    <>
+    </>
   )
 }
 

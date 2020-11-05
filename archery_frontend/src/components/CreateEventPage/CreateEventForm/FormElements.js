@@ -144,6 +144,7 @@ export const FormError = styled.p`
 
 export const FormBtnWrapper = styled.div`
   width: 100%;
+  margin-top: 10px;
 `;
 
 export const NavBtn = styled(ButtonRoute)`

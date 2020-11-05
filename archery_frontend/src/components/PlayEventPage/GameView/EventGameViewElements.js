@@ -23,7 +23,13 @@ export const GameInnerWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const ErrorView = styled.div``;
+export const ErrorView = styled.div`
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: ${color.light1.fg};
+`;
 
 export const ViewTitle = styled.h1`
   text-align: center;

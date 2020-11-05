@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const TwoShot = () => {
+const TwoShot = ({gameData}) => {
   return (
     <div>
       2 Shot uwu
@@ -8,4 +8,4 @@ const TwoShot = () => {
   )
 }
 
-export default TwoShot
+export default TwoShot;
