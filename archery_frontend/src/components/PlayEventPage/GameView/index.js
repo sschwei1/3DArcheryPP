@@ -15,7 +15,7 @@ export const EventCookie = 'eventData';
 
 const GameView = ({authToken, clearParentCookies = () => {}}) => {
   const [cookies, setCookie, removeCookie] = useCookies([EventCookie]);
-  const [eventData, setEventData] = useState();
+  const [eventData, setEventData] = useState(cookies[EventCookie]);
 
   const evaluateGameView = (data) => {
     switch(data.countType){
@@ -40,12 +40,6 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
     setEventData(undefined);
     clearParentCookies();
   }
-
-  useEffect(() => {
-    if(cookies[EventCookie]){
-      setEventData(cookies[EventCookie]);
-    }
-  }, []);
 
   console.log("view rendered:",
     eventData ?

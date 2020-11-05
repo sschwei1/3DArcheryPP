@@ -424,6 +424,7 @@ namespace _3dArcheryRepos
 
 
             var evtData = new StartEventResponseModel();
+            evtData.Name = evt.Name;
             evtData.Users = evtusers.ToList();
             evtData.Targets = targets.ToList();
             evtData.CountType = evt.CountTypeId;

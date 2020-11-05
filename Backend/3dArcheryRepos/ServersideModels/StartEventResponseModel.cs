@@ -6,6 +6,7 @@ namespace _3dArcheryRepos.ServersideModels
 {
     public class StartEventResponseModel
     {
+        public string Name { get; set; }
         public int CountType { get; set; }
 
         public TrackStartEventModel TrackInfo { get; set; }
