@@ -400,7 +400,7 @@ namespace _3dArcheryRepos
             var evtusers = Db.EventUsers.Include(e => e.User).Where(e => e.EventId == evt.Id)
                 .Select(e => new UserMinModel
                 {
-                    Id = e.Id,
+                    Id = e.UserId,
                     Name = e.User.Username
                 });
 
