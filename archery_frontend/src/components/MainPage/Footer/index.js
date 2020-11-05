@@ -38,7 +38,7 @@ const Footer = () => {
         <SocialMedia>
           <SocialMediaWrap>
             <SocialLogoLink to='welcome' {...scrollProps}>
-              <SocialLogo src={require('../../../images/logos/logo_transparent_no_name_swapped_colors.png')} />
+              <SocialLogo src={require('../../../images/logos/logo_transparent_no_name_swapped_colors.png').default} />
               3dium
             </SocialLogoLink>
             <WebsiteRights>

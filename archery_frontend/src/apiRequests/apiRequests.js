@@ -45,21 +45,16 @@ export const GetAuthToken = (shortToken) => {
     .catch(err => ({payload: undefined, error: err}));
 };
 
-export const StartEvent = (authToken) => {
-  let myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  let raw = JSON.stringify(authToken);
-
-  let requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-  };
-
-  return fetch(`${apiDomain}/track/StartEvent`, requestOptions)
+export const GetEventUsers = (authToken) => {
+  return fetch(`${apiDomain}/track/geteventuser?token=${authToken}`)
     .then(res => res.json())
     .then(res => CheckResponse(res))
     .catch(err => ({payload: undefined, error: err.message}));
-};
+}
+
+export const StartEvent = (authToken) => {
+  return fetch(`${apiDomain}/track/StartEvent?token=${authToken}`)
+    .then(res => res.json())
+    .then(res => CheckResponse(res))
+    .catch(err => ({payload: undefined, error: err.message}));
+}

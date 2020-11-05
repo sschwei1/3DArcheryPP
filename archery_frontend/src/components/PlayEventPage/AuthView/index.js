@@ -59,7 +59,7 @@ const AuthView = ({callback = () => {}}) => {
           $dark={true}
           $maxWidth={true}
           onClick={isLoading ? null : handleSubmit} >
-          {isLoading ? 'Loading' : 'Start your event'}
+          {isLoading ? 'Loading' : 'Event Overview'}
         </ButtonDiv>
       </FormBtnWrapper>
     </AuthWrapper>
