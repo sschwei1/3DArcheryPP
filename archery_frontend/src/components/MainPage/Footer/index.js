@@ -32,22 +32,7 @@ const Footer = () => {
               <FooterLinkR to='dev/sswe'>About Sebastian Schweiger</FooterLinkR>
               <FooterLinkR to='dev/klar'>About Kevin Larson</FooterLinkR>
             </FooterLinkItems>
-            <FooterLinkItems>
-              <FooterLinkTitle>About Us</FooterLinkTitle>
-              <FooterLinkR to='createevent'>Create Event</FooterLinkR>
-              <FooterLinkR to='eventoverview'>Event Overview</FooterLinkR>
-              <FooterLinkR to='howto'>How to use</FooterLinkR>
-              <FooterLinkR to='dev/sswe'>About Sebastian Schweiger</FooterLinkR>
-              <FooterLinkR to='dev/klar'>About Kevin Larson</FooterLinkR>
-            </FooterLinkItems>
-            <FooterLinkItems>
-              <FooterLinkTitle>About Us</FooterLinkTitle>
-              <FooterLinkR to='createevent'>Create Event</FooterLinkR>
-              <FooterLinkR to='eventoverview'>Event Overview</FooterLinkR>
-              <FooterLinkR to='howto'>How to use</FooterLinkR>
-              <FooterLinkR to='dev/sswe'>About Sebastian Schweiger</FooterLinkR>
-              <FooterLinkR to='dev/klar'>About Kevin Larson</FooterLinkR>
-            </FooterLinkItems>
+           
           </FooterLinkWrapper>
         </FooterLinksContainer>
         <SocialMedia>

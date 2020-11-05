@@ -178,9 +178,7 @@ namespace _3dArcheryApi.Controllers
                 repos.DeleteEvent(token);
                 return new JsonResult(new JsonResponse() { Status = "Event deleted", StatusCode = 404 });
             
-           
-
-           
+       
         }
 
         [HttpWeb.HttpPost]
