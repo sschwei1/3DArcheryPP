@@ -49,6 +49,12 @@ const GameView = ({authToken, clearParentCookies = () => {}}) => {
   const eventFinishedCallback = () => {
     clearCookies();
     EndEvent(authToken).then(ret => {
+      if(ret.payload){
+        setEventFinishData(ret.payload)
+      }
+      else{
+        setEventData({specialMessage: ret.error});
+      }
       console.log(ret);
     });
   }
