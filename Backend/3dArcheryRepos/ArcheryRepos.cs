@@ -577,6 +577,14 @@ namespace _3dArcheryRepos
 
         }
 
+        public bool UserHasInviteDecline(long chatId)
+        {
+            var user = Db.Users.SingleOrDefault(e => e.ChatId == chatId);
+
+            var invites = Db.EventUsers.Include(e => e.Event).SingleOrDefault(e => e.UserId == user.Id && e.Event.StartTime == null);
+            return invites != null;
+        }
+
         public void Dispose()
         {
 
