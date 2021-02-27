@@ -58,9 +58,7 @@ const PlayEvent = () => {
     <SiteWrapper>
       {
         endEventData ? (
-          <EventEndView>
-
-          </EventEndView>
+          <EventEndView users={endEventData} />
         ) : (
         authCode ? (
             <GameView authToken={authCode} callback={endEventDataCallback} clearParentCookies={clearCookies} />
